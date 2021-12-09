@@ -1,0 +1,78 @@
+
+{
+    "date": "18 October 2021",
+    "summary": {
+        "species": "human",
+        "sample_num": "6",
+        "cell_num": "1,431",
+        "cell_num_per_sample": "238.50",
+        "map_rate_ave_sample": "3.64%"
+    },
+    "table_link": {
+        "Sample_cells_info_stat": "./result_file/Sample_cells_info_stat.xls",
+        "Cell_filter_stat": "./result_file/cellfilter_stat.info"
+    },
+    "PDF_link": "./result_file/report_cn.pdf",
+    "cell_stat_table": {
+        "data": [
+            ["L01","404342813","21.85%","1431","133650","15982","2834","17647"],
+            ["L02","404342813","21.85%","1431","133650","15982","2834","17647"]
+        ]
+    },
+    "cell_filter_stat": {
+        "data": [
+            ["pbmc1","1725","758","0","4","0","52","911","52.81"],
+            ["pbmc1","1725","758","0","4","0","52","911","52.81"],
+            ["pbmc1","1725","758","0","4","0","52","911","52.81"],
+            ["pbmc1","1725","758","0","4","0","52","911","52.81"],
+            ["pbmc1","1725","758","0","4","0","52","911","52.81"],
+            ["pbmc1","1725","758","0","4","0","52","911","52.81"],
+            ["pbmc1","1725","758","0","4","0","52","911","52.81"]
+        ]
+    },
+    "final_cluster_stat": {
+        "samples": ["pbmc1", "pbmc2", "pbmc3", "TIL1", "TIL2", "TIL3"],
+        "data": [
+            ["0","543","454","591","424","626","344"],
+            ["1","543","454","591","424","626","344"],
+            ["2","543","454","591","424","626","344"]
+        ]
+    },
+    "diffCluster_stat": {
+        "data": [
+            ["IL7R","0","1.20","0.79","0.227","0","0"],
+            ["LTB","0","1.20","0.79","0.227","0","0"],
+            ["RPL3","0","1.20","0.79","0.227","0","0"],
+            ["RPS12","0","1.20","0.79","0.227","0","0"]
+        ]
+    },
+    "cluster_Biological_Process_enrich_list": {
+        "data": [
+            ["GO:0003735","structural constituent of ribosome","95/1190","165/18115","8.76","7.06893278405108e-69","2.99871569681325e-66","DAP3/ISG15/MRPL20/MRPL33","95"],
+            ["GO:0003735","structural constituent of ribosome","95/1190","165/18115","8.76","7.06893278405108e-69","2.99871569681325e-66","DAP3/ISG15/MRPL20/MRPL33","95"]
+        ]
+    },
+    "cluster_KEGG_pathway_enrich_list": {
+        "data": [
+            ["ko00190","Oxidative phosphorylation","68/870","134/8085","4.72","2.01419801290328e-31","8.86247125677445e-30","ATP5F1A/ATP5F1B/ATP5F1C/ATP5F1D/ATP5F1E","68"],
+            ["ko00190","Oxidative phosphorylation","68/870","134/8085","4.72","2.01419801290328e-31","8.86247125677445e-30","ATP5F1A/ATP5F1B/ATP5F1C/ATP5F1D/ATP5F1E","68"],
+            ["ko00190","Oxidative phosphorylation","68/870","134/8085","4.72","2.01419801290328e-31","8.86247125677445e-30","ATP5F1A/ATP5F1B/ATP5F1C/ATP5F1D/ATP5F1E","68"]
+        ]
+    },
+    "Pseudotime_difference_gene": {
+        "data": [
+            ["OK","negbinomial.size","0","0","AGTRAP","4222","TRUE"],
+            ["OK","negbinomial.size","0","0","AGTRAP","4222","TRUE"],
+            ["OK","negbinomial.size","0","0","AGTRAP","4222","TRUE"],
+            ["OK","negbinomial.size","0","0","AGTRAP","4222","TRUE"]
+        ]
+    },
+    "Pseudotime_info": {
+        "data": [
+            ["AAACCCACACCGTGCA-1_1_1","L01","0","30.6525040410055","3"],
+            ["AAACCCACACCGTGCA-1_1_1","L01","0","30.6525040410055","3"],
+            ["AAACCCACACCGTGCA-1_1_1","L01","0","30.6525040410055","3"],
+            ["AAACCCACACCGTGCA-1_1_1","L01","0","30.6525040410055","3"]
+        ]
+    }
+}

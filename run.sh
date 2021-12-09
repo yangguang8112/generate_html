@@ -1,1 +1,1 @@
-python main.py base.html data.json ceshiceded.html
+python main.py ../Result ~/tmp/report

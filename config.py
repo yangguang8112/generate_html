@@ -26,21 +26,38 @@ class Config(object):
         ]
         self.need_result_fig_file_list = {
             "fig1":[
-
+                "Result_1_DataFilter/All_sample_nofilter.vln.png",
+                "Result_1_DataFilter/All_sample_filter.vln.png",
+                "Result_1_DataFilter/All_sample_nofilter.scatter.png",
+                "Result_1_DataFilter/All_sample_filter.scatter.png",
+                "Result_1_DataFilter/All.libarary.transcriptome.similarity.png"
             ],
             "fig2":[
-
+                "Result_2_Analysis/02_Clustering/final_cluster_umap_batch.png",
+                "Result_2_Analysis/02_Clustering/final_cluster_umap_sample.png",
+                "Result_2_Analysis/02_Clustering/final_cluster_umap_splitBatch.png",
+                "Result_2_Analysis/02_Clustering/final_cluster_umap_splitSample.png"
             ],
             "fig3":[
-
+                "Result_2_Analysis/02_Clustering/final_cluster_umap.png",
+                "Result_2_Analysis/03_Difference/diffCluster_picture/All.cluster0_top6_markerUmap.png",
+                "Result_2_Analysis/03_Difference/diffCluster_picture/dotplot_and_barplot.png",
+                "Result_2_Analysis/03_Difference/diffCluster_picture/All.cluster0_top6_markerVln.png"
             ],
             "fig4":[
-
+                "Result_2_Analysis/03_Difference/diffCluster_volcano/All.cluster0.volcano.png",
+                "Result_2_Analysis/03_Difference/diffCluster_picture/top_markergene_heatmap.png",
+                "Result_2_Analysis/04_Enrichment/BP_dotplot.png",
+                "Result_2_Analysis/04_Enrichment/KEGG_dotplot.png"
             ],
             "fig5":[
-
+                "Result_3_Pseudotime/cell_trajectory_cluster_split.png",
+                "Result_3_Pseudotime/cell_trajectory_Pseudotime.png",
+                "Result_3_Pseudotime/cell_trajectory_heatmap.png",
+                "Result_3_Pseudotime/cell_trajectory_topGene_marker_cluster.png"
             ],
             "fig6":[
-                
+                "Result_2_Analysis/05_CellAnnotation/final.cluster_annotation_umap.png",
+                "Result_2_Analysis/05_CellAnnotation/final.cluster_annotation_sample_barplot.png"
             ]
         }

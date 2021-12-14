@@ -77,7 +77,9 @@ def main():
     if not os.path.exists(report_path):
         os.mkdir(report_path)
     # cp result and template file
-    os.system("cp -r Template/full_size_page {report_path};cp -r Template/report_files {report_path}".format(report_path=report_path))
+    main_path = os.path.split(os.path.realpath(__file__))[0]
+    print(main_path)
+    os.system("cp -r {main_path}/Template/full_size_page {report_path};cp -r {main_path}/Template/report_files {report_path}".format(report_path=report_path, main_path=main_path))
     os.mkdir("{report_path}/result_file".format(report_path=report_path))
     os.mkdir("{report_path}/show_img".format(report_path=report_path))
     # TODO cp result file

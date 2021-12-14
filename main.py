@@ -40,10 +40,18 @@ def merge_html(base_html_name, content_html_name, out_html_name):
             ohe.write(line)
 
 def generate_data(result_path, config):
+    old_json = result_path + '/Backup/02_JSON/final_parameter.json'
+    with open(old_json, 'r') as oj:
+        old_res = json.loads(oj.read())
     res = {}
     res['date'] = time.strftime("%d %b %Y", time.localtime())
-    # species need var
-    res['summary'] = {'species': "human"}
+    # summary data from old json
+    res['summary'] = {'species': old_json['Species']}
+    res['summary']['title'] = old_json['project_id']
+    res['summary']['choose_resulotion'] = old_json['choose_res']
+    res['summary']['FC'] = old_json['FC']
+    res['summary']['pvalue'] = old_json['pvalue']
+    # 
     df = pd.read_csv(result_path+"/"+config.need_result_table_file_list[0], header=0, sep='\t', thousands=',')
     sample_num  = len(df)
     res['summary']['sample_num'] = str(sample_num)

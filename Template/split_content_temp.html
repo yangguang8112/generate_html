@@ -77,7 +77,7 @@
           data-test="article-title"
           data-article-title=""
         >
-        Cell Landscape 结题报告
+        {{ summary.title }} 结题报告
         </h1>
 
       </header>
@@ -506,7 +506,7 @@
               相似的细胞通常具有相似的基因表达谱。细胞聚类就是将表达谱相似的细胞聚在一起，形成一个cluster。
               但是单细胞数据的表达矩阵的维度非常高，所以在聚类之前需要先对数据进行降维。
               常用的降维方法有：PCA (principal component analysis)，t-SNE (t-Distributed Stochastic Neighbor Embedding)，UMAP (Uniform Manifold Approximation and Projection for Dimension Reduction)等。
-              我们使用 Seurat 软件，选取 resolution = 0.1 进行细胞聚类
+              我们使用 Seurat 软件，选取 resolution = {{ summary.choose_resulotion }} 进行细胞聚类
               <sup>
                 <a data-track="click" data-track-action="reference anchor" data-track-label="link" data-test="citation-ref" aria-label="Reference 2" title="Stuart T, Butler A, Hoffman P, et al. Comprehensive integration of single-cell data[J]. Cell, 2019, 177(7): 1888-1902. e21." href="./our_content.html#ref-CR2" id="ref-link-section-d38771043e817">2</a>
               </sup>
@@ -584,7 +584,7 @@
           </div>
           <p>
             基于细胞聚类的结果，使用非参数检验方法（wilcox秩和检验）对各个cluster中的基因进行分析，
-            寻找cluster的特异性基因即marker基因。筛选标准：|Fold Change| ≥ 1.5 & P-value ≤ 0.05 （表4）。
+            寻找cluster的特异性基因即marker基因。筛选标准：|Fold Change| ≥ {{ summary.FC }} & P-value ≤ {{ summary.pvalue }} （表4）。
             对细胞聚类得到的所有cluster，我们评估了每个cluster在不同样本，不同批次间的比例。
             并选择每个类群的 top2 的基因进行气泡图的展示（Fig.
             <a data-track="click" data-track-label="link" data-track-action="figure anchor" href="./our_content.html#Fig3">3c-d</a>

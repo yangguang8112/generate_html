@@ -66,6 +66,10 @@ def generate_data(result_path, config):
         for i in range(min(8, len(df))):
             line = df.iloc[i]
             res[table_name]["data"].append([str(i) for i in line.values.tolist()])
+        # gene list too long
+        if table_name in ['cluster_Biological_Process_enrich_list', 'cluster_KEGG_pathway_enrich_list']:
+            for data in res[table_name]["data"]:
+                data[-2] = data[-2][:8] + '...'
     # final_cluster_stat need colname
     df = pd.read_csv(result_path + '/' + config.need_result_table_file_list[config.data_json_keys.index('final_cluster_stat')], header=0, sep='\t')
     res['final_cluster_stat']['samples'] = df.columns.tolist()[1:]

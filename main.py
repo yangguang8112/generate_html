@@ -46,11 +46,11 @@ def generate_data(result_path, config):
     res = {}
     res['date'] = time.strftime("%d %b %Y", time.localtime())
     # summary data from old json
-    res['summary'] = {'species': old_json['Species']}
-    res['summary']['title'] = old_json['project_id']
-    res['summary']['choose_resulotion'] = old_json['choose_res']
-    res['summary']['FC'] = old_json['FC']
-    res['summary']['pvalue'] = old_json['pvalue']
+    res['summary'] = {'species': old_res['Species']}
+    res['summary']['title'] = old_res['project_id']
+    res['summary']['choose_resulotion'] = old_res['choose_res']
+    res['summary']['FC'] = old_res['FC']
+    res['summary']['pvalue'] = old_res['pvalue']
     # 
     df = pd.read_csv(result_path+"/"+config.need_result_table_file_list[0], header=0, sep='\t', thousands=',')
     sample_num  = len(df)
@@ -108,8 +108,8 @@ def main():
     merge_fig5(get_abs_path(config.need_result_fig_file_list['fig5'], report_path + '/result_file'), report_path+'/show_img')
     merge_fig6(get_abs_path(config.need_result_fig_file_list['fig6'], report_path + '/result_file'), report_path+'/show_img')
     # generate report html
-    generate_content("Template/split_content_temp.html", data_json, report_path + "/tmp.html")
-    merge_html("Template/split_base.html", report_path + "/tmp.html", report_path + "/report.html")
+    generate_content(main_path + "/Template/split_content_temp.html", data_json, report_path + "/tmp.html")
+    merge_html(main_path + "/Template/split_base.html", report_path + "/tmp.html", report_path + "/report.html")
     os.system("rm {report_path}/tmp.html".format(report_path=report_path))
 
 

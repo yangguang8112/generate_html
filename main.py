@@ -40,7 +40,7 @@ def merge_html(base_html_name, content_html_name, out_html_name):
             ohe.write(line)
 
 def generate_data(result_path, config):
-    old_json = result_path + '/Backup/02_JSON/final_parameter.json'
+    old_json = result_path + '/../Backup/02_JSON/final_parameter.json'
     with open(old_json, 'r') as oj:
         old_res = json.loads(oj.read())
     res = {}
@@ -61,7 +61,11 @@ def generate_data(result_path, config):
     # table data
     for table_name, data_file in zip(config.data_json_keys, config.need_result_table_file_list):
         res[table_name] = {"data": []}
-        df = pd.read_csv(result_path + '/' + data_file, header=0, sep='\t')
+        try:
+            # 处理没有结果的情况
+            df = pd.read_csv(result_path + '/' + data_file, header=0, sep='\t')
+        except:
+            break
         # max line == 8
         for i in range(min(8, len(df))):
             line = df.iloc[i]

@@ -118,7 +118,10 @@ def merge_fig3(fig_file_list, out_path):
     addText(c, 'd', (1560, 10))
     addText(d, 'e')
 
-    target = Image.new('RGBA', (d_size[0], a_size[1] + c_size[1] + d_size[1]))
+    WIDTH = max(a_size[0]+b_size[0], c_size[0], d_size[0])
+    HEIGHT = max(a_size[1], b_size[1]) + c_size[1] + d_size[1]
+    # target = Image.new('RGBA', (d_size[0], a_size[1] + c_size[1] + d_size[1]))
+    target = Image.new('RGBA', (WIDTH, HEIGHT))
 
     target.paste(a, (0, 0))
     target.paste(b, (a_size[0], 0))
@@ -195,3 +198,14 @@ def merge_fig5(fig_file_list, out_path):
 
 def merge_fig6(fig_file_list, out_path):
     concat_images(fig_file_list, out_path + "/fig6.png", 2, 1)
+
+
+if __name__ == '__main__':
+    # debug
+    fig_file_list = [
+        "final_cluster_umap.png",
+        "All.cluster0_top6_markerUmap.png",
+        "dotplot_and_barplot.png",
+        "All.cluster0_top6_markerVln.png"
+    ]
+    merge_fig3(fig_file_list, "../")

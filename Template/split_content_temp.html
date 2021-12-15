@@ -227,6 +227,7 @@
         </div>
       </div>
 
+      {% if check_sec.cell_filter == 1 %}
       <section data-title="细胞过滤">
         <div class="c-article-section" id="Sec1-section">
           <h2
@@ -378,7 +379,9 @@
           </div>
         </div>
       </section>
+      {% endif %}
 
+      {% if check_sec.sample_merge == 1 %}
       <section data-title="多样本合并">
         <div class="c-article-section" id="Sec11-section">
           <h2
@@ -487,6 +490,9 @@
           </div>
         </div>
       </section>
+      {% endif %}
+
+      {% if check_sec.cell_cluster_marker == 1 %}
       <section data-title="细胞聚类和marker鉴定">
         <div class="c-article-section" id="Sec12-section">
           <h2
@@ -769,7 +775,9 @@
           </div>
         </div>
       </section>
+      {% endif %}
 
+      {% if check_sec.go_kegg == 1 %}
       <section data-title="富集分析">
         <div class="c-article-section" id="code-availability-section">
           <h2
@@ -1051,7 +1059,9 @@
           </div>
         </div>
       </section>
+      {% endif %}
 
+      {% if check_sec.pseudotime == 1 %}
       <section data-title="拟时序分析">
         <div class="c-article-section" id="article-comments-section">
           <h2
@@ -1319,7 +1329,9 @@
           </div>
         </div>
       </section>
+      {% endif %}
 
+      {% if check_sec.cell_type == 1 %}
       <section data-title="细胞类型鉴定">
         <div class="c-article-section" id="article-comments-section">
           <h2
@@ -1438,6 +1450,7 @@
           </div>
         </div>
       </section>
+      {% endif %}
 
       <!-- <section data-title="模板">
         <div class="c-article-section" id="article-comments-section">

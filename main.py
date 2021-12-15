@@ -81,22 +81,33 @@ def get_abs_path(file_list, path):
 
 def main():
     result_path = sys.argv[1]
-    report_path = sys.argv[2]
+    if len(sys.argv) == 3:
+        report_path = sys.argv[2]
+        if not os.path.exists(report_path):
+            os.mkdir(report_path)
+    else:
+        report_path = result_path + '/report'
+        if not os.path.exists(report_path):
+            os.mkdir(report_path)
+        else:
+            os.system("rm -rf " + report_path)
+            os.mkdir(report_path)
+
     config = Config()
     if not os.path.exists(result_path):
         print("Not Found result data")
         exit()
-    if not os.path.exists(report_path):
-        os.mkdir(report_path)
+    
     # cp result and template file
     main_path = os.path.split(os.path.realpath(__file__))[0]
-    print(main_path)
+    # print(main_path)
     os.system("cp -r {main_path}/Template/full_size_page {report_path};cp -r {main_path}/Template/report_files {report_path}".format(report_path=report_path, main_path=main_path))
     os.mkdir("{report_path}/result_file".format(report_path=report_path))
     os.mkdir("{report_path}/show_img".format(report_path=report_path))
     # TODO cp result file
     os.system("cp -r {result_path}/Result_2_Analysis/03_Difference/diffCluster_File {report_path}/result_file".format(result_path=result_path, report_path=report_path))
-    for file in config.need_result_table_file_list:
+    for index, file in enumerate(config.need_result_table_file_list):
+        # index 和 文件 和html中的sec对应起来
         os.system("cp {result_path}/{file} {report_path}/result_file".format(result_path=result_path, report_path=report_path, file=file))
     # pic 还差在fig.html里面的一些图片“详见”链接没有处理
     for files in config.need_result_fig_file_list.values():
@@ -105,12 +116,31 @@ def main():
     # get_data_json
     data_json = generate_data(result_path, config)
     # generate show image
-    merge_fig1(get_abs_path(config.need_result_fig_file_list['fig1'], report_path + '/result_file'), report_path+'/show_img')
-    merge_fig2(get_abs_path(config.need_result_fig_file_list['fig2'], report_path + '/result_file'), report_path+'/show_img')
-    merge_fig3(get_abs_path(config.need_result_fig_file_list['fig3'], report_path + '/result_file'), report_path+'/show_img')
-    merge_fig4(get_abs_path(config.need_result_fig_file_list['fig4'], report_path + '/result_file'), report_path+'/show_img')
-    merge_fig5(get_abs_path(config.need_result_fig_file_list['fig5'], report_path + '/result_file'), report_path+'/show_img')
-    merge_fig6(get_abs_path(config.need_result_fig_file_list['fig6'], report_path + '/result_file'), report_path+'/show_img')
+    try:
+        merge_fig1(get_abs_path(config.need_result_fig_file_list['fig1'], report_path + '/result_file'), report_path+'/show_img')
+    except:
+        config.check_sec['cell_filter'] = 0
+    try:
+        merge_fig2(get_abs_path(config.need_result_fig_file_list['fig2'], report_path + '/result_file'), report_path+'/show_img')
+    except:
+        config.check_sec['sample_merge'] = 0
+    try:
+        merge_fig3(get_abs_path(config.need_result_fig_file_list['fig3'], report_path + '/result_file'), report_path+'/show_img')
+    except:
+        config.check_sec['cell_cluster_marker'] = 0
+    try:
+        merge_fig4(get_abs_path(config.need_result_fig_file_list['fig4'], report_path + '/result_file'), report_path+'/show_img')
+    except:
+        config.check_sec['go_kegg'] = 0
+    try:
+        merge_fig5(get_abs_path(config.need_result_fig_file_list['fig5'], report_path + '/result_file'), report_path+'/show_img')
+    except:
+        config.check_sec['pseudotime'] = 0
+    try:
+        merge_fig6(get_abs_path(config.need_result_fig_file_list['fig6'], report_path + '/result_file'), report_path+'/show_img')
+    except:
+        config.check_sec['cell_type'] = 0
+    data_json['check_sec'] = config.check_sec
     # generate report html
     generate_content(main_path + "/Template/split_content_temp.html", data_json, report_path + "/tmp.html")
     merge_html(main_path + "/Template/split_base.html", report_path + "/tmp.html", report_path + "/report.html")

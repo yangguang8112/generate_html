@@ -24,6 +24,14 @@ class Config(object):
             "Pseudotime_difference_gene",
             "Pseudotime_info"
         ]
+        self.check_sec = {
+            'cell_filter': 1,
+            'sample_merge': 1,
+            'cell_cluster_marker': 1,
+            'go_kegg': 1,
+            'pseudotime': 1,
+            'cell_type': 1
+        }
         self.need_result_fig_file_list = {
             "fig1":[
                 "Result_1_DataFilter/All_sample_nofilter.vln.png",

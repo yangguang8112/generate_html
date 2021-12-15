@@ -5,7 +5,7 @@ pandas
 pillow
 ```
 ### USAGE
-只有两个参数，第一个是分析任务生成的结果文件路径，第二个是要生成的报告的路径（不需要创建）
+只需要一个参数，分析任务生成的结果文件路径。报告会默认生成到result目录下，名字默认为report。如果指定第二个参数，则指定report的生成位置
 ``` shell
-python main.py [result path] [report path]
+python main.py [result path]
 ```

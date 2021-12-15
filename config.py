@@ -48,9 +48,9 @@ class Config(object):
             ],
             "fig3":[
                 "Result_2_Analysis/02_Clustering/final_cluster_umap.png",
-                "Result_2_Analysis/03_Difference/diffCluster_picture/All.cluster0_top*_markerUmap.png",
+                "Result_2_Analysis/03_Difference/diffCluster_picture/All.cluster0_top12_markerUmap.png",
                 "Result_2_Analysis/03_Difference/diffCluster_picture/dotplot_and_barplot.png",
-                "Result_2_Analysis/03_Difference/diffCluster_picture/All.cluster0_top*_markerVln.png"
+                "Result_2_Analysis/03_Difference/diffCluster_picture/All.cluster0_top12_markerVln.png"
             ],
             "fig4":[
                 "Result_2_Analysis/03_Difference/diffCluster_volcano/All.cluster0.volcano.png",

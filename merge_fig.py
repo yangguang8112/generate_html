@@ -130,6 +130,45 @@ def merge_fig3(fig_file_list, out_path):
 
     target.save(out_path + "/fig3.png")
 
+def merge_fig3_new(fig_file_list, out_path):
+    # fig_file_list = [
+    # "img/figure3_scRNA-seq/A.png",
+    # "img/figure3_scRNA-seq/B.png",
+    # "img/figure3_scRNA-seq/C-double.png",
+    # "img/figure3_scRNA-seq/D.png",]
+    a, b, c, d = fig_file_list
+
+    fig_objs = []
+    for fig_file in fig_file_list:
+        fig_objs.append(Image.open(fig_file))
+
+    a, b, c, d = fig_objs
+
+    # size [(1950, 1560), (1950, 1560), (3120, 1170), (3900, 1560)]
+    a_size, b_size, c_size, d_size = get_size(fig_file_list)
+
+    # c_size = (a_size[0] + b_size[0], int(c_size[1] * (a_size[0] + b_size[0]) / c_size[0]))
+    # c = c.resize(c_size, Image.ANTIALIAS)
+
+    addText(a, 'a')
+    addText(b, 'b')
+    addText(c, 'c')
+    addText(c, 'd')
+    # addText(d, 'e')
+
+    WIDTH = max(a_size[0]+b_size[0], d_size[0]+b_size[0], c_size[0])
+    HEIGHT = max(a_size[1]+d_size[1], b_size[1]) + c_size[1]
+    # target = Image.new('RGBA', (d_size[0], a_size[1] + c_size[1] + d_size[1]))
+    target = Image.new('RGBA', (WIDTH, HEIGHT))
+
+    target.paste(a, (0, 0))
+    target.paste(b, (a_size[0], 0))
+    
+    target.paste(d, (0, a_size[1]))
+    target.paste(c, (0, max(a_size[1]+d_size[1], b_size[1])))
+
+    target.save(out_path + "/fig3.png")
+
 def merge_fig4(fig_file_list, out_path):
     # fig_file_list = [
     # "img/figure4_FunctionalAnalysis/A.png",

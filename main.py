@@ -55,9 +55,9 @@ def generate_data(result_path, config):
     df = pd.read_csv(result_path+"/"+config.need_result_table_file_list[0], header=0, sep='\t', thousands=',')
     sample_num  = len(df)
     res['summary']['sample_num'] = str(sample_num)
-    res['summary']['cell_num_per_sample'] = str(df['Estimated Number of Cells'].mean())
+    res['summary']['cell_num_per_sample'] = str(round(df['Estimated Number of Cells'].mean(), 2))
     res['summary']['cell_num'] = str(df['Estimated Number of Cells'].sum())
-    res['summary']['map_rate_ave_sample'] = str(sum([float(i.strip("%")) for i in df['Reads Mapped to Genome']]) / sample_num) + '%'
+    res['summary']['map_rate_ave_sample'] = str(round(sum([float(i.strip("%")) for i in df['Reads Mapped to Genome']]) / sample_num, 2)) + '%'
     # table data
     for table_name, data_file in zip(config.data_json_keys, config.need_result_table_file_list):
         res[table_name] = {"data": []}
@@ -129,7 +129,7 @@ def main():
     except:
         config.check_sec['sample_merge'] = 0
     try:
-        merge_fig3(get_abs_path(config.need_result_fig_file_list['fig3'], report_path + '/result_file'), report_path+'/show_img')
+        merge_fig3_new(get_abs_path(config.need_result_fig_file_list['fig3'], report_path + '/result_file'), report_path+'/show_img')
     except:
         config.check_sec['cell_cluster_marker'] = 0
     try:

@@ -146,7 +146,7 @@ def main():
     except:
         config.check_sec['sample_merge'] = 0
     try:
-        merge_fig3_new(get_abs_path(config.need_result_fig_file_list['fig3'], report_path + '/result_file'), report_path+'/show_img')
+        merge_fig3_new_new(get_abs_path(config.need_result_fig_file_list['fig3'], report_path + '/result_file'), report_path+'/show_img')
     except:
         config.check_sec['cell_cluster_marker'] = 0
     try:

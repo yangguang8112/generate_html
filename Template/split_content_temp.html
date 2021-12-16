@@ -335,14 +335,14 @@
             <p>
               要拿到相对质量好的可进一步分析的数据，我们要做多步过滤和质控。
               首先如表2所示，对各个样本过滤前后整体的nGene（number of Gene），nUMI（number of UMI），percent.mt（线粒体基因占比）和 percent.ribosome（核糖体含量）做了统计（Fig.
-              <a data-track="click" data-track-label="link" data-track-action="figure anchor" href="./our_content.html#Fig1">1a-b</a>
+              <a data-track="click" data-track-label="link" data-track-action="figure anchor" href="./report.html#Fig1">1a-b</a>
               ）。
               其次，可以比较线粒体比例 vs.UMI数或基因数 vs.UMI数（Fig.
-              <a data-track="click" data-track-label="link" data-track-action="figure anchor" href="./our_content.html#Fig1">1c</a>
+              <a data-track="click" data-track-label="link" data-track-action="figure anchor" href="./report.html#Fig1">1c</a>
               ，单文库的结果详见）。
               细胞中基因表达数目与UMI数目呈现正相关，细胞中检测到的UMI数目越多，表达的基因数目越多。
               线粒体基因与UMI数目没有明显的相关性。
-              再者，样本间的转录组相关性可进一步帮助判断数据可靠性（Fig.<a data-track="click" data-track-label="link" data-track-action="figure anchor" href="./our_content.html#Fig1">1d</a>）。
+              再者，样本间的转录组相关性可进一步帮助判断数据可靠性（Fig.<a data-track="click" data-track-label="link" data-track-action="figure anchor" href="./report.html#Fig1">1d</a>）。
               通过计算样本间基因表达平均值的pearson相关系数，查看样本间的相关性。
               同类型样本相关性常在90%甚至95%以上。相关性图能够作为数据质量和数据类型的校验并指示特定样本间的转录组相关度。
             </p>
@@ -451,7 +451,7 @@
                     <p>
                       文库的整合优先选用Seurat中的“SCTransform”
                       <sup>
-                        <a data-track="click" data-track-action="reference anchor" data-track-label="link" data-test="citation-ref" aria-label="Reference 1" title="Hafemeister C, Satija R. Normalization and variance stabilization of single-cell RNA-seq data using regularized negative binomial regression[J]. Genome biology, 2019, 20(1): 1-15." href="./our_content.html#ref-CR1" id="ref-link-section-d38771043e817">1</a>
+                        <a data-track="click" data-track-action="reference anchor" data-track-label="link" data-test="citation-ref" aria-label="Reference 1" title="Hafemeister C, Satija R. Normalization and variance stabilization of single-cell RNA-seq data using regularized negative binomial regression[J]. Genome biology, 2019, 20(1): 1-15." href="./report.html#ref-CR1" id="ref-link-section-d38771043e817">1</a>
                       </sup>
                       。“SCTransform”不仅批次效应矫正能力强，而且能够更好保留真实存在的生物学差异。
                       <b>a</b> 不同批次整合后的细胞在UMAP坐标上的情况，不同颜色表示不同批次，通过这个图我们可以观察不同批次数据的整合后的情况。许多情况下，我们期望不同batch细胞弥散分布，没有明显的聚集。但是，即使某个batch的细胞有聚集，也不一定是整合效果不好。可能不同batch样本的差异巨大，存在生物学上特有的细胞类群。但生物学重复如果出现batch特异，则需要额外注意。  
@@ -514,7 +514,7 @@
               常用的降维方法有：PCA (principal component analysis)，t-SNE (t-Distributed Stochastic Neighbor Embedding)，UMAP (Uniform Manifold Approximation and Projection for Dimension Reduction)等。
               我们使用 Seurat 软件，选取 resolution = {{ summary.choose_resulotion }} 进行细胞聚类
               <sup>
-                <a data-track="click" data-track-action="reference anchor" data-track-label="link" data-test="citation-ref" aria-label="Reference 2" title="Stuart T, Butler A, Hoffman P, et al. Comprehensive integration of single-cell data[J]. Cell, 2019, 177(7): 1888-1902. e21." href="./our_content.html#ref-CR2" id="ref-link-section-d38771043e817">2</a>
+                <a data-track="click" data-track-action="reference anchor" data-track-label="link" data-test="citation-ref" aria-label="Reference 2" title="Stuart T, Butler A, Hoffman P, et al. Comprehensive integration of single-cell data[J]. Cell, 2019, 177(7): 1888-1902. e21." href="./report.html#ref-CR2" id="ref-link-section-d38771043e817">2</a>
               </sup>
               。聚类结果如下。 
             </p>
@@ -593,10 +593,10 @@
             寻找cluster的特异性基因即marker基因。筛选标准：|Fold Change| ≥ {{ summary.FC }} & P-value ≤ {{ summary.pvalue }} （表4）。
             对细胞聚类得到的所有cluster，我们评估了每个cluster在不同样本，不同批次间的比例。
             并选择每个类群的 top2 的基因进行气泡图的展示（Fig.
-            <a data-track="click" data-track-label="link" data-track-action="figure anchor" href="./our_content.html#Fig3">3c-d</a>
+            <a data-track="click" data-track-label="link" data-track-action="figure anchor" href="./report.html#Fig3">3c-d</a>
             )。
             我们也可以挑选高变基因进行小提琴图的展示（Fig.
-            <a data-track="click" data-track-label="link" data-track-action="figure anchor" href="./our_content.html#Fig3">3e</a>
+            <a data-track="click" data-track-label="link" data-track-action="figure anchor" href="./report.html#Fig3">3e</a>
             )。
           </p>
           <div
@@ -679,10 +679,10 @@
           <p>
             我们也提供了更多的展示方式。
             对每个cluster，火山图可以很好呈现该cluster相对于剩下的细胞显著高表达以及低表达的基因（Fig.
-            <a data-track="click" data-track-label="link" data-track-action="figure anchor" href="./our_content.html#Fig4">4a</a>
+            <a data-track="click" data-track-label="link" data-track-action="figure anchor" href="./report.html#Fig4">4a</a>
             ）。
             marker基因热图也是常用的展现方式之一。这里我们挑选了每个cluster top10的markers展示（Fig.
-            <a data-track="click" data-track-label="link" data-track-action="figure anchor" href="./our_content.html#Fig4">4b</a>
+            <a data-track="click" data-track-label="link" data-track-action="figure anchor" href="./report.html#Fig4">4b</a>
             ）。
           </p>
 
@@ -739,9 +739,9 @@
                       <b>a</b> 细胞聚类UMAP图，不同的颜色表示不同的cluster。  
                       <b>b</b> marker基因在所有细胞中的表达UMAP图，颜色越深表达越高。可以通过同一个cluster的多个基因表达UMAP图和不同cluster top marker的UMAP图来辅助cluster细胞类型和特征的判断。每个cluster top的marker基因表达UMAP图
                       <a href="./img/">详见</a>。
-                      <b>c</b> 每个cluster在样本（左）和批次（右）间的细胞数比例堆叠柱状图。对于批次的柱状图，我们会矫正批次中样本的数量。
-                      <b>d</b> marker基因气泡图展示。颜色越深表达越高，圆圈越大该表达该基因细胞的比例越大。
-                      <b>e</b> top 2 marker表达小提琴图，展示marker基因在不同clusters中的表达情况。横轴标为相对表达值，纵坐标为不同的cluster。每个cluster top的marker基因表达小提琴图<a href="./img/">详见</a>。
+                      <b>c</b> top 2 marker表达小提琴图，展示marker基因在不同clusters中的表达情况。横轴标为相对表达值，纵坐标为不同的cluster。每个cluster top的marker基因表达小提琴图<a href="./img/">详见</a>。
+                      <b>d</b> 每个cluster在样本（左）和批次（右）间的细胞数比例堆叠柱状图。对于批次的柱状图，我们会矫正批次中样本的数量。
+                      <b>e</b> marker基因气泡图展示。颜色越深表达越高，圆圈越大该表达该基因细胞的比例越大。
                     </p>
                   </div>
                 </div>
@@ -798,12 +798,12 @@
             GO注释系统是一个有向无环图，包含三个主要分支，即：生物学过程（Biological Process），分子功能（Molecular Function）和细胞组分（Cellular Component）。
             对每个cluster的差异基因集，采用ClusterProfiler
             <sup>
-              <a data-track="click" data-track-action="reference anchor" data-track-label="link" data-test="citation-ref" aria-label="Reference 3" title="Yu G, Wang L G, Han Y, et al. clusterProfiler: an R package for comparing biological themes among gene clusters[J]. Omics: a journal of integrative biology, 2012, 16(5): 284-287." href="./our_content.html#ref-CR3" id="ref-link-section-d38771043e817">3</a>
+              <a data-track="click" data-track-action="reference anchor" data-track-label="link" data-test="citation-ref" aria-label="Reference 3" title="Yu G, Wang L G, Han Y, et al. clusterProfiler: an R package for comparing biological themes among gene clusters[J]. Omics: a journal of integrative biology, 2012, 16(5): 284-287." href="./report.html#ref-CR3" id="ref-link-section-d38771043e817">3</a>
             </sup>
             对基因分别进行生物学过程，分子功能和细胞组分的富集分析。
             富集分析采用超几何检验方法来寻找与整个基因组背景相比显著富集的GO条目。
             我们用气泡图展现了所有cluster top的GO term（仅包含BP）（Fig.
-            <a data-track="click" data-track-label="link" data-track-action="figure anchor" href="./our_content.html#Fig4">4c</a>
+            <a data-track="click" data-track-label="link" data-track-action="figure anchor" href="./report.html#Fig4">4c</a>
             ）。全部的富集结果详见表5 GO富集分析结果表。
           </p>
           <div
@@ -974,7 +974,7 @@
             KEGG(Kyoto Encyclopedia of Genes and Genomes)是一个整合了基因组、化学和系统功能信息的数据库。
             基于KEGG数据库，pathway 富集分析用超几何检验找出与整个基因组背景相比，在差异基因中显著富集的 pathway。
             气泡图展示了所有cluster top的KEGG pathway，并用颜色表示了pathway的富集程度（Fig.
-            <a data-track="click" data-track-label="link" data-track-action="figure anchor" href="./our_content.html#Fig4">4d</a>
+            <a data-track="click" data-track-label="link" data-track-action="figure anchor" href="./report.html#Fig4">4d</a>
             ）。全部结果详见表6 KEGG富集分析结果表。
           </p>
           <div
@@ -1084,7 +1084,7 @@
               目前拟时序分析最常用的工具是由Trapnell实验室开发的Monocle，它采用了无监督算法，将单个细胞按照拟时间排列在对应的轨迹上。
               Monocle
               <sup>
-                <a data-track="click" data-track-action="reference anchor" data-track-label="link" data-test="citation-ref" aria-label="Reference 3" title="Qiu X, Mao Q, Tang Y, et al. Reversed graph embedding resolves complex single-cell trajectories[J]. Nature methods, 2017, 14(10): 979-982." href="./our_content.html#ref-CR4" id="ref-link-section-d38771043e817">4</a>
+                <a data-track="click" data-track-action="reference anchor" data-track-label="link" data-test="citation-ref" aria-label="Reference 3" title="Qiu X, Mao Q, Tang Y, et al. Reversed graph embedding resolves complex single-cell trajectories[J]. Nature methods, 2017, 14(10): 979-982." href="./report.html#ref-CR4" id="ref-link-section-d38771043e817">4</a>
               </sup>
               是一款利用反向图形嵌入（reversed graph embedding） 的机器学习方法，根据细胞基因表达量信息，预测、重构出细胞发育分化轨迹的软件。
               拟时序分析的差异基因详见 表7 拟时序差异基因表，细胞在拟时序上的分布详见 表8 细胞的拟时序位置表。
@@ -1350,7 +1350,7 @@
             <p>
               SingleR
               <sup>
-                <a data-track="click" data-track-action="reference anchor" data-track-label="link" data-test="citation-ref" aria-label="Reference 5" title="Aran D, Looney A P, Liu L, et al. Reference-based analysis of lung single-cell sequencing reveals a transitional profibrotic macrophage[J]. Nature immunology, 2019, 20(2): 163-172." href="./our_content.html#ref-CR5" id="ref-link-section-d38771043e817">5</a>
+                <a data-track="click" data-track-action="reference anchor" data-track-label="link" data-test="citation-ref" aria-label="Reference 5" title="Aran D, Looney A P, Liu L, et al. Reference-based analysis of lung single-cell sequencing reveals a transitional profibrotic macrophage[J]. Nature immunology, 2019, 20(2): 163-172." href="./report.html#ref-CR5" id="ref-link-section-d38771043e817">5</a>
               </sup>
               （single cell recognition）是一个可以对细胞进行自动注释的R包。
               它通过计算单细胞参考表达谱数据集（如：芯片数据、RNA-seq测序纯细胞类型数据、细胞类型明确定义的scRNA-seq数据）与待鉴定的细胞表达谱之间的相关性，将待鉴定细胞注释为与参考数据集中相关性最高的一种细胞类型。

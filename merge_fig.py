@@ -145,16 +145,19 @@ def merge_fig3_new(fig_file_list, out_path):
     a, b, c, d = fig_objs
 
     # size [(1950, 1560), (1950, 1560), (3120, 1170), (3900, 1560)]
+    # size [(2340, 1560), (1560, 2340), (4680, 2340), (2340, 1560)]
     a_size, b_size, c_size, d_size = get_size(fig_file_list)
 
     # c_size = (a_size[0] + b_size[0], int(c_size[1] * (a_size[0] + b_size[0]) / c_size[0]))
     # c = c.resize(c_size, Image.ANTIALIAS)
+    b_size = (int(b_size[0] * ((a_size[1] + d_size[1])/b_size[1])) , a_size[1] + d_size[1])
+    b = b.resize(b_size, Image.ANTIALIAS)
 
     addText(a, 'a')
     addText(b, 'b')
-    addText(c, 'c')
+    addText(d, 'c')
     addText(c, 'd')
-    # addText(d, 'e')
+    addText(c, 'e', (1843, 60))
 
     WIDTH = max(a_size[0]+b_size[0], d_size[0]+b_size[0], c_size[0])
     HEIGHT = max(a_size[1]+d_size[1], b_size[1]) + c_size[1]
@@ -163,7 +166,7 @@ def merge_fig3_new(fig_file_list, out_path):
 
     target.paste(a, (0, 0))
     target.paste(b, (a_size[0], 0))
-    
+
     target.paste(d, (0, a_size[1]))
     target.paste(c, (0, max(a_size[1]+d_size[1], b_size[1])))
 
@@ -243,8 +246,8 @@ if __name__ == '__main__':
     # debug
     fig_file_list = [
         "final_cluster_umap.png",
-        "All.cluster0_top6_markerUmap.png",
+        "All.cluster0_top12_markerUmap.png",
         "dotplot_and_barplot.png",
-        "All.cluster0_top6_markerVln.png"
+        "All.cluster0_top12_markerVln.png"
     ]
-    merge_fig3(fig_file_list, "../")
+    merge_fig3_new(fig_file_list, "./")

@@ -144,7 +144,6 @@ def merge_fig3_new(fig_file_list, out_path):
 
     a, b, c, d = fig_objs
 
-    # size [(1950, 1560), (1950, 1560), (3120, 1170), (3900, 1560)]
     # size [(2340, 1560), (1560, 2340), (4680, 2340), (2340, 1560)]
     a_size, b_size, c_size, d_size = get_size(fig_file_list)
 

@@ -39,6 +39,15 @@ def merge_html(base_html_name, content_html_name, out_html_name):
         for line in base_html[CONTENT_LINE_NUM:]:
             ohe.write(line)
 
+def is_float(var):
+    if not var.isdigit():
+        try:
+            return str(round(float(var), 3))
+        except:
+            return var
+    return var
+
+
 def generate_data(result_path, config):
     old_json = result_path + '/../Backup/02_JSON/final_parameter.json'
     with open(old_json, 'r') as oj:
@@ -69,6 +78,7 @@ def generate_data(result_path, config):
         # max line == 8
         for i in range(min(8, len(df))):
             line = df.iloc[i]
+            # res[table_name]["data"].append([is_float(str(i)) for i in line.values.tolist()])
             res[table_name]["data"].append([str(i) for i in line.values.tolist()])
         # gene list too long
         if table_name in ['cluster_Biological_Process_enrich_list', 'cluster_KEGG_pathway_enrich_list']:
@@ -77,6 +87,10 @@ def generate_data(result_path, config):
     # final_cluster_stat need colname
     df = pd.read_csv(result_path + '/' + config.need_result_table_file_list[config.data_json_keys.index('final_cluster_stat')], header=0, sep='\t')
     res['final_cluster_stat']['samples'] = df.columns.tolist()[1:]
+    # table 4 FC 小数位
+    for l in res['diffCluster_stat']['data']:
+        l[2] = is_float(l[2])
+    #
     return res
 
 def get_abs_path(file_list, path):

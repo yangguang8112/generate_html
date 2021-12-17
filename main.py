@@ -60,6 +60,16 @@ def generate_data(result_path, config):
     res['summary']['choose_resulotion'] = old_res['choose_res']
     res['summary']['FC'] = old_res['FC']
     res['summary']['pvalue'] = old_res['pvalue']
+    res['summary']['mincell'] = old_res['mincell']
+    res['summary']['res_value'] = old_res
+    if old_res['FDR'] != 'NULL':
+        res['summary']['thred_desc'] = ' & FDR ≤ ' + old_res['FDR']
+    else:
+        if old_res['pvalue'] != 'NULL':
+            res['summary']['thred_desc'] = ' & P-value ≤ ' + old_res['pvalue']
+        else:
+            res['summary']['thred_desc'] = ''
+        
     # 
     df = pd.read_csv(result_path+"/"+config.need_result_table_file_list[0], header=0, sep='\t', thousands=',')
     sample_num  = len(df)
@@ -67,6 +77,10 @@ def generate_data(result_path, config):
     res['summary']['cell_num_per_sample'] = str(round(df['Estimated Number of Cells'].mean(), 2))
     res['summary']['cell_num'] = str(df['Estimated Number of Cells'].sum())
     res['summary']['map_rate_ave_sample'] = str(round(sum([float(i.strip("%")) for i in df['Reads Mapped to Genome']]) / sample_num, 2)) + '%'
+    #
+    df = pd.read_csv(result_path+"/"+config.need_result_table_file_list[1], header=0, sep='\t', thousands=',')
+    res['summary']['filtered_cell_num'] = str(df['Final_cells_number'].sum())
+    res['summary']['filtered_cell_num_per_sample'] = str(round(df['Final_cells_number'].mean(), 2))
     # table data
     for table_name, data_file in zip(config.data_json_keys, config.need_result_table_file_list):
         res[table_name] = {"data": []}

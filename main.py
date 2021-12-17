@@ -1,3 +1,9 @@
+#!coding=utf-8
+"""
+Created by Guang Yang
+You can contact the developer via yangguang2@genomics.cn or access the details via https://github.com/yangguang8112/generate_html.git
+"""
+
 from types import resolve_bases
 from jinja2 import Template
 import sys
@@ -132,6 +138,10 @@ def main():
     
     # cp result and template file
     main_path = os.path.split(os.path.realpath(__file__))[0]
+    # get_data_json
+    data_json = generate_data(result_path, config)
+    config.need_result_fig_file_list['fig3'][1] = config.need_result_fig_file_list['fig3'][1].replace("_uniqstr_", data_json['summary']['res_value']['topGene_Show'])
+    config.need_result_fig_file_list['fig3'][3] = config.need_result_fig_file_list['fig3'][3].replace("_uniqstr_", data_json['summary']['res_value']['topGene_Show'])
     # print(main_path)
     os.system("cp -r {main_path}/Template/full_size_page {report_path};cp -r {main_path}/Template/report_files {report_path}".format(report_path=report_path, main_path=main_path))
     os.mkdir("{report_path}/result_file".format(report_path=report_path))
@@ -148,8 +158,7 @@ def main():
     for files in config.need_result_fig_file_list.values():
         for f in files:
             os.system("cp {result_path}/{f} {report_path}/result_file".format(result_path=result_path, f=f, report_path=report_path))
-    # get_data_json
-    data_json = generate_data(result_path, config)
+    
     # generate show image
     try:
         merge_fig1(get_abs_path(config.need_result_fig_file_list['fig1'], report_path + '/result_file'), report_path+'/show_img')

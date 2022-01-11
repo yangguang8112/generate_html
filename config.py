@@ -8,7 +8,7 @@ class Config(object):
             "Result_0_DataStat/Sample_cells_info_stat.xls",
             "Result_1_DataFilter/cellfilter_stat.info",
             "Result_2_Analysis/02_Clustering/final_cluster_stat.xls",
-            "Result_2_Analysis/03_Difference/diffCluster_File/All.cluster0.diff_gene.xls",
+            "Result_2_Analysis/03_Difference/diffCluster_File/All.cluster0.marker_gene.xls",
             "Result_2_Analysis/04_Enrichment/cluster0/GO/cluster0_Biological_Process_enrich.list",
             "Result_2_Analysis/04_Enrichment/cluster0/KEGG/cluster0_KEGG_pathway_enrich.list",
             "Result_3_Pseudotime/Pseudotime_difference_gene.xls",

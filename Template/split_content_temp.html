@@ -286,12 +286,12 @@
                           <th class="u-text-left">
                             All_cells_number
                           </th>
-                          <th class="u-text-left">filter by Mitochondria ≤ 5</th>
-                          <th class="u-text-left">filter by UMI ≥ 100</th>
+                          <th class="u-text-left">filter by Mitochondria ≤ {{ summary.res_value.percent_mt_cutoff }}</th>
+                          <th class="u-text-left">filter by UMI ≥ {{ summary.res_value.nUMI_cutoff }}</th>
                           <th class="u-text-left">
-                            filter by minimal gene number ≥ 200
+                            filter by minimal gene number ≥ {{ summary.res_value.nGene_lower_cutoff }}
                           </th>
-                          <th class="u-text-left">filter by maximum gene number ≤ 25000</th>
+                          <th class="u-text-left">filter by maximum gene number ≤ {{ summary.res_value.nGene_upper_cutoff }}</th>
                           <th class="u-text-left">filter by double</th>
                           <th class="u-text-left">Final_cells_number</th>
                           <th class="u-text-left">percent(%)</th>
@@ -959,7 +959,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        {% for line in cluster_Biological_Process_enrich_list.data %}
+                        {% for line in cluster0_Biological_Process_enrich_list.data %}
                           <tr>
                             {% for info in line %}
                             <td class="u-text-left">{{ info }}</td>
@@ -993,7 +993,7 @@
                   data-track-action="view table"
                   data-track-label="button"
                   rel="nofollow"
-                  href="./result_file/cluster_Biological_Process_enrich.list"
+                  href="./result_file/cluster0_Biological_Process_enrich.list"
                   aria-label="Full size table 5"
                   ><span>Full size table</span
                   ><svg
@@ -1059,7 +1059,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      {% for line in cluster_KEGG_pathway_enrich_list.data %}
+                      {% for line in cluster0_KEGG_pathway_enrich_list.data %}
                           <tr>
                             {% for info in line %}
                             <td class="u-text-left">{{ info }}</td>
@@ -1079,7 +1079,7 @@
                 data-track-action="view table"
                 data-track-label="button"
                 rel="nofollow"
-                href="./result_file/cluster_KEGG_pathway_enrich.list"
+                href="./result_file/cluster0_KEGG_pathway_enrich.list"
                 aria-label="Full size table 6"
                 ><span>Full size table</span
                 ><svg

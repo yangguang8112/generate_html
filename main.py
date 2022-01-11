@@ -101,7 +101,7 @@ def generate_data(result_path, config):
             # res[table_name]["data"].append([is_float(str(i)) for i in line.values.tolist()])
             res[table_name]["data"].append([str(i) for i in line.values.tolist()])
         # gene list too long
-        if table_name in ['cluster_Biological_Process_enrich_list', 'cluster_KEGG_pathway_enrich_list']:
+        if table_name in ['cluster0_Biological_Process_enrich_list', 'cluster0_KEGG_pathway_enrich_list']:
             for data in res[table_name]["data"]:
                 data[-2] = data[-2][:8] + '...'
     # final_cluster_stat need colname

@@ -16,8 +16,8 @@ def get_size(image_list):
         image_size.append(img.size)
     return image_size
 
-def addText(pil_obj, text, pos=(10,10)):
-    font = ImageFont.truetype('./fonts/DejaVuSans-Bold.ttf', 64)
+def addText(pil_obj, text, pos=(10,10), size=64):
+    font = ImageFont.truetype('./fonts/DejaVuSans-Bold.ttf', size)
     draw = ImageDraw.Draw(pil_obj)
     draw.text(pos, text, fill= (0, 0, 0), font=font)
     return
@@ -26,12 +26,12 @@ def addText(pil_obj, text, pos=(10,10)):
 LOWER_CASE = 'abcdefghijklmnopqrstuvwxyz'
 SAVE_QUALITY = 50
 
-def concat_images(image_list, res_file, COL, ROW):
+def concat_images(image_list, res_file, COL, ROW, text_size=64):
     UNIT_WIDTH_SIZE, UNIT_HEIGHT_SIZE = get_max_size(image_list)
     image_objs = []
     for index in range(COL*ROW):
         img_obj = Image.open(image_list[index])
-        addText(img_obj, LOWER_CASE[index])
+        addText(img_obj, LOWER_CASE[index], size=text_size)
         image_objs.append(img_obj)
     target = Image.new('RGBA', (UNIT_WIDTH_SIZE * COL, UNIT_HEIGHT_SIZE * ROW)) #创建成品图的画布
     #第一个参数RGB表示创建RGB彩色图，第二个参数传入元组指定图片大小，第三个参数可指定颜色，默认为黑色
@@ -314,10 +314,7 @@ def merge_fig6(fig_file_list, out_path):
 
 if __name__ == '__main__':
     # debug
-    fig_file_list = [
-        "final_cluster_umap.png",
-        "All.cluster0_top12_markerUmap.png",
-        "dotplot_and_barplot.png",
-        "All.cluster0_top12_markerVln.png"
-    ]
-    merge_fig3_new_new(fig_file_list, "./")
+    fig_file_list = ['Result_03_sample/TCR/05.Geneusage/hs.trav.barplot/P11S4.png', 'Result_03_sample/TCR/05.Geneusage/hs.trbv.polarplot/P11S4.png', 'Result_03_sample/TCR/05.Geneusage/circosPlot/P11S4.png', 'Result_03_sample/TCR/05.Geneusage/all/TRBV_js.png']
+                
+    # merge_fig3_new_new(fig_file_list, "./")
+    concat_images(fig_file_list, './ceshi.png', 2, 2, text_size=20)

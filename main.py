@@ -55,61 +55,73 @@ def is_float(var):
 
 
 def generate_data(result_path, config):
-    old_json = result_path + '/../Backup/02_JSON/final_parameter.json'
+    old_json = result_path + '/Backup/final_parameter.json'
     with open(old_json, 'r') as oj:
         old_res = json.loads(oj.read())
     res = {}
     res['date'] = time.strftime("%d %b %Y", time.localtime())
     # summary data from old json
     res['summary'] = {'species': old_res['Species']}
-    res['summary']['title'] = old_res['project_id']
-    res['summary']['choose_resulotion'] = old_res['choose_res']
-    res['summary']['FC'] = old_res['FC']
-    res['summary']['pvalue'] = old_res['pvalue']
-    res['summary']['mincell'] = old_res['mincell']
-    res['summary']['res_value'] = old_res
-    if old_res['FDR'] != 'NULL':
-        res['summary']['thred_desc'] = ' & FDR ≤ ' + old_res['FDR']
-    else:
-        if old_res['pvalue'] != 'NULL':
-            res['summary']['thred_desc'] = ' & P-value ≤ ' + old_res['pvalue']
-        else:
-            res['summary']['thred_desc'] = ''
+    res['summary']['title'] = old_res['Project_id']
+    res['summary']['TCR'] = {"has": old_res['TCR']}
+    res['summary']['BCR'] = {"has": old_res['BCR']}
         
     # 
-    df = pd.read_csv(result_path+"/"+config.need_result_table_file_list[0], header=0, sep='\t', thousands=',')
-    sample_num  = len(df)
-    res['summary']['sample_num'] = str(sample_num)
-    res['summary']['cell_num_per_sample'] = str(round(df['Estimated Number of Cells'].mean(), 2))
-    res['summary']['cell_num'] = str(df['Estimated Number of Cells'].sum())
-    res['summary']['map_rate_ave_sample'] = str(round(sum([float(i.strip("%")) for i in df['Reads Mapped to Genome']]) / sample_num, 2)) + '%'
-    #
-    df = pd.read_csv(result_path+"/"+config.need_result_table_file_list[1], header=0, sep='\t', thousands=',')
-    res['summary']['filtered_cell_num'] = str(df['Final_cells_number'].sum())
-    res['summary']['filtered_cell_num_per_sample'] = str(round(df['Final_cells_number'].mean(), 2))
+    # df = pd.read_csv(result_path+"/"+config.need_result_table_file_list[0], header=0, sep='\t', thousands=',')
+    # sample_num  = len(df)
+    # res['summary']['sample_num'] = str(sample_num)
+    # res['summary']['cell_num_per_sample'] = str(round(df['Estimated Number of Cells'].mean(), 2))
+    # res['summary']['cell_num'] = str(df['Estimated Number of Cells'].sum())
+    # res['summary']['map_rate_ave_sample'] = str(round(sum([float(i.strip("%")) for i in df['Reads Mapped to Genome']]) / sample_num, 2)) + '%'
+    # #
+    # df = pd.read_csv(result_path+"/"+config.need_result_table_file_list[1], header=0, sep='\t', thousands=',')
+    # res['summary']['filtered_cell_num'] = str(df['Final_cells_number'].sum())
+    # res['summary']['filtered_cell_num_per_sample'] = str(round(df['Final_cells_number'].mean(), 2))
     # table data
-    for table_name, data_file in zip(config.data_json_keys, config.need_result_table_file_list):
-        res[table_name] = {"data": []}
-        try:
-            # 处理没有结果的情况
-            df = pd.read_csv(result_path + '/' + data_file, header=0, sep='\t')
-        except:
-            break
-        # max line == 8
-        for i in range(min(8, len(df))):
+    immune_types = []
+    if old_res['TCR']:
+        immune_types.append('TCR')
+    if old_res['BCR']:
+        immune_types.append('BCR')
+    for immune_type in immune_types:
+        table_name = immune_type + '_summary'
+        # res['TCR_summary'] = {"header": [], "data": []}
+        res[table_name] = {"header": [], "data": []}
+        df = pd.read_csv(result_path + '/' + config.need_result_table_file_list[immune_type][0], header=0, sep='\t', thousands=',')
+        res['summary'][immune_type]['sample_num'] = str(len(df))
+        res['summary'][immune_type]['raw_cell_num'] = str(df['Estimated Number of Cells'].sum())
+        res['summary'][immune_type]['filted_VJ_cell_num'] = str(df['Number of Cells With Productive V-J Spanning Pair'].sum())
+        res['summary'][immune_type]['raw_cell_num_per_sample'] = str(round(df['Estimated Number of Cells'].mean(), 2))
+        res['summary'][immune_type]['filted_VJ_cell_num_per_sample'] = str(round(df['Number of Cells With Productive V-J Spanning Pair'].mean(), 2))
+        res['summary'][immune_type]['map_vdj_rate'] = format(((df['Number of Read Pairs'] * df['Reads Mapped to Any V(D)J Gene'].str.strip("%").astype(float)/100) / df['Number of Read Pairs'].sum() * 100).mean(), '.2f') + '%'
+        res[table_name]["header"] = df.columns.tolist()
+        for i in range(len(df)):
             line = df.iloc[i]
-            # res[table_name]["data"].append([is_float(str(i)) for i in line.values.tolist()])
             res[table_name]["data"].append([str(i) for i in line.values.tolist()])
-        # gene list too long
-        if table_name in ['cluster0_Biological_Process_enrich_list', 'cluster0_KEGG_pathway_enrich_list']:
-            for data in res[table_name]["data"]:
-                data[-2] = data[-2][:8] + '...'
+    res['summary']['immune_types'] = immune_types
+        
+    # for table_name, data_file in zip(config.data_json_keys, config.need_result_table_file_list):
+    #     res[table_name] = {"data": []}
+    #     try:
+    #         # 处理没有结果的情况
+    #         df = pd.read_csv(result_path + '/' + data_file, header=0, sep='\t')
+    #     except:
+    #         break
+    #     # max line == 8
+    #     for i in range(min(8, len(df))):
+    #         line = df.iloc[i]
+    #         # res[table_name]["data"].append([is_float(str(i)) for i in line.values.tolist()])
+    #         res[table_name]["data"].append([str(i) for i in line.values.tolist()])
+    #     # gene list too long
+    #     if table_name in ['cluster0_Biological_Process_enrich_list', 'cluster0_KEGG_pathway_enrich_list']:
+    #         for data in res[table_name]["data"]:
+    #             data[-2] = data[-2][:8] + '...'
     # final_cluster_stat need colname
-    df = pd.read_csv(result_path + '/' + config.need_result_table_file_list[config.data_json_keys.index('final_cluster_stat')], header=0, sep='\t')
-    res['final_cluster_stat']['samples'] = df.columns.tolist()[1:]
-    # table 4 FC 小数位
-    for l in res['diffCluster_stat']['data']:
-        l[2] = is_float(l[2])
+    # df = pd.read_csv(result_path + '/' + config.need_result_table_file_list[config.data_json_keys.index('final_cluster_stat')], header=0, sep='\t')
+    # res['final_cluster_stat']['samples'] = df.columns.tolist()[1:]
+    # # table 4 FC 小数位
+    # for l in res['diffCluster_stat']['data']:
+    #     l[2] = is_float(l[2])
     #
     return res
 
@@ -140,53 +152,55 @@ def main():
     main_path = os.path.split(os.path.realpath(__file__))[0]
     # get_data_json
     data_json = generate_data(result_path, config)
-    config.need_result_fig_file_list['fig3'][1] = config.need_result_fig_file_list['fig3'][1].replace("_uniqstr_", data_json['summary']['res_value']['topGene_Show'])
-    config.need_result_fig_file_list['fig3'][3] = config.need_result_fig_file_list['fig3'][3].replace("_uniqstr_", data_json['summary']['res_value']['topGene_Show'])
     # print(main_path)
     os.system("cp -r {main_path}/Template/full_size_page {report_path};cp -r {main_path}/Template/report_files {report_path}".format(report_path=report_path, main_path=main_path))
     os.mkdir("{report_path}/result_file".format(report_path=report_path))
     os.mkdir("{report_path}/show_img".format(report_path=report_path))
     os.mkdir("{report_path}/img".format(report_path=report_path))
+    # sample name file
+    for immune_type in data_json['summary']['immune_types']:
+        eg_sample1 = data_json[immune_type + '_summary']['data'][0][0][:-2]
+        ################################################### gai 1111111111111111111111111111
+        eg_sample2 = data_json[immune_type + '_summary']['data'][0][0][:-2]
+        for index, fn in enumerate(config.need_result_fig_file_list['fig4'][immune_type][:3]):
+            tmp = fn.split("/")
+            tmp[-1] = eg_sample1 + '.' + tmp[-1].split(".")[-1]
+            config.need_result_fig_file_list['fig4'][immune_type][index] = "/".join(tmp)
+        config.need_result_fig_file_list['fig5'][immune_type][0] = config.need_result_fig_file_list['fig5'][immune_type][0].split("aa_from_")[0] + "aa_from_" + eg_sample1 + '.png'
+        config.need_result_fig_file_list['fig5'][immune_type][1] = config.need_result_fig_file_list['fig5'][immune_type][1].split("aa_from_")[0] + "aa_from_" + eg_sample2 + '.png'
+    # print(config.need_result_fig_file_list['fig4'])
+
     # TODO cp result file
-    os.system("cp -r {result_path}/Result_2_Analysis/03_Difference/diffCluster_File {report_path}/result_file".format(result_path=result_path, report_path=report_path))
-    for index, file in enumerate(config.need_result_table_file_list):
-        # index 和 文件 和html中的sec对应起来
-        os.system("cp {result_path}/{file} {report_path}/result_file".format(result_path=result_path, report_path=report_path, file=file))
-    # 图片“详见”拷贝
-    os.system("cp {result_path}/Result_2_Analysis/03_Difference/diffCluster_volcano/All.*.volcano.png {report_path}/img".format(result_path=result_path, report_path=report_path))
-    os.system("cp {result_path}/Result_2_Analysis/03_Difference/diffCluster_picture/All.*marker*.png {report_path}/img".format(result_path=result_path, report_path=report_path))
-    for files in config.need_result_fig_file_list.values():
-        for f in files:
-            os.system("cp {result_path}/{f} {report_path}/result_file".format(result_path=result_path, f=f, report_path=report_path))
+    for immune_type in data_json['summary']['immune_types']:
+        for file in config.need_result_table_file_list[immune_type]:
+            os.system("cp {result_path}/{file} {report_path}/result_file".format(result_path=result_path, report_path=report_path, file=file))
+        for files in config.need_result_fig_file_list.values():
+            for f in files[immune_type]:
+                os.system("cp {result_path}/{f} {report_path}/result_file".format(result_path=result_path, f=f, report_path=report_path))
+        for index, file in enumerate(config.need_result_fig_file_list['fig4'][immune_type][:3]):
+            tmp = file.split("/")
+            new_name = immune_type + '-' + tmp[-2] + '-' + tmp[-1]
+            os.system("cp {result_path}/{file} {report_path}/result_file/{new_name}".format(result_path=result_path, report_path=report_path, file=file, new_name=new_name))
+            tmp[-1] = new_name
+            config.need_result_fig_file_list['fig4'][immune_type][index] = "/".join(tmp)
+
     
     # generate show image
-    try:
-        merge_fig1(get_abs_path(config.need_result_fig_file_list['fig1'], report_path + '/result_file'), report_path+'/show_img')
-    except:
-        config.check_sec['cell_filter'] = 0
-    try:
-        merge_fig2(get_abs_path(config.need_result_fig_file_list['fig2'], report_path + '/result_file'), report_path+'/show_img')
-    except:
-        config.check_sec['sample_merge'] = 0
-    try:
-        merge_fig3_new_new(get_abs_path(config.need_result_fig_file_list['fig3'], report_path + '/result_file'), report_path+'/show_img')
-    except:
-        config.check_sec['cell_cluster_marker'] = 0
-    try:
-        merge_fig4(get_abs_path(config.need_result_fig_file_list['fig4'], report_path + '/result_file'), report_path+'/show_img')
-    except:
-        config.check_sec['go_kegg'] = 0
-    try:
-        merge_fig5(get_abs_path(config.need_result_fig_file_list['fig5'], report_path + '/result_file'), report_path+'/show_img')
-    except:
-        config.check_sec['pseudotime'] = 0
-    try:
-        merge_fig6(get_abs_path(config.need_result_fig_file_list['fig6'], report_path + '/result_file'), report_path+'/show_img')
-    except:
-        config.check_sec['cell_type'] = 0
+    for image_index in range(1, 8):
+        fig_name = 'fig' + str(image_index)
+        try:
+            for immune_type in data_json['summary']['immune_types']:
+                file_name = immune_type + '_' + fig_name + '.png'
+                file_num = len(config.need_result_fig_file_list[fig_name][immune_type])
+                concat_images(get_abs_path(config.need_result_fig_file_list[fig_name][immune_type], report_path + '/result_file'), report_path+'/show_img/'+ file_name, 2, file_num // 2, text_size=20)
+        except:
+            config.check_sec['cell_filter'] = 0
     data_json['check_sec'] = config.check_sec
     # generate report html
     generate_content(main_path + "/Template/split_content_temp.html", data_json, report_path + "/tmp.html")
+    for i in range(1, 8):
+        fig_html_name = 'Fig' + str(i) + '.html'
+        generate_content(main_path + "/Template/full_size_page/" + fig_html_name, data_json, report_path + "/full_size_page/" + fig_html_name)
     merge_html(main_path + "/Template/split_base.html", report_path + "/tmp.html", report_path + "/report.html")
     os.system("rm {report_path}/tmp.html".format(report_path=report_path))
 

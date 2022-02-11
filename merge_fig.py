@@ -176,7 +176,14 @@ def merge_fig3_new_new(fig_file_list, out_path):
     a_d_b_size = (a_size[0]+b_size[0], a_and_d_size[1])
     # tag e
     c_resize = (a_d_b_size[0], int(c_size[1] * a_d_b_size[0] / c_size[0]))
-    e_tag_pos = (int(1843 * c_resize[0] / c_size[0]), int(60 * c_resize[1] / c_size[1]))
+    # get e pos
+    e_row_pos = 1843
+    for i in range(c.size[0]):
+        if c.getpixel((i, 0))[-1] == 0:
+            e_row_pos = i
+            break
+    e_row_pos += 10
+    e_tag_pos = (int(e_row_pos * c_resize[0] / c_size[0]), int(10 * c_resize[1] / c_size[1]))
     c_size = c_resize
     a = a.resize(a_size, Image.ANTIALIAS)
     b = b.resize(b_size, Image.ANTIALIAS)

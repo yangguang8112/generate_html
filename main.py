@@ -65,6 +65,7 @@ def generate_data(result_path, config):
     res['summary']['title'] = old_res['Project_id']
     res['summary']['TCR'] = {"has": old_res['TCR']}
     res['summary']['BCR'] = {"has": old_res['BCR']}
+    res['summary']['others'] = old_res
         
     # 
     # df = pd.read_csv(result_path+"/"+config.need_result_table_file_list[0], header=0, sep='\t', thousands=',')
@@ -159,9 +160,11 @@ def main():
     os.mkdir("{report_path}/img".format(report_path=report_path))
     # sample name file
     for immune_type in data_json['summary']['immune_types']:
-        eg_sample1 = data_json[immune_type + '_summary']['data'][0][0][:-2]
-        ################################################### gai 1111111111111111111111111111
-        eg_sample2 = data_json[immune_type + '_summary']['data'][1][0][:-2]
+        # eg_sample1 = data_json[immune_type + '_summary']['data'][0][0][:-2]
+        # ################################################### gai 1111111111111111111111111111
+        # eg_sample2 = data_json[immune_type + '_summary']['data'][1][0][:-2]
+        eg_sample1 = data_json['summary']['others']['fig5_'+immune_type+'_sample1']
+        eg_sample2 = data_json['summary']['others']['fig5_'+immune_type+'_sample2']
         for index, fn in enumerate(config.need_result_fig_file_list['fig4'][immune_type][:3]):
             tmp = fn.split("/")
             tmp[-1] = eg_sample1 + '.' + tmp[-1].split(".")[-1]

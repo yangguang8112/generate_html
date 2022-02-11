@@ -316,8 +316,8 @@ if __name__ == '__main__':
     # debug
     fig_file_list = [
         "final_cluster_umap.png",
-        "All.cluster0_top12_markerUmap.png",
+        "All.cluster0_top6_markerUmap.png",
         "dotplot_and_barplot.png",
-        "All.cluster0_top12_markerVln.png"
+        "All.cluster0_top6_markerVln.png"
     ]
     merge_fig3_new_new(fig_file_list, "./")

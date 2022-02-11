@@ -93,7 +93,7 @@ def generate_data(result_path, config):
         res['summary'][immune_type]['filted_VJ_cell_num'] = str(df['Number of Cells With Productive V-J Spanning Pair'].sum())
         res['summary'][immune_type]['raw_cell_num_per_sample'] = str(round(df['Estimated Number of Cells'].mean(), 2))
         res['summary'][immune_type]['filted_VJ_cell_num_per_sample'] = str(round(df['Number of Cells With Productive V-J Spanning Pair'].mean(), 2))
-        res['summary'][immune_type]['map_vdj_rate'] = format(((df['Number of Read Pairs'] * df['Reads Mapped to Any V(D)J Gene'].str.strip("%").astype(float)/100) / df['Number of Read Pairs'].sum() * 100).mean(), '.2f') + '%'
+        res['summary'][immune_type]['map_vdj_rate'] = format(((df['Number of Read Pairs'] * df['Reads Mapped to Any V(D)J Gene'].str.strip("%").astype(float)/100) / df['Number of Read Pairs'].sum() * 100).sum(), '.2f') + '%'
         res[table_name]["header"] = df.columns.tolist()
         for i in range(len(df)):
             line = df.iloc[i]
@@ -161,7 +161,7 @@ def main():
     for immune_type in data_json['summary']['immune_types']:
         eg_sample1 = data_json[immune_type + '_summary']['data'][0][0][:-2]
         ################################################### gai 1111111111111111111111111111
-        eg_sample2 = data_json[immune_type + '_summary']['data'][0][0][:-2]
+        eg_sample2 = data_json[immune_type + '_summary']['data'][1][0][:-2]
         for index, fn in enumerate(config.need_result_fig_file_list['fig4'][immune_type][:3]):
             tmp = fn.split("/")
             tmp[-1] = eg_sample1 + '.' + tmp[-1].split(".")[-1]
@@ -183,6 +183,12 @@ def main():
             os.system("cp {result_path}/{file} {report_path}/result_file/{new_name}".format(result_path=result_path, report_path=report_path, file=file, new_name=new_name))
             tmp[-1] = new_name
             config.need_result_fig_file_list['fig4'][immune_type][index] = "/".join(tmp)
+        for i in [1,2,3,5,6,7]:
+            fig_name = 'fig' + str(i)
+            for index, file in enumerate(config.need_result_fig_file_list[fig_name][immune_type]):
+                new_name = immune_type + '-' + file.split("/")[-1]
+                os.system("cp {result_path}/{file} {report_path}/result_file/{new_name}".format(result_path=result_path, report_path=report_path, file=file, new_name=new_name))
+                config.need_result_fig_file_list[fig_name][immune_type][index] = new_name
 
     
     # generate show image

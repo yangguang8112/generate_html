@@ -110,6 +110,19 @@
           <div class="c-article-section__content" id="Abs1-content">
             <p>
               本项目中分析物种为：{{ summary.species }}<br>
+              <p>
+                分析的BCR样本总数为：{{ summary.BCR.sample_num }}个；<br>
+                所有样本过滤前总细胞数为：{{ summary.BCR.raw_cell_num }}个，过滤后带有效V(D)J对总细胞数为：{{ summary.BCR.filted_VJ_cell_num }}个；<br>
+                过滤前平均每个样本的细胞数为：{{ summary.BCR.raw_cell_num_per_sample }}个，过滤后为：{{ summary.BCR.filted_VJ_cell_num_per_sample }}个；<br>
+                平均每个样本比对到V(D)J片段的比对率为：{{ summary.BCR.map_vdj_rate }}，详细结果见细胞信息统计总表。
+              </p>
+
+              <p>
+                分析的TCR样本总数为：{{ summary.TCR.sample_num }}个；<br>
+                所有样本过滤前总细胞数为：{{ summary.TCR.raw_cell_num }}个，过滤后带有效V(D)J对总细胞数为：{{ summary.TCR.filted_VJ_cell_num }}个；<br>
+                过滤前平均每个样本的细胞数为：{{ summary.TCR.raw_cell_num_per_sample }}个，过滤后为：{{ summary.TCR.filted_VJ_cell_num_per_sample }}个；<br>
+                平均每个样本比对到V(D)J片段的比对率为：{{ summary.TCR.map_vdj_rate }}，详细结果见细胞信息统计总表。
+              </p>
             </p>
             <div
               class="c-article-table"
@@ -125,12 +138,12 @@
                 </figcaption>
                 <div class="c-article-table-container">
                   {% if summary.BCR.has %}
-                  <p>
+                  <!-- <p>
                     分析的BCR样本总数为：{{ summary.BCR.sample_num }}个；<br>
                     所有样本过滤前总细胞数为：{{ summary.BCR.raw_cell_num }}个，过滤后带有效V(D)J对总细胞数为：{{ summary.BCR.filted_VJ_cell_num }}个；<br>
                     过滤前平均每个样本的细胞数为：{{ summary.BCR.raw_cell_num_per_sample }}个，过滤后为：{{ summary.BCR.filted_VJ_cell_num_per_sample }}个；<br>
                     平均每个样本比对到V(D)J片段的比对率为：{{ summary.BCR.map_vdj_rate }}，详细结果见细胞信息统计总表。
-                  </p>
+                  </p> -->
                   <div class="c-article-table-border c-table-scroll-wrapper">
                     <div
                       class="
@@ -162,12 +175,12 @@
                   {% endif %}
                   {% if summary.TCR.has %}
                   <br>
-                  <p>
-                    分析的BCR样本总数为：{{ summary.TCR.sample_num }}个；<br>
+                  <!-- <p>
+                    分析的TCR样本总数为：{{ summary.TCR.sample_num }}个；<br>
                     所有样本过滤前总细胞数为：{{ summary.TCR.raw_cell_num }}个，过滤后带有效V(D)J对总细胞数为：{{ summary.TCR.filted_VJ_cell_num }}个；<br>
                     过滤前平均每个样本的细胞数为：{{ summary.TCR.raw_cell_num_per_sample }}个，过滤后为：{{ summary.TCR.filted_VJ_cell_num_per_sample }}个；<br>
                     平均每个样本比对到V(D)J片段的比对率为：{{ summary.TCR.map_vdj_rate }}，详细结果见细胞信息统计总表。
-                  </p>
+                  </p> -->
                   <div class="c-article-table-border c-table-scroll-wrapper">
                     <div
                       class="
@@ -426,7 +439,7 @@
       {% endif %}
 
       {% if check_sec.cell_cluster_marker == 1 %}
-      <section data-title="多样性分析">
+      <section data-title="克隆多样性">
         <div class="c-article-section" id="Sec12-section">
           <h2
             class="
@@ -435,7 +448,7 @@
             "
             id="Sec12"
           >
-          细胞聚类和marker鉴定
+          克隆多样性
           </h2>
           <div class="c-article-section__content" id="Sec12-content">
             <!-- <h3 class="c-article__sub-heading" id="Sec13">
@@ -633,7 +646,7 @@
             id="article-comments-content"
           >
             <p>
-              克隆型追踪（Clonetype tracking）可以显示感兴趣的克隆型在不同的样本或者类群中的分布情况。这里显示的的是
+              克隆型追踪（Clonetype tracking）可以显示感兴趣的克隆型在不同的样本或者类群中的分布情况。这里显示的的是这里显示的是前两个样本top10的克隆型在不同样本中的分布。
             </p>
             <div
               class="

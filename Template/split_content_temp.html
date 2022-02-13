@@ -10,7 +10,7 @@
     <div class="c-context-bar__container u-container">
       <div class="c-context-bar__title">
         <!-- Inference and analysis of cell-cell communication using CellChat -->
-        Cell Landscape 结题报告
+        Immune Landscape 结题报告
       </div>
 
       <div class="c-pdf-download u-clear-both">
@@ -56,7 +56,7 @@
             <span
               class="c-article-identifiers__open"
               data-test="open-access"
-              >Cell Landscape</span
+              >Immune Landscape</span
             >
           </li>
 
@@ -77,7 +77,7 @@
           data-test="article-title"
           data-article-title=""
         >
-        {{ summary.title }} 结题报告
+        {{ summary.title }} 免疫组库结题报告
         </h1>
 
       </header>
@@ -111,33 +111,72 @@
             <p>
               本项目中分析物种为：{{ summary.species }}<br>
               <p>
-                分析的BCR样本总数为：{{ summary.BCR.sample_num }}个；<br>
-                所有样本过滤前总细胞数为：{{ summary.BCR.raw_cell_num }}个，过滤后带有效V(D)J对总细胞数为：{{ summary.BCR.filted_VJ_cell_num }}个；<br>
-                过滤前平均每个样本的细胞数为：{{ summary.BCR.raw_cell_num_per_sample }}个，过滤后为：{{ summary.BCR.filted_VJ_cell_num_per_sample }}个；<br>
-                平均每个样本比对到V(D)J片段的比对率为：{{ summary.BCR.map_vdj_rate }}，详细结果见细胞信息统计总表。
-              </p>
-
-              <p>
                 分析的TCR样本总数为：{{ summary.TCR.sample_num }}个；<br>
-                所有样本过滤前总细胞数为：{{ summary.TCR.raw_cell_num }}个，过滤后带有效V(D)J对总细胞数为：{{ summary.TCR.filted_VJ_cell_num }}个；<br>
+                所有样本过滤前总细胞数为：{{ summary.TCR.raw_cell_num }}个，过滤后带有效V(D)J对的总细胞数为：{{ summary.TCR.filted_VJ_cell_num }}个；<br>
                 过滤前平均每个样本的细胞数为：{{ summary.TCR.raw_cell_num_per_sample }}个，过滤后为：{{ summary.TCR.filted_VJ_cell_num_per_sample }}个；<br>
-                平均每个样本比对到V(D)J片段的比对率为：{{ summary.TCR.map_vdj_rate }}，详细结果见细胞信息统计总表。
+                平均每个样本的V(D)J片段比对率为：{{ summary.TCR.map_vdj_rate }}。详细结果见 表1 细胞信息统计总表。
+              </p>
+              <p>
+                分析的BCR样本总数为：{{ summary.BCR.sample_num }}个；<br>
+                所有样本过滤前总细胞数为：{{ summary.BCR.raw_cell_num }}个，过滤后带有效V(D)J对的总细胞数为：{{ summary.BCR.filted_VJ_cell_num }}个；<br>
+                过滤前平均每个样本的细胞数为：{{ summary.BCR.raw_cell_num_per_sample }}个，过滤后为：{{ summary.BCR.filted_VJ_cell_num_per_sample }}个；<br>
+                平均每个样本的V(D)J片段比对率为：{{ summary.BCR.map_vdj_rate }}。详细结果见 表1 细胞信息统计总表。
               </p>
             </p>
             <div
               class="c-article-table"
               data-test="inline-table"
               data-container-section="table"
-              id="table-2"
+              id="table-1"
             >
               <figure>
                 <figcaption class="c-article-table__figcaption">
-                  <b id="Tab2" data-test="table-caption"
+                  <b id="Tab1" data-test="table-caption"
                     >表1 细胞信息统计总表</b
                   >
                 </figcaption>
                 <div class="c-article-table-container">
+
+                  {% if summary.TCR.has %}
+                  TCR
+                  <!-- <p>
+                    分析的TCR样本总数为：{{ summary.TCR.sample_num }}个；<br>
+                    所有样本过滤前总细胞数为：{{ summary.TCR.raw_cell_num }}个，过滤后带有效V(D)J对总细胞数为：{{ summary.TCR.filted_VJ_cell_num }}个；<br>
+                    过滤前平均每个样本的细胞数为：{{ summary.TCR.raw_cell_num_per_sample }}个，过滤后为：{{ summary.TCR.filted_VJ_cell_num_per_sample }}个；<br>
+                    平均每个样本比对到V(D)J片段的比对率为：{{ summary.TCR.map_vdj_rate }}，详细结果见细胞信息统计总表。
+                  </p> -->
+                  <div class="c-article-table-border c-table-scroll-wrapper">
+                    <div
+                      class="
+                        c-table-scroll-wrapper__content
+                        c-table-scroll-wrapper__fade--transparent
+                      "
+                      data-component-scroll-wrapper=""
+                    >
+                      <table class="data last-table">
+                        <thead class="c-article-table-head">
+                          <tr>
+                            {%for col in TCR.{{ table_keys | first }}.header %}
+                            <th class="u-text-left">{{ col }}</th>
+                            {%endfor%}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for line in TCR_summary.data %}
+                          <tr>
+                            {% for info in line %}
+                            <td class="u-text-left">{{ info }}</td>
+                            {% endfor %}
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  {% endif %}
                   {% if summary.BCR.has %}
+                  <br>
+                  BCR
                   <!-- <p>
                     分析的BCR样本总数为：{{ summary.BCR.sample_num }}个；<br>
                     所有样本过滤前总细胞数为：{{ summary.BCR.raw_cell_num }}个，过滤后带有效V(D)J对总细胞数为：{{ summary.BCR.filted_VJ_cell_num }}个；<br>
@@ -173,50 +212,15 @@
                     </div>
                   </div>
                   {% endif %}
-                  {% if summary.TCR.has %}
-                  <br>
-                  <!-- <p>
-                    分析的TCR样本总数为：{{ summary.TCR.sample_num }}个；<br>
-                    所有样本过滤前总细胞数为：{{ summary.TCR.raw_cell_num }}个，过滤后带有效V(D)J对总细胞数为：{{ summary.TCR.filted_VJ_cell_num }}个；<br>
-                    过滤前平均每个样本的细胞数为：{{ summary.TCR.raw_cell_num_per_sample }}个，过滤后为：{{ summary.TCR.filted_VJ_cell_num_per_sample }}个；<br>
-                    平均每个样本比对到V(D)J片段的比对率为：{{ summary.TCR.map_vdj_rate }}，详细结果见细胞信息统计总表。
-                  </p> -->
-                  <div class="c-article-table-border c-table-scroll-wrapper">
-                    <div
-                      class="
-                        c-table-scroll-wrapper__content
-                        c-table-scroll-wrapper__fade--transparent
-                      "
-                      data-component-scroll-wrapper=""
-                    >
-                      <table class="data last-table">
-                        <thead class="c-article-table-head">
-                          <tr>
-                            {%for col in TCR_summary.header %}
-                            <th class="u-text-left">{{ col }}</th>
-                            {%endfor%}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {% for line in TCR_summary.data %}
-                          <tr>
-                            {% for info in line %}
-                            <td class="u-text-left">{{ info }}</td>
-                            {% endfor %}
-                          </tr>
-                          {% endfor %}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  {% endif %}
+                  
                   <div class="c-article-section__figure-description" data-test="bottom-caption" id="table-desc">
                     <p>
                       表1 注： <br>SampleID：分析时的样本名；<br>
-                      Estimated Number of Cells：检测到的细胞数目；<br>
-                      Mean Read Pairs per Cell：平均每个细胞检测到的Reads数目；<br>
+                      Estimated Number of Cells：检测到的细胞数目，细胞数目取决于文库中T/B细胞比例；<br>
+                      Mean Read Pairs per Cell：平均每个细胞检测到的Reads数目，推荐每个细胞的测序量为5000个reads；<br>
+                      Number of Read Pairs：样本的总reads数目；<br>
                       Number of Cells With Productive V-J Spanning Pair：带有效V-J对的细胞数目；<br>
-                      Reads MaReads Mapped to Any V(D)J Gene：比对到V(D)J片段的Reads比例；<br>
+                      Reads Mapped to Any V(D)J Gene：比对到V(D)J片段的Reads比例；<br>
                       Reads Mapped to TRA/B, IGH/K/L：比对到相应片段的Reads比例。
                     </p>
                   </div>
@@ -295,10 +299,145 @@
           </h2>
           <div class="c-article-section__content" id="Sec1-content">
             <p>
-              克隆型分布分析包括克隆型数目统计、丰度（abundance）分析、CDR3序列长度分析等，旨在获得样本中不同克隆型的大致分布情况。
+              通常情况下，一个淋巴细胞会同时表达一条重链和一条轻链，这两条链共同确定了这个细胞的克隆型(Clonetype)。
+              相比常规免疫组库分析，单细胞免疫组库可以同时获得一个细胞的轻链和重链，因此可以更好地确定细胞的克隆型。
+              但在实际的分析过程中，可能会出现一个克隆型只含有一条链或者多条链的情况，在我们的分析中过滤了含有3条以上链的细胞。
             </p>
             <p>
-              克隆型数目统计可以获得样本中总克隆型数目和样本特异性的克隆型数目；丰度分析探索了克隆型的富集情况，比如最富集的10%克隆型的细胞占有的比例；CDR3序列长度分析统计了样本中CDR3序列长度的分布，可以辅助判断样本的差异。
+              CDR3区域是T/BCR序列中变化最丰富的部分，两个细胞CDR3序列完全相同被认定为一种克隆型。
+              如果两个细胞的一条链完全相同，其中一个细胞未测到另一条链，也视为两个克隆型。在 表2 中包括所有样本的克隆型统计的基本信息。
+            </p>
+
+            <div
+              class="c-article-table"
+              data-test="inline-table"
+              data-container-section="table"
+              id="table-2"
+            >
+              <figure>
+                <figcaption class="c-article-table__figcaption">
+                  <b id="Tab2" data-test="table-caption"
+                    >表2 克隆型统计</b
+                  >
+                </figcaption>
+                <div class="c-article-table-container">
+
+                  {% if summary.TCR.has %}
+                  TCR
+                  <div class="c-article-table-border c-table-scroll-wrapper">
+                    <div
+                      class="
+                        c-table-scroll-wrapper__content
+                        c-table-scroll-wrapper__fade--transparent
+                      "
+                      data-component-scroll-wrapper=""
+                    >
+                      <table class="data last-table">
+                        <thead class="c-article-table-head">
+                          <tr>
+                            {%for col in TCR_summary.header %}
+                            <th class="u-text-left">{{ col }}</th>
+                            {%endfor%}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for line in TCR_summary.data %}
+                          <tr>
+                            {% for info in line %}
+                            <td class="u-text-left">{{ info }}</td>
+                            {% endfor %}
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  {% endif %}
+                  {% if summary.BCR.has %}
+                  <br>
+                  BCR
+                  <div class="c-article-table-border c-table-scroll-wrapper">
+                    <div
+                      class="
+                        c-table-scroll-wrapper__content
+                        c-table-scroll-wrapper__fade--transparent
+                      "
+                      data-component-scroll-wrapper=""
+                    >
+                      <table class="data last-table">
+                        <thead class="c-article-table-head">
+                          <tr>
+                            {%for col in BCR_summary.header %}
+                            <th class="u-text-left">{{ col }}</th>
+                            {%endfor%}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for line in BCR_summary.data %}
+                          <tr>
+                            {% for info in line %}
+                            <td class="u-text-left">{{ info }}</td>
+                            {% endfor %}
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  {% endif %}
+                  
+                  <div class="c-article-section__figure-description" data-test="bottom-caption" id="table-desc">
+                    <p>
+                      表1 注： <br>SampleID：分析时的样本名；<br>
+                      Clonetype_id：克隆型名称；<br>
+                      Frequency：克隆型大小；<br>
+                      Proportion：克隆型占样本的比例；<br>
+                      CDR3.aa：克隆型的CDR3序列，如果克隆型为双链，则用分号隔开，前面为轻链后面为重链。
+                    </p>
+                  </div>
+                </div>
+                <div class="u-text-right u-hide-print">
+                  <a
+                    class="c-article__pill-button"
+                    data-test="table-link"
+                    data-track="click"
+                    data-track-action="view table"
+                    data-track-label="button"
+                    rel="nofollow"
+                    href="./result_file"
+                    aria-label="Full size table 2"
+                    ><span>Full size table</span
+                    ><svg
+                      width="16"
+                      height="16"
+                      focusable="false"
+                      role="img"
+                      aria-hidden="true"
+                      class="u-icon"
+                    >
+                      <use
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        xlink:href="#global-icon-chevron-right"
+                      ></use>
+                      </svg></a>
+                </div>
+              </figure>
+            </div>
+
+            <p>
+              克隆型分布分析包括克隆型数目统计、丰度（abundance）分析、CDR3序列长度分析等，旨在获得样本中不同克隆型的大致分布情况。
+              本分析和下面的大部分分析内容采用immunarch
+              <sup>
+                <a data-track="click" data-track-action="reference anchor" 
+                data-track-label="link" data-test="citation-ref" aria-label="Reference 1" 
+                title="ImmunoMind Team. (2019). immunarch: An R Package for Painless Bioinformatics Analysis of T-Cell and B-Cell Immune Repertoires. Zenodo. http://doi.org/10.5281/zenodo.3367200" 
+                href="./report.html#ref-CR1" id="ref-link-section-d38771043e817">1</a>
+              </sup>
+              进行分析。
+            </p>
+            <p>
+              克隆型数目统计可以获得样本中总克隆型数目和样本特异性的克隆型数目；丰度分析探索了克隆型的富集情况，比如最富集的10%克隆型的细胞占有的比例；
+              CDR3序列长度分析统计了样本中CDR3序列长度的分布，可以辅助判断样本的差异。
             </p>
             <div class="
                 c-article-section__figure

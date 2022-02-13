@@ -66,7 +66,6 @@ def generate_data(result_path, config):
     res['summary']['TCR'] = {"has": old_res['TCR']}
     res['summary']['BCR'] = {"has": old_res['BCR']}
     res['summary']['others'] = old_res
-        
     # 
     # df = pd.read_csv(result_path+"/"+config.need_result_table_file_list[0], header=0, sep='\t', thousands=',')
     # sample_num  = len(df)
@@ -82,24 +81,27 @@ def generate_data(result_path, config):
     immune_types = []
     if old_res['TCR']:
         immune_types.append('TCR')
+        res['TCR'] = {}
     if old_res['BCR']:
         immune_types.append('BCR')
+        res['BCR'] = {}
     for immune_type in immune_types:
-        table_name = immune_type + '_summary'
-        # res['TCR_summary'] = {"header": [], "data": []}
-        res[table_name] = {"header": [], "data": []}
-        df = pd.read_csv(result_path + '/' + config.need_result_table_file_list[immune_type][0], header=0, sep='\t', thousands=',')
-        res['summary'][immune_type]['sample_num'] = str(len(df))
-        res['summary'][immune_type]['raw_cell_num'] = str(df['Estimated Number of Cells'].sum())
-        res['summary'][immune_type]['filted_VJ_cell_num'] = str(df['Number of Cells With Productive V-J Spanning Pair'].sum())
-        res['summary'][immune_type]['raw_cell_num_per_sample'] = str(round(df['Estimated Number of Cells'].mean(), 2))
-        res['summary'][immune_type]['filted_VJ_cell_num_per_sample'] = str(round(df['Number of Cells With Productive V-J Spanning Pair'].mean(), 2))
-        res['summary'][immune_type]['map_vdj_rate'] = format(((df['Number of Read Pairs'] * df['Reads Mapped to Any V(D)J Gene'].str.strip("%").astype(float)/100) / df['Number of Read Pairs'].sum() * 100).sum(), '.2f') + '%'
-        res[table_name]["header"] = df.columns.tolist()
-        for i in range(len(df)):
-            line = df.iloc[i]
-            res[table_name]["data"].append([str(i) for i in line.values.tolist()])
+        for table_name, data_file in zip(config.data_json_keys, config.need_result_table_file_list[immune_type]):
+            res[immune_type][table_name] = {"header": [], "data": []}
+            df = pd.read_csv(result_path + '/' + data_file, header=0, sep='\t', thousands=',')
+            res[immune_type][table_name]["header"] = df.columns.tolist()
+            for i in range(min(10, len(df))):
+                line = df.iloc[i]
+                res[immune_type][table_name]["data"].append([str(i) for i in line.values.tolist()])
+            if table_name == config.data_json_keys[0]:
+                res['summary'][immune_type]['sample_num'] = str(len(df))
+                res['summary'][immune_type]['raw_cell_num'] = str(df['Estimated Number of Cells'].sum())
+                res['summary'][immune_type]['filted_VJ_cell_num'] = str(df['Number of Cells With Productive V-J Spanning Pair'].sum())
+                res['summary'][immune_type]['raw_cell_num_per_sample'] = str(round(df['Estimated Number of Cells'].mean(), 2))
+                res['summary'][immune_type]['filted_VJ_cell_num_per_sample'] = str(round(df['Number of Cells With Productive V-J Spanning Pair'].mean(), 2))
+                res['summary'][immune_type]['map_vdj_rate'] = format(((df['Number of Read Pairs'] * df['Reads Mapped to Any V(D)J Gene'].str.strip("%").astype(float)/100) / df['Number of Read Pairs'].sum() * 100).sum(), '.2f') + '%'
     res['summary']['immune_types'] = immune_types
+    res['table_keys'] = config.data_json_keys
         
     # for table_name, data_file in zip(config.data_json_keys, config.need_result_table_file_list):
     #     res[table_name] = {"data": []}
@@ -117,6 +119,7 @@ def generate_data(result_path, config):
     #     if table_name in ['cluster0_Biological_Process_enrich_list', 'cluster0_KEGG_pathway_enrich_list']:
     #         for data in res[table_name]["data"]:
     #             data[-2] = data[-2][:8] + '...'
+
     # final_cluster_stat need colname
     # df = pd.read_csv(result_path + '/' + config.need_result_table_file_list[config.data_json_keys.index('final_cluster_stat')], header=0, sep='\t')
     # res['final_cluster_stat']['samples'] = df.columns.tolist()[1:]

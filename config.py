@@ -7,10 +7,12 @@ class Config(object):
         self.need_result_table_file_list = {
             'TCR': [
                 "Result_01_report/TCR_library_cells_info_stat.xls",
+                "Result_03_sample/TCR/00.Clonetype/TCR_clonetype.tsv"
 
             ],
             'BCR': [
                 "Result_01_report/BCR_library_cells_info_stat.xls",
+                "Result_03_sample/TCR/00.Clonetype/TCR_clonetype.tsv"
             ]
         }
         
@@ -26,13 +28,7 @@ class Config(object):
         # ]
         self.data_json_keys = [
             "cell_stat_table",
-            "cell_filter_stat",
-            "final_cluster_stat",
-            "diffCluster_stat",
-            "cluster0_Biological_Process_enrich_list",
-            "cluster0_KEGG_pathway_enrich_list",
-            "Pseudotime_difference_gene",
-            "Pseudotime_info"
+            "cell_clonetype",
         ]
         self.check_sec = {
             'cell_filter': 1,

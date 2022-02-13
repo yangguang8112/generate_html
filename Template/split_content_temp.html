@@ -110,18 +110,22 @@
           <div class="c-article-section__content" id="Abs1-content">
             <p>
               本项目中分析物种为：{{ summary.species }}<br>
+              {% if summary.TCR.has %}
               <p>
                 分析的TCR样本总数为：{{ summary.TCR.sample_num }}个；<br>
                 所有样本过滤前总细胞数为：{{ summary.TCR.raw_cell_num }}个，过滤后带有效V(D)J对的总细胞数为：{{ summary.TCR.filted_VJ_cell_num }}个；<br>
                 过滤前平均每个样本的细胞数为：{{ summary.TCR.raw_cell_num_per_sample }}个，过滤后为：{{ summary.TCR.filted_VJ_cell_num_per_sample }}个；<br>
                 平均每个样本的V(D)J片段比对率为：{{ summary.TCR.map_vdj_rate }}。详细结果见 表1 细胞信息统计总表。
               </p>
+              {% endif %}
+              {% if summary.BCR.has %}
               <p>
                 分析的BCR样本总数为：{{ summary.BCR.sample_num }}个；<br>
                 所有样本过滤前总细胞数为：{{ summary.BCR.raw_cell_num }}个，过滤后带有效V(D)J对的总细胞数为：{{ summary.BCR.filted_VJ_cell_num }}个；<br>
                 过滤前平均每个样本的细胞数为：{{ summary.BCR.raw_cell_num_per_sample }}个，过滤后为：{{ summary.BCR.filted_VJ_cell_num_per_sample }}个；<br>
                 平均每个样本的V(D)J片段比对率为：{{ summary.BCR.map_vdj_rate }}。详细结果见 表1 细胞信息统计总表。
               </p>
+              {% endif %}
             </p>
             <div
               class="c-article-table"
@@ -710,12 +714,13 @@
             最高的V、D、J基因，以及出现频率最高的V-J基因对，这些结果有助于对克隆型功能的理解。这里仅展示单个样本的结果。
             更多的结果可见
             {% if summary.TCR.has %}
-            <a href="../Result_03_sample/TCR/05.Geneusage/img/">TCR</a>
-            {% elif summary.BCR.has %}
+            <a href="../Result_03_sample/TCR/05.Geneusage/">TCR</a>
+            {% endif %}
+            {% if summary.BCR.has %}
               {% if summary.TCR.has %}
               和
               {% endif %}
-            <a href="../Result_03_sample/BCR/05.Geneusage/img/">BCR</a>
+            <a href="../Result_03_sample/BCR/05.Geneusage/">BCR</a>
             {% endif %}
             。
           </p>

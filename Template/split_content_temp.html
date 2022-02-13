@@ -707,7 +707,17 @@
           >
           <p>
             T/BCR的V、D、J基因是多样性的重要来源，不同样本V(D)J基因的出现频率存在一定的特异性，对样本V(D)J基因频率（Geneusage）分析可以获得出现频率
-            最高的V、D、J基因，以及出现频率最高的V-J基因对，这些结果有助于对克隆型功能的理解。这里仅展示单个样本的结果。更多的结果可见文件夹。
+            最高的V、D、J基因，以及出现频率最高的V-J基因对，这些结果有助于对克隆型功能的理解。这里仅展示单个样本的结果。
+            更多的结果可见
+            {% if summary.TCR.has %}
+            <a href="../Result_03_sample/TCR/05.Geneusage/img/">TCR</a>
+            {% elif summary.BCR.has %}
+              {% if summary.TCR.has %}
+              和
+              {% endif %}
+            <a href="../Result_03_sample/BCR/05.Geneusage/img/">BCR</a>
+            {% endif %}
+            。
           </p>
           <div
               class="
@@ -748,7 +758,7 @@
                     <p>
                       <b>a，b</b> 分别用柱状图和极坐标图展示top20的V基因的出现频率。
                       <b>c</b> V-J基因对的出现频率。
-                      <b>d</b> 基因V(D)J基因频率J-S散度。J-S散度用于评估两样本中基因的重叠度，如果值越大，则重叠度越低。
+                      <b>d</b> 样本V基因频率J-S散度。J-S散度用于评估两样本中基因的重叠度，如果值越大，则重叠度越低。
                     </p>
                   </div>
                 </div>
@@ -964,9 +974,17 @@
                 </div>
               </figure>
             </div>
+            {% if summary.RNA %}
+            <p>
+              单细胞免疫组库数据可以同时分析一个细胞的转录组和T/BCR的数据，有助于理解不同细胞类型在免疫反应中的作用。
+              因此，若同时进行了单细胞转录组测序，我们会把所有文库的contig进行合并，并按照指定的细胞类群进行重新分组，产生基于细胞类群的T/BCR分析结果，
+              包括细胞类群克隆型分布，共享克隆型，多样性分析，V(D)J基因频率，克隆型追踪，Motif分析，详见<a href="../Result_04_cluster">结果目录</a>。
+            </p>
+            {% endif %}
           </div>
         </div>
       </section>
+      {% endif %}
 
       <section data-title="UMAP">
         <div class="c-article-section" id="article-comments-section">
@@ -984,7 +1002,14 @@
             id="article-comments-content"
           >
             <p>
-              在UMAP上展示克隆型丰度有助于理解类群中克隆型的分布，通过将统计得到的克隆型细胞数目与转录组数据整合，利用Seurat软件绘图。
+              在UMAP上展示克隆型丰度有助于理解类群中克隆型的分布，通过将统计得到的克隆型细胞数目与转录组数据整合，利用Seurat
+              <sup>
+                <a data-track="click" data-track-action="reference anchor" 
+                data-track-label="link" data-test="citation-ref" aria-label="Reference 4" 
+                title="Hao Y, Hao S, Andersen-Nissen E, et al. Integrated analysis of multimodal single-cell data[J]. Cell, 2021, 184(13): 3573-3587. e29." 
+                href="./report.html#ref-CR4" id="ref-link-section-d38771043e817">4</a>
+              </sup>
+              软件绘图。
             </p>
             <div
               class="
@@ -1058,7 +1083,7 @@
           </div>
         </div>
       </section>
-      {% endif %}
+      
 
       <!-- <section data-title="模板">
         <div class="c-article-section" id="article-comments-section">
@@ -1107,7 +1132,7 @@
                   >
                     <span class="c-article-references__counter">1.</span>
                     <p class="c-article-references__text" id="ref-CR1">
-                      Chao A. Nonparametric estimation of the number of classes in a population[J]. Scandinavian Journal of statistics, 1984: 265-270.
+                      ImmunoMind Team. (2019). immunarch: An R Package for Painless Bioinformatics Analysis of T-Cell and B-Cell Immune Repertoires. Zenodo. http://doi.org/10.5281/zenodo.3367200
                     </p>
                   </li>
                   <li
@@ -1118,7 +1143,7 @@
                   >
                     <span class="c-article-references__counter">2.</span>
                     <p class="c-article-references__text" id="ref-CR2">
-                      Gini C. On the measure of concentration with special reference to income and statistics[J]. Colorado College Publication, General Series, 1936, 208(1): 73-79.
+                      Chao A. Nonparametric estimation of the number of classes in a population[J]. Scandinavian Journal of statistics, 1984: 265-270.
                     </p>
                   </li>
                   <li
@@ -1129,7 +1154,7 @@
                   >
                     <span class="c-article-references__counter">3.</span>
                     <p class="c-article-references__text" id="ref-CR3">
-                      ImmunoMind Team. (2019). immunarch: An R Package for Painless Bioinformatics Analysis of T-Cell and B-Cell Immune Repertoires. Zenodo. 
+                      Gini C. On the measure of concentration with special reference to income and statistics[J]. Colorado College Publication, General Series, 1936, 208(1): 73-79.
                     </p>
                   </li>
                   <li

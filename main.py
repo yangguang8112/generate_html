@@ -66,6 +66,7 @@ def generate_data(result_path, config):
     res['summary']['TCR'] = {"has": old_res['TCR']}
     res['summary']['BCR'] = {"has": old_res['BCR']}
     res['summary']['others'] = old_res
+    res['summary']['RNA'] = old_res['RNA']
     # 
     # df = pd.read_csv(result_path+"/"+config.need_result_table_file_list[0], header=0, sep='\t', thousands=',')
     # sample_num  = len(df)

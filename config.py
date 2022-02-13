@@ -12,7 +12,7 @@ class Config(object):
             ],
             'BCR': [
                 "Result_01_report/BCR_library_cells_info_stat.xls",
-                "Result_03_sample/TCR/00.Clonetype/TCR_clonetype.tsv"
+                "Result_03_sample/BCR/00.Clonetype/TCR_clonetype.tsv"
             ]
         }
         

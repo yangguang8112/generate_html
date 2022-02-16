@@ -247,6 +247,7 @@
           <div class="c-article-section__content" id="Sec1-content">
             <p>
               原始数据中存在一些低质量的数据信息，会影响生信分析的结果可靠性。因此，在进行下游分析前需要对细胞数据进行过滤。主要根据：基因数、UMI数、线粒体含量、双胞数等指标进行过滤。
+              <a href="../Result_1_DataFilter" target="_blank">细胞过滤相关结果文件</a>
             </p>
             <p>
               一般过滤指标我们可以选择细胞中最低表达的基因数在200-500之间，UMI数至少在100以上，线粒体含量小于20%。具体项目分析时设置的过滤参数如下：
@@ -534,7 +535,7 @@
               <sup>
                 <a data-track="click" data-track-action="reference anchor" data-track-label="link" data-test="citation-ref" aria-label="Reference 2" title="Stuart T, Butler A, Hoffman P, et al. Comprehensive integration of single-cell data[J]. Cell, 2019, 177(7): 1888-1902. e21." href="./report.html#ref-CR2" id="ref-link-section-d38771043e817">2</a>
               </sup>
-              。聚类结果如下。 
+              。<a href="../Result_2_Analysis/02_Clustering" target="_blank">聚类结果</a>如下。 
             </p>
             <div
             class="c-article-table"
@@ -824,7 +825,7 @@
           <p>
             GO数据库是GO组织（Gene Ontology Consortium）于2000年构建的一个结构化的标准生物学注释系统，旨在建立基因及其产物知识的标准词汇体系，适用于各个物种。
             GO注释系统是一个有向无环图，包含三个主要分支，即：生物学过程（Biological Process），分子功能（Molecular Function）和细胞组分（Cellular Component）。
-            对每个cluster的差异基因集，采用ClusterProfiler
+            对每个cluster的<a href="../Result_2_Analysis/03_Difference" target="_blank">差异基因</a>集，采用ClusterProfiler
             <sup>
               <a data-track="click" data-track-action="reference anchor" data-track-label="link" data-test="citation-ref" aria-label="Reference 3" title="Yu G, Wang L G, Han Y, et al. clusterProfiler: an R package for comparing biological themes among gene clusters[J]. Omics: a journal of integrative biology, 2012, 16(5): 284-287." href="./report.html#ref-CR3" id="ref-link-section-d38771043e817">3</a>
             </sup>
@@ -832,7 +833,7 @@
             富集分析采用超几何检验方法来寻找与整个基因组背景相比显著富集的GO条目。
             我们用气泡图展现了所有cluster top的GO term（仅包含BP）（Fig.
             <a data-track="click" data-track-label="link" data-track-action="figure anchor" href="./report.html#Fig4">4c</a>
-            ）。全部的富集结果详见表5 GO富集分析结果表。
+            ）。全部的<a href="../Result_2_Analysis/04_Enrichment" target="_blank">富集结果</a>详见表5 GO富集分析结果表。
           </p>
           <div
               class="
@@ -1129,7 +1130,7 @@
                 <a data-track="click" data-track-action="reference anchor" data-track-label="link" data-test="citation-ref" aria-label="Reference 3" title="Qiu X, Mao Q, Tang Y, et al. Reversed graph embedding resolves complex single-cell trajectories[J]. Nature methods, 2017, 14(10): 979-982." href="./report.html#ref-CR4" id="ref-link-section-d38771043e817">4</a>
               </sup>
               是一款利用反向图形嵌入（reversed graph embedding） 的机器学习方法，根据细胞基因表达量信息，预测、重构出细胞发育分化轨迹的软件。
-              拟时序分析的差异基因详见 表7 拟时序差异基因表，细胞在拟时序上的分布详见 表8 细胞的拟时序位置表。
+              拟时序分析的差异基因详见 表7 拟时序差异基因表，细胞在拟时序上的分布详见 表8 细胞的拟时序位置表。<a href="../Result_3_Pseudotime" target="_blank">拟时序分析相关结果文件</a>
             </p>
             <div
               class="
@@ -1408,6 +1409,7 @@
               </sup>
               （single cell recognition）是一个可以对细胞进行自动注释的R包。
               它通过计算单细胞参考表达谱数据集（如：芯片数据、RNA-seq测序纯细胞类型数据、细胞类型明确定义的scRNA-seq数据）与待鉴定的细胞表达谱之间的相关性，将待鉴定细胞注释为与参考数据集中相关性最高的一种细胞类型。
+              <a href="../Result_2_Analysis/05_CellAnnotation" target="_blank">细胞类型鉴定相关结果文件</a>
             </p>
             <p>
               使用SingleR对聚类的cluster进行细胞类型的鉴定。SingleR将未知的数据和参考库中的已知细胞类型的数据进行比较。
@@ -1501,6 +1503,82 @@
                 </div>
               </figure>
             </div>
+
+            <div
+          class="c-article-table"
+          data-test="inline-table"
+          data-container-section="table"
+          id="table-9"
+        >
+          <figure>
+            <figcaption class="c-article-table__figcaption">
+              <b id="Tab9" data-test="table-caption"
+                >表9 细胞类型注释</b
+              >
+            </figcaption>
+            <div class="c-article-table-container">
+              <div class="c-article-table-border c-table-scroll-wrapper">
+                <div
+                  class="
+                    c-table-scroll-wrapper__content
+                    c-table-scroll-wrapper__fade--transparent
+                  "
+                  data-component-scroll-wrapper=""
+                >
+                  <table class="data last-table">
+                    <thead class="c-article-table-head">
+                      <tr>
+                        {% for col in cell_annotation_statinfo.header %}
+                        <th class="u-text-left">{{col}}</th>
+                        {% endfor %}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for line in cell_annotation_statinfo.data %}
+                          <tr>
+                            {% for info in line %}
+                            <td class="u-text-left">{{ info }}</td>
+                            {% endfor %}
+                          </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="c-article-section__figure-description" data-test="bottom-caption" id="table-desc">
+                <p>
+                  表9 注： <br>
+                  第一列(Cell Type)：注释的细胞类型；第二列往后表示分析对应的样本；每个数值表示样本所在的细胞类型中的细胞数目。
+                </p>
+              </div>
+            </div>
+            <div class="u-text-right u-hide-print">
+              <a
+                class="c-article__pill-button"
+                data-test="table-link"
+                data-track="click"
+                data-track-action="view table"
+                data-track-label="button"
+                rel="nofollow"
+                href="./result_file/final.cell_annotation_statInfo.xls"
+                aria-label="Full size table 9"
+                ><span>Full size table</span
+                ><svg
+                  width="16"
+                  height="16"
+                  focusable="false"
+                  role="img"
+                  aria-hidden="true"
+                  class="u-icon"
+                >
+                  <use
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="#global-icon-chevron-right"
+                  ></use>
+                  </svg></a>
+            </div>
+          </figure>
+        </div>
           </div>
         </div>
       </section>

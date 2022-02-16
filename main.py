@@ -89,13 +89,14 @@ def generate_data(result_path, config):
     res['summary']['filtered_cell_num_per_sample'] = str(round(df['Final_cells_number'].mean(), 2))
     # table data
     for table_name, data_file in zip(config.data_json_keys, config.need_result_table_file_list):
-        res[table_name] = {"data": []}
+        res[table_name] = {"data": [], "header": []}
         try:
             # 处理没有结果的情况
             df = pd.read_csv(result_path + '/' + data_file, header=0, sep='\t')
         except:
             break
         # max line == 8
+        res[table_name]["header"] = df.columns.tolist()
         for i in range(min(8, len(df))):
             line = df.iloc[i]
             # res[table_name]["data"].append([is_float(str(i)) for i in line.values.tolist()])

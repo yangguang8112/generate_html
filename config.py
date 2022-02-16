@@ -12,7 +12,8 @@ class Config(object):
             "Result_2_Analysis/04_Enrichment/cluster0/GO/cluster0_Biological_Process_enrich.list",
             "Result_2_Analysis/04_Enrichment/cluster0/KEGG/cluster0_KEGG_pathway_enrich.list",
             "Result_3_Pseudotime/Pseudotime_difference_gene.xls",
-            "Result_3_Pseudotime/Pseudotime_info.xls"
+            "Result_3_Pseudotime/Pseudotime_info.xls",
+            "Result_2_Analysis/05_CellAnnotation/final.cell_annotation_statInfo.xls"
         ]
         self.data_json_keys = [
             "cell_stat_table",
@@ -22,7 +23,8 @@ class Config(object):
             "cluster0_Biological_Process_enrich_list",
             "cluster0_KEGG_pathway_enrich_list",
             "Pseudotime_difference_gene",
-            "Pseudotime_info"
+            "Pseudotime_info",
+            "cell_annotation_statinfo"
         ]
         self.check_sec = {
             'cell_filter': 1,

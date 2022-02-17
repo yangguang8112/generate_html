@@ -147,15 +147,15 @@ def main():
     os.system("cp -r {main_path}/Template/full_size_page {report_path};cp -r {main_path}/Template/report_files {report_path}".format(report_path=report_path, main_path=main_path))
     os.mkdir("{report_path}/result_file".format(report_path=report_path))
     os.mkdir("{report_path}/show_img".format(report_path=report_path))
-    os.mkdir("{report_path}/img".format(report_path=report_path))
+    # os.mkdir("{report_path}/img".format(report_path=report_path))
     # TODO cp result file
     os.system("cp -r {result_path}/Result_2_Analysis/03_Difference/diffCluster_File {report_path}/result_file".format(result_path=result_path, report_path=report_path))
     for index, file in enumerate(config.need_result_table_file_list):
         # index 和 文件 和html中的sec对应起来
         os.system("cp {result_path}/{file} {report_path}/result_file".format(result_path=result_path, report_path=report_path, file=file))
     # 图片“详见”拷贝
-    os.system("cp {result_path}/Result_2_Analysis/03_Difference/diffCluster_volcano/All.*.volcano.png {report_path}/img".format(result_path=result_path, report_path=report_path))
-    os.system("cp {result_path}/Result_2_Analysis/03_Difference/diffCluster_picture/All.*marker*.png {report_path}/img".format(result_path=result_path, report_path=report_path))
+    # os.system("cp {result_path}/Result_2_Analysis/03_Difference/diffCluster_volcano/All.*.volcano.png {report_path}/img".format(result_path=result_path, report_path=report_path))
+    # os.system("cp {result_path}/Result_2_Analysis/03_Difference/diffCluster_picture/All.*marker*.png {report_path}/img".format(result_path=result_path, report_path=report_path))
     for files in config.need_result_fig_file_list.values():
         for f in files:
             os.system("cp {result_path}/{f} {report_path}/result_file".format(result_path=result_path, f=f, report_path=report_path))

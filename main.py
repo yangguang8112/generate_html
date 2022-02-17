@@ -188,13 +188,13 @@ def main():
     try:
         merge_fig5(get_abs_path(config.need_result_fig_file_list['fig5'], report_path + '/result_file'), report_path+'/show_img')
     except KeyError as e:
-        print("fig4 merge error!!!!!!!!")
+        print("fig5 merge error!!!!!!!!")
         print(e)
         config.check_sec['pseudotime'] = 0
     try:
         merge_fig6(get_abs_path(config.need_result_fig_file_list['fig6'], report_path + '/result_file'), report_path+'/show_img')
     except KeyError as e:
-        print("fig4 merge error!!!!!!!!")
+        print("fig6 merge error!!!!!!!!")
         print(e)
         config.check_sec['cell_type'] = 0
     data_json['check_sec'] = config.check_sec

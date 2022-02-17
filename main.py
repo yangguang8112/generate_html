@@ -163,27 +163,39 @@ def main():
     # generate show image
     try:
         merge_fig1(get_abs_path(config.need_result_fig_file_list['fig1'], report_path + '/result_file'), report_path+'/show_img')
-    except:
+    except KeyError as e:
+        print("fig1 merge error!!!!!!!!")
+        print(e)
         config.check_sec['cell_filter'] = 0
     try:
         merge_fig2(get_abs_path(config.need_result_fig_file_list['fig2'], report_path + '/result_file'), report_path+'/show_img')
-    except:
+    except KeyError as e:
+        print("fig2 merge error!!!!!!!!")
+        print(e)
         config.check_sec['sample_merge'] = 0
     try:
         merge_fig3_new_new(get_abs_path(config.need_result_fig_file_list['fig3'], report_path + '/result_file'), report_path+'/show_img')
-    except:
+    except KeyError as e:
+        print("fig3 merge error!!!!!!!!")
+        print(e)
         config.check_sec['cell_cluster_marker'] = 0
     try:
         merge_fig4(get_abs_path(config.need_result_fig_file_list['fig4'], report_path + '/result_file'), report_path+'/show_img')
-    except:
+    except KeyError as e:
+        print("fig4 merge error!!!!!!!!")
+        print(e)
         config.check_sec['go_kegg'] = 0
     try:
         merge_fig5(get_abs_path(config.need_result_fig_file_list['fig5'], report_path + '/result_file'), report_path+'/show_img')
-    except:
+    except KeyError as e:
+        print("fig4 merge error!!!!!!!!")
+        print(e)
         config.check_sec['pseudotime'] = 0
     try:
         merge_fig6(get_abs_path(config.need_result_fig_file_list['fig6'], report_path + '/result_file'), report_path+'/show_img')
-    except:
+    except KeyError as e:
+        print("fig4 merge error!!!!!!!!")
+        print(e)
         config.check_sec['cell_type'] = 0
     data_json['check_sec'] = config.check_sec
     # generate report html

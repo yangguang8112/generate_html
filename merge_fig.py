@@ -1,6 +1,8 @@
 from PIL import ImageFont, ImageDraw, Image
 import os
 
+HERE = os.path.split(os.path.realpath(__file__))[0]
+
 def get_max_size(image_list):
     max_size = (0, 0)
     for image in image_list:
@@ -17,7 +19,7 @@ def get_size(image_list):
     return image_size
 
 def addText(pil_obj, text, pos=(10,10)):
-    font = ImageFont.truetype('./fonts/DejaVuSans-Bold.ttf', 64)
+    font = ImageFont.truetype(HERE + '/fonts/DejaVuSans-Bold.ttf', 64)
     draw = ImageDraw.Draw(pil_obj)
     draw.text(pos, text, fill= (0, 0, 0), font=font)
     return
@@ -321,10 +323,18 @@ def merge_fig6(fig_file_list, out_path):
 
 if __name__ == '__main__':
     # debug
+    # fig_file_list = [
+    #     "final_cluster_umap.png",
+    #     "All.cluster0_top6_markerUmap.png",
+    #     "dotplot_and_barplot.png",
+    #     "All.cluster0_top6_markerVln.png"
+    # ]
+    # merge_fig3_new_new(fig_file_list, "./")
     fig_file_list = [
-        "final_cluster_umap.png",
-        "All.cluster0_top6_markerUmap.png",
-        "dotplot_and_barplot.png",
-        "All.cluster0_top6_markerVln.png"
+        "All_sample_nofilter.vln.png",
+        "All_sample_filter.vln.png",
+        "All_sample_nofilter.scatter.png",
+        "All_sample_filter.scatter.png",
+        "All.libarary.transcriptome.similarity.png"
     ]
-    merge_fig3_new_new(fig_file_list, "./")
+    merge_fig1(fig_file_list, "./")

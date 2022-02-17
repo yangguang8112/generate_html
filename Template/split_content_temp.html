@@ -254,7 +254,7 @@
             </p>
             <p>
               (1) 基因表达的细胞数：≥ {{ summary.mincell }}；<br/>
-              (2) 线粒体含量(%)：≤ {{ summary.res_value.percent_mt_cutoff }}；<br/>
+              (2) 线粒体含量(%)：≤ Mitochondria threshold(%)<sup>Related to the sample</sup>；<br/>
               (3) UMI数目：≥ {{ summary.res_value.nUMI_cutoff }}；<br/>
               (4) 基因数目：{{ summary.res_value.nGene_lower_cutoff }} ~ {{ summary.res_value.nGene_upper_cutoff }}。<br/>
             </p>
@@ -283,7 +283,10 @@
                     <table class="data last-table">
                       <thead class="c-article-table-head">
                         <tr>
-                          <th class="u-text-left">Sample</th>
+                          {% for col in cell_filter_stat.header %}
+                          <th class="u-text-left">{{ col }}</th>
+                          {% endfor %}
+                          <!-- <th class="u-text-left">Sample</th>
                           <th class="u-text-left">
                             All_cells_number
                           </th>
@@ -295,7 +298,7 @@
                           <th class="u-text-left">filter by maximum gene number ≤ {{ summary.res_value.nGene_upper_cutoff }}</th>
                           <th class="u-text-left">filter by double</th>
                           <th class="u-text-left">Final_cells_number</th>
-                          <th class="u-text-left">percent(%)</th>
+                          <th class="u-text-left">percent(%)</th> -->
                         </tr>
                       </thead>
                       <tbody>
@@ -314,7 +317,8 @@
                   <p>
                     表2 注： <br>SampleID：分析时的样本名；<br>
                     All_cells_number：过滤前的细胞总数；<br>
-                    filter by Mitochondria ≤ {{ summary.res_value.percent_mt_cutoff }}：按照线粒体含量过滤掉的细胞数；<br>
+                    Mitochondria threshold(%)：细胞中最大线粒体含量的比例；<br>
+                    filter by Mitochondria：按照线粒体含量过滤掉的细胞数；<br>
                     filter by UMI ≥ {{ summary.res_value.nUMI_cutoff }}：按照UMI数过滤掉的细胞数；<br>
                     filter by minimal gene number ≥ {{ summary.res_value.nGene_lower_cutoff }}：按照最低基因数过滤掉的细胞数；<br>
                     filter by maximum gene number ≤ {{ summary.res_value.nGene_upper_cutoff }}：按照最大基因数过滤掉的细胞数；<br>

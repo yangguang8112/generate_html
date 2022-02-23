@@ -978,19 +978,21 @@
                 </div>
               </figure>
             </div>
-            {% if summary.RNA %}
-            <p>
-              单细胞免疫组库数据可以同时分析一个细胞的转录组和T/BCR的数据，有助于理解不同细胞类型在免疫反应中的作用。
-              因此，若同时进行了单细胞转录组测序，我们会把所有文库的contig进行合并，并按照指定的细胞类群进行重新分组，产生基于细胞类群的T/BCR分析结果，
-              包括细胞类群克隆型分布，共享克隆型，多样性分析，V(D)J基因频率，克隆型追踪，Motif分析，详见<a href="../Result_04_cluster">结果目录</a>。
-            </p>
-            {% endif %}
           </div>
         </div>
       </section>
       {% endif %}
 
+
+      {% if summary.RNA %}
+            <p>
+              单细胞免疫组库数据可以同时分析一个细胞的转录组和T/BCR的数据，有助于理解不同细胞类型在免疫反应中的作用。
+              因此，若同时进行了单细胞转录组测序，我们会把所有文库的contig进行合并，并按照指定的细胞类群进行重新分组，产生基于细胞类群的T/BCR分析结果，
+              包括细胞类群克隆型分布，共享克隆型，多样性分析，V(D)J基因频率，克隆型追踪，Motif分析，详见<a href="../Result_04_cluster">结果目录</a>。
+            </p>
+
       <section data-title="UMAP">
+        
         <div class="c-article-section" id="article-comments-section">
           <h2
             class="
@@ -1087,6 +1089,7 @@
           </div>
         </div>
       </section>
+      {% endif %}
       
 
       <!-- <section data-title="模板">

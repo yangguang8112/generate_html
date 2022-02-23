@@ -1,6 +1,8 @@
 from PIL import ImageFont, ImageDraw, Image
 import os
 
+HERE = os.path.split(os.path.realpath(__file__))[0]
+
 def get_max_size(image_list):
     max_size = (0, 0)
     for image in image_list:
@@ -17,7 +19,7 @@ def get_size(image_list):
     return image_size
 
 def addText(pil_obj, text, pos=(10,10), size=64):
-    font = ImageFont.truetype('./fonts/DejaVuSans-Bold.ttf', size)
+    font = ImageFont.truetype(HERE + '/fonts/DejaVuSans-Bold.ttf', size)
     draw = ImageDraw.Draw(pil_obj)
     draw.text(pos, text, fill= (0, 0, 0), font=font)
     return

@@ -181,9 +181,9 @@ def main():
     for immune_type in data_json['summary']['immune_types']:
         for file in config.need_result_table_file_list[immune_type]:
             os.system("cp {result_path}/{file} {report_path}/result_file".format(result_path=result_path, report_path=report_path, file=file))
-        for files in config.need_result_fig_file_list.values():
-            for f in files[immune_type]:
-                os.system("cp {result_path}/{f} {report_path}/result_file".format(result_path=result_path, f=f, report_path=report_path))
+        # for files in config.need_result_fig_file_list.values():
+        #     for f in files[immune_type]:
+        #         os.system("cp {result_path}/{f} {report_path}/result_file".format(result_path=result_path, f=f, report_path=report_path))
         for index, file in enumerate(config.need_result_fig_file_list['fig4'][immune_type][:3]):
             tmp = file.split("/")
             new_name = immune_type + '-' + tmp[-2] + '-' + tmp[-1]

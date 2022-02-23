@@ -191,6 +191,8 @@ def main():
             tmp[-1] = new_name
             config.need_result_fig_file_list['fig4'][immune_type][index] = "/".join(tmp)
         for i in [1,2,3,5,6,7]:
+            if i == 7 and data_json['summary']['RNA'] == 0:
+                continue
             fig_name = 'fig' + str(i)
             for index, file in enumerate(config.need_result_fig_file_list[fig_name][immune_type]):
                 new_name = immune_type + '-' + file.split("/")[-1]
@@ -200,6 +202,8 @@ def main():
     
     # generate show image
     for image_index in range(1, 8):
+        if i == 7 and data_json['summary']['RNA'] == 0:
+            continue
         fig_name = 'fig' + str(image_index)
         try:
             for immune_type in data_json['summary']['immune_types']:
@@ -212,6 +216,8 @@ def main():
     # generate report html
     generate_content(main_path + "/Template/split_content_temp.html", data_json, report_path + "/tmp.html")
     for i in range(1, 8):
+        if i == 7 and data_json['summary']['RNA'] == 0:
+            continue
         fig_html_name = 'Fig' + str(i) + '.html'
         generate_content(main_path + "/Template/full_size_page/" + fig_html_name, data_json, report_path + "/full_size_page/" + fig_html_name)
     merge_html(main_path + "/Template/split_base.html", report_path + "/tmp.html", report_path + "/report.html")

@@ -202,6 +202,7 @@ def main():
     generate_content(main_path + "/Template/split_content_temp.html", data_json, report_path + "/tmp.html")
     merge_html(main_path + "/Template/split_base.html", report_path + "/tmp.html", report_path + "/report.html")
     os.system("rm {report_path}/tmp.html".format(report_path=report_path))
+    os.system("rm -rf {report_path}/result_file/".format(report_path=report_path))
 
 
 

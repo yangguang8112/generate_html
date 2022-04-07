@@ -163,41 +163,41 @@ def main():
     os.mkdir("{report_path}/show_img".format(report_path=report_path))
     os.mkdir("{report_path}/img".format(report_path=report_path))
     # sample name file
-    for immune_type in data_json['summary']['immune_types']:
-        # eg_sample1 = data_json[immune_type + '_summary']['data'][0][0][:-2]
-        # ################################################### gai 1111111111111111111111111111
-        # eg_sample2 = data_json[immune_type + '_summary']['data'][1][0][:-2]
-        eg_sample1 = data_json['summary']['others']['fig5_'+immune_type+'_sample1']
-        eg_sample2 = data_json['summary']['others']['fig5_'+immune_type+'_sample2']
-        for index, fn in enumerate(config.need_result_fig_file_list['fig4'][immune_type][:3]):
-            tmp = fn.split("/")
-            tmp[-1] = eg_sample1 + '.' + tmp[-1].split(".")[-1]
-            config.need_result_fig_file_list['fig4'][immune_type][index] = "/".join(tmp)
-        config.need_result_fig_file_list['fig5'][immune_type][0] = config.need_result_fig_file_list['fig5'][immune_type][0].split("aa_from_")[0] + "aa_from_" + eg_sample1 + '.png'
-        config.need_result_fig_file_list['fig5'][immune_type][1] = config.need_result_fig_file_list['fig5'][immune_type][1].split("aa_from_")[0] + "aa_from_" + eg_sample2 + '.png'
-    # print(config.need_result_fig_file_list['fig4'])
+    # for immune_type in data_json['summary']['immune_types']:
+    #     # eg_sample1 = data_json[immune_type + '_summary']['data'][0][0][:-2]
+    #     # ################################################### gai 1111111111111111111111111111
+    #     # eg_sample2 = data_json[immune_type + '_summary']['data'][1][0][:-2]
+    #     eg_sample1 = data_json['summary']['others']['fig5_'+immune_type+'_sample1']
+    #     eg_sample2 = data_json['summary']['others']['fig5_'+immune_type+'_sample2']
+    #     for index, fn in enumerate(config.need_result_fig_file_list['fig4'][immune_type][:3]):
+    #         tmp = fn.split("/")
+    #         tmp[-1] = eg_sample1 + '.' + tmp[-1].split(".")[-1]
+    #         config.need_result_fig_file_list['fig4'][immune_type][index] = "/".join(tmp)
+    #     config.need_result_fig_file_list['fig5'][immune_type][0] = config.need_result_fig_file_list['fig5'][immune_type][0].split("aa_from_")[0] + "aa_from_" + eg_sample1 + '.png'
+    #     config.need_result_fig_file_list['fig5'][immune_type][1] = config.need_result_fig_file_list['fig5'][immune_type][1].split("aa_from_")[0] + "aa_from_" + eg_sample2 + '.png'
+    # # print(config.need_result_fig_file_list['fig4'])
 
     # TODO cp result file
     for immune_type in data_json['summary']['immune_types']:
         for file in config.need_result_table_file_list[immune_type]:
             os.system("cp {result_path}/{file} {report_path}/result_file".format(result_path=result_path, report_path=report_path, file=file))
-        for files in config.need_result_fig_file_list.values():
-            for f in files[immune_type]:
-                os.system("cp {result_path}/{f} {report_path}/result_file".format(result_path=result_path, f=f, report_path=report_path))
-        for index, file in enumerate(config.need_result_fig_file_list['fig4'][immune_type][:3]):
-            tmp = file.split("/")
-            new_name = immune_type + '-' + tmp[-2] + '-' + tmp[-1]
-            os.system("cp {result_path}/{file} {report_path}/result_file/{new_name}".format(result_path=result_path, report_path=report_path, file=file, new_name=new_name))
-            tmp[-1] = new_name
-            config.need_result_fig_file_list['fig4'][immune_type][index] = "/".join(tmp)
-        for i in [1,2,3,5,6,7]:
-            if i == 7 and data_json['summary']['RNA'] == 0:
-                continue
-            fig_name = 'fig' + str(i)
-            for index, file in enumerate(config.need_result_fig_file_list[fig_name][immune_type]):
-                new_name = immune_type + '-' + file.split("/")[-1]
-                os.system("cp {result_path}/{file} {report_path}/result_file/{new_name}".format(result_path=result_path, report_path=report_path, file=file, new_name=new_name))
-                config.need_result_fig_file_list[fig_name][immune_type][index] = new_name
+        # for files in config.need_result_fig_file_list.values():
+        #     for f in files[immune_type]:
+        #         os.system("cp {result_path}/{f} {report_path}/result_file".format(result_path=result_path, f=f, report_path=report_path))
+        # for index, file in enumerate(config.need_result_fig_file_list['fig4'][immune_type][:3]):
+        #     tmp = file.split("/")
+        #     new_name = immune_type + '-' + tmp[-2] + '-' + tmp[-1]
+        #     os.system("cp {result_path}/{file} {report_path}/result_file/{new_name}".format(result_path=result_path, report_path=report_path, file=file, new_name=new_name))
+        #     tmp[-1] = new_name
+        #     config.need_result_fig_file_list['fig4'][immune_type][index] = "/".join(tmp)
+        # for i in [1,2,3,5,6,7]:
+        #     if i == 7 and data_json['summary']['RNA'] == 0:
+        #         continue
+        #     fig_name = 'fig' + str(i)
+        #     for index, file in enumerate(config.need_result_fig_file_list[fig_name][immune_type]):
+        #         new_name = immune_type + '-' + file.split("/")[-1]
+        #         os.system("cp {result_path}/{file} {report_path}/result_file/{new_name}".format(result_path=result_path, report_path=report_path, file=file, new_name=new_name))
+        #         config.need_result_fig_file_list[fig_name][immune_type][index] = new_name
 
     
     # generate show image
@@ -205,13 +205,19 @@ def main():
         if image_index == 7 and data_json['summary']['RNA'] == 0:
             continue
         fig_name = 'fig' + str(image_index)
-        try:
-            for immune_type in data_json['summary']['immune_types']:
-                file_name = immune_type + '_' + fig_name + '.png'
-                file_num = len(config.need_result_fig_file_list[fig_name][immune_type])
-                concat_images(get_abs_path(config.need_result_fig_file_list[fig_name][immune_type], report_path + '/result_file'), report_path+'/show_img/'+ file_name, 2, file_num // 2, text_size=20)
-        except:
-            config.check_sec['cell_filter'] = 0
+        for immune_type in data_json['summary']['immune_types']:
+            fig_path = result_path + '/' + config.final_figs[fig_name][immune_type]
+            if os.path.exists(fig_path):
+                os.system("cp {fig_path} {report_path}/show_img/{immune_type}_{fig_name}.png".format(fig_path=fig_path, report_path=report_path, immune_type=immune_type, fig_name=fig_name))
+            else:
+                print("No such fig : %s !!!" % fig_name)
+        # try:
+        #     for immune_type in data_json['summary']['immune_types']:
+        #         file_name = immune_type + '_' + fig_name + '.png'
+        #         file_num = len(config.need_result_fig_file_list[fig_name][immune_type])
+        #         concat_images(get_abs_path(config.need_result_fig_file_list[fig_name][immune_type], report_path + '/result_file'), report_path+'/show_img/'+ file_name, 2, file_num // 2, text_size=20)
+        # except:
+        #     config.check_sec['cell_filter'] = 0
     data_json['check_sec'] = config.check_sec
     # generate report html
     generate_content(main_path + "/Template/split_content_temp.html", data_json, report_path + "/tmp.html")

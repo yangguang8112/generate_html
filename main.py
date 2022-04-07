@@ -141,8 +141,8 @@ def main():
     main_path = os.path.split(os.path.realpath(__file__))[0]
     # get_data_json
     data_json = generate_data(result_path, config)
-    config.need_result_fig_file_list['fig3'][1] = config.need_result_fig_file_list['fig3'][1].replace("_uniqstr_", data_json['summary']['res_value']['topGene_Show'])
-    config.need_result_fig_file_list['fig3'][3] = config.need_result_fig_file_list['fig3'][3].replace("_uniqstr_", data_json['summary']['res_value']['topGene_Show'])
+    # config.need_result_fig_file_list['fig3'][1] = config.need_result_fig_file_list['fig3'][1].replace("_uniqstr_", data_json['summary']['res_value']['topGene_Show'])
+    # config.need_result_fig_file_list['fig3'][3] = config.need_result_fig_file_list['fig3'][3].replace("_uniqstr_", data_json['summary']['res_value']['topGene_Show'])
     # print(main_path)
     os.system("cp -r {main_path}/Template/full_size_page {report_path};cp -r {main_path}/Template/report_files {report_path}".format(report_path=report_path, main_path=main_path))
     os.mkdir("{report_path}/result_file".format(report_path=report_path))
@@ -156,47 +156,54 @@ def main():
     # 图片“详见”拷贝
     # os.system("cp {result_path}/Result_2_Analysis/03_Difference/diffCluster_volcano/All.*.volcano.png {report_path}/img".format(result_path=result_path, report_path=report_path))
     # os.system("cp {result_path}/Result_2_Analysis/03_Difference/diffCluster_picture/All.*marker*.png {report_path}/img".format(result_path=result_path, report_path=report_path))
-    for files in config.need_result_fig_file_list.values():
-        for f in files:
-            os.system("cp {result_path}/{f} {report_path}/result_file".format(result_path=result_path, f=f, report_path=report_path))
+    # for files in config.need_result_fig_file_list.values():
+    #     for f in files:
+    #         os.system("cp {result_path}/{f} {report_path}/result_file".format(result_path=result_path, f=f, report_path=report_path))
     
     # generate show image
-    try:
-        merge_fig1(get_abs_path(config.need_result_fig_file_list['fig1'], report_path + '/result_file'), report_path+'/show_img')
-    except KeyError as e:
-        print("fig1 merge error!!!!!!!!")
-        print(e)
-        config.check_sec['cell_filter'] = 0
-    try:
-        merge_fig2(get_abs_path(config.need_result_fig_file_list['fig2'], report_path + '/result_file'), report_path+'/show_img')
-    except KeyError as e:
-        print("fig2 merge error!!!!!!!!")
-        print(e)
-        config.check_sec['sample_merge'] = 0
-    try:
-        merge_fig3_new_new(get_abs_path(config.need_result_fig_file_list['fig3'], report_path + '/result_file'), report_path+'/show_img')
-    except KeyError as e:
-        print("fig3 merge error!!!!!!!!")
-        print(e)
-        config.check_sec['cell_cluster_marker'] = 0
-    try:
-        merge_fig4(get_abs_path(config.need_result_fig_file_list['fig4'], report_path + '/result_file'), report_path+'/show_img')
-    except KeyError as e:
-        print("fig4 merge error!!!!!!!!")
-        print(e)
-        config.check_sec['go_kegg'] = 0
-    try:
-        merge_fig5(get_abs_path(config.need_result_fig_file_list['fig5'], report_path + '/result_file'), report_path+'/show_img')
-    except KeyError as e:
-        print("fig5 merge error!!!!!!!!")
-        print(e)
-        config.check_sec['pseudotime'] = 0
-    try:
-        merge_fig6(get_abs_path(config.need_result_fig_file_list['fig6'], report_path + '/result_file'), report_path+'/show_img')
-    except KeyError as e:
-        print("fig6 merge error!!!!!!!!")
-        print(e)
-        config.check_sec['cell_type'] = 0
+    for i in range(1, 7):
+        fig_name = "fig%d" % i
+        fig_path = result_path + '/' + config.final_figs[fig_name]
+        if os.path.exists(fig_path):
+            os.system("cp {fig_path} {report_path}/show_img/fig{i}.png".format(fig_path=fig_path, report_path=report_path, i=i))
+        else:
+            config.check_sec[config.check_keys[i-1]] = 0
+    # try:
+    #     merge_fig1(get_abs_path(config.need_result_fig_file_list['fig1'], report_path + '/result_file'), report_path+'/show_img')
+    # except KeyError as e:
+    #     print("fig1 merge error!!!!!!!!")
+    #     print(e)
+    #     config.check_sec['cell_filter'] = 0
+    # try:
+    #     merge_fig2(get_abs_path(config.need_result_fig_file_list['fig2'], report_path + '/result_file'), report_path+'/show_img')
+    # except KeyError as e:
+    #     print("fig2 merge error!!!!!!!!")
+    #     print(e)
+    #     config.check_sec['sample_merge'] = 0
+    # try:
+    #     merge_fig3_new_new(get_abs_path(config.need_result_fig_file_list['fig3'], report_path + '/result_file'), report_path+'/show_img')
+    # except KeyError as e:
+    #     print("fig3 merge error!!!!!!!!")
+    #     print(e)
+    #     config.check_sec['cell_cluster_marker'] = 0
+    # try:
+    #     merge_fig4(get_abs_path(config.need_result_fig_file_list['fig4'], report_path + '/result_file'), report_path+'/show_img')
+    # except KeyError as e:
+    #     print("fig4 merge error!!!!!!!!")
+    #     print(e)
+    #     config.check_sec['go_kegg'] = 0
+    # try:
+    #     merge_fig5(get_abs_path(config.need_result_fig_file_list['fig5'], report_path + '/result_file'), report_path+'/show_img')
+    # except KeyError as e:
+    #     print("fig5 merge error!!!!!!!!")
+    #     print(e)
+    #     config.check_sec['pseudotime'] = 0
+    # try:
+    #     merge_fig6(get_abs_path(config.need_result_fig_file_list['fig6'], report_path + '/result_file'), report_path+'/show_img')
+    # except KeyError as e:
+    #     print("fig6 merge error!!!!!!!!")
+    #     print(e)
+    #     config.check_sec['cell_type'] = 0
     data_json['check_sec'] = config.check_sec
     # generate report html
     generate_content(main_path + "/Template/split_content_temp.html", data_json, report_path + "/tmp.html")

@@ -73,10 +73,10 @@ class Config(object):
         #     ]
         # }
         self.final_figs = {
-            "fig1": "Backup/07_show_img/fig1_final.png",
-            "fig2": "Backup/07_show_img/fig2_final.png",
-            "fig3": "Backup/07_show_img/fig3_final.png",
-            "fig4": "Backup/07_show_img/fig4_final.png",
-            "fig5": "Backup/07_show_img/fig5_final.png",
-            "fig6": "Backup/07_show_img/fig6_final.png"
+            "fig1": "../Backup/07_show_img/fig1_final.png",
+            "fig2": "../Backup/07_show_img/fig2_final.png",
+            "fig3": "../Backup/07_show_img/fig3_final.png",
+            "fig4": "../Backup/07_show_img/fig4_final.png",
+            "fig5": "../Backup/07_show_img/fig5_final.png",
+            "fig6": "../Backup/07_show_img/fig6_final.png"
         }

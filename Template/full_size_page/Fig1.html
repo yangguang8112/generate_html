@@ -6118,7 +6118,7 @@
           data-component="article-container"
           data-track-component="figure"
         >
-          <div id="figure-1-title" class="u-display-none">Fig. 1: 克隆型分布</div>
+          <div id="figure-1-title" class="u-display-none">Fig. 1: 数据质控</div>
           <article itemscope="itemscope" itemtype="http://schema.org/Article">
             <header>
               <h1
@@ -6126,42 +6126,43 @@
                 data-test="top-caption"
                 id="Fig1"
               >
-              Fig. 1: 克隆型分布
+              Fig. 1: 数据质控
               </h1>
             </header>
             <div class="c-article-figure-content">
               <figure data-test="figure">
-                {% for immune_type in summary.immune_types %}
-                <p>{{immune_type}}</p>
+
                 <div class="c-article-figure-content-image">
                   <div class="c-article-figure-content-image-inline">
                     <picture
                       ><source
                         type="image/webp"
                         srcset="
-                        ../show_img/{{ immune_type }}_fig1.png 1x
+                        ../show_img/{{ figs_name.fig1 }} 1x
                         " />
                       <img
                         aria-describedby="Fig1"
-                        src="../show_img/{{ immune_type }}_fig1.png"
+                        src="../show_img/{{ figs_name.fig1 }}"
                         alt="Fig. 1"
                         width="2049"
                         height="1552"
                     /></picture>
                   </div>
                 </div>
-                {% endfor %}
+
                 <div
                   class="c-article-figure-description"
                   data-test="bottom-caption"
                   id="figure-1-desc"
                 >
-                  <p>
-                    <b>a</b> 各样本中特有的克隆型总数目，特有克隆数目一般随细胞数目增加而增加。 
-                    <b>b</b> 各样本中克隆型丰度变化，横轴表示克隆型具有的细胞数目，即克隆型大小，纵轴表示克隆型的数目，随着克隆型大小的增加，相应地该大小的克隆型数目逐渐减少，曲线呈现下降趋势。
-                    <b>c</b> 克隆型频率在对应分段的克隆型的累计占比，如淡黄色表示频率小于10<sup>-4</sup>的的克隆型的累计百分比，出现Large和Hyperexpand比例较高说明克隆性增殖情况明显。
-                    <b>d</b> 将克隆型按照克隆型大小分为五类，统计对应克隆细胞数目占样本细胞的比例，一般来说，克隆型大小为1的克隆数目占比较高，克隆型大小越大占比越低。如果大克隆型比例较高，则说明存在明显的克隆性增殖。
-                  </p>
+                <p>
+                  <b>a</b> 过滤前样本的富集分数的分布。
+                  <b>b</b> 过滤前样本的片段数分布。 
+                  <b>c</b> 过滤后样本的富集分数的分布。
+                  <b>d</b> 过滤后样本的片段数分布。
+                  <b>e</b> 过滤后样本长度的分布。
+                  <b>f</b> 过滤后样本的片段数和TSS富集分数的分布密度图。
+                </p>
                 </div>
                 <div class="c-article-figure-button-container hide-print">
                   <a

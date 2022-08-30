@@ -10,7 +10,7 @@
     <div class="c-context-bar__container u-container">
       <div class="c-context-bar__title">
         <!-- Inference and analysis of cell-cell communication using CellChat -->
-        Immune Landscape 结题报告
+        scATAC Landscape 结题报告
       </div>
 
       <div class="c-pdf-download u-clear-both">
@@ -56,7 +56,7 @@
             <span
               class="c-article-identifiers__open"
               data-test="open-access"
-              >Immune Landscape</span
+              >scATAC Landscape</span
             >
           </li>
 
@@ -77,7 +77,7 @@
           data-test="article-title"
           data-article-title=""
         >
-        {{ summary.title }} 免疫组库结题报告
+        {{ summary.title }} scATAC-seq结题报告
         </h1>
 
       </header>
@@ -109,23 +109,10 @@
           </h2>
           <div class="c-article-section__content" id="Abs1-content">
             <p>
-              本项目中分析物种为：{{ summary.species }}<br>
-              {% if summary.TCR.has %}
-              <p>
-                分析的TCR样本总数为：{{ summary.TCR.sample_num }}个；<br>
-                所有样本过滤前总细胞数为：{{ summary.TCR.raw_cell_num }}个，过滤后带有效V(D)J对的总细胞数为：{{ summary.TCR.filted_VJ_cell_num }}个；<br>
-                过滤前平均每个样本的细胞数为：{{ summary.TCR.raw_cell_num_per_sample }}个，过滤后为：{{ summary.TCR.filted_VJ_cell_num_per_sample }}个；<br>
-                平均每个样本的V(D)J片段比对率为：{{ summary.TCR.map_vdj_rate }}。详细结果见 表1 细胞信息统计总表。
-              </p>
-              {% endif %}
-              {% if summary.BCR.has %}
-              <p>
-                分析的BCR样本总数为：{{ summary.BCR.sample_num }}个；<br>
-                所有样本过滤前总细胞数为：{{ summary.BCR.raw_cell_num }}个，过滤后带有效V(D)J对的总细胞数为：{{ summary.BCR.filted_VJ_cell_num }}个；<br>
-                过滤前平均每个样本的细胞数为：{{ summary.BCR.raw_cell_num_per_sample }}个，过滤后为：{{ summary.BCR.filted_VJ_cell_num_per_sample }}个；<br>
-                平均每个样本的V(D)J片段比对率为：{{ summary.BCR.map_vdj_rate }}。详细结果见 表1 细胞信息统计总表。
-              </p>
-              {% endif %}
+              本项目中分析的物种为：{{ summary.Species }}；分析时样本总数为：{{ summary.sample_num }}<br>
+              所有样本过滤前总细胞数为：{{ summary.raw_cell }}个cells，过滤后总细胞数为：{{ summary.cell_filter }}<br>
+              过滤前平均每个样本的细胞数目为：{{ summary.raw_cell_per_sample }}个cells，过滤后为：{{ summary.cell_filter_per_sample }}个cells<br>
+              详细结果见细胞信息统计总表。<br>
             </p>
             <div
               class="c-article-table"
@@ -141,14 +128,6 @@
                 </figcaption>
                 <div class="c-article-table-container">
 
-                  {% if summary.TCR.has %}
-                  TCR
-                  <!-- <p>
-                    分析的TCR样本总数为：{{ summary.TCR.sample_num }}个；<br>
-                    所有样本过滤前总细胞数为：{{ summary.TCR.raw_cell_num }}个，过滤后带有效V(D)J对总细胞数为：{{ summary.TCR.filted_VJ_cell_num }}个；<br>
-                    过滤前平均每个样本的细胞数为：{{ summary.TCR.raw_cell_num_per_sample }}个，过滤后为：{{ summary.TCR.filted_VJ_cell_num_per_sample }}个；<br>
-                    平均每个样本比对到V(D)J片段的比对率为：{{ summary.TCR.map_vdj_rate }}，详细结果见细胞信息统计总表。
-                  </p> -->
                   <div class="c-article-table-border c-table-scroll-wrapper">
                     <div
                       class="
@@ -160,13 +139,13 @@
                       <table class="data last-table">
                         <thead class="c-article-table-head">
                           <tr>
-                            {%for col in TCR[table_keys[0]].header %}
+                            {%for col in tables.table1.header %}
                             <th class="u-text-left">{{ col }}</th>
                             {%endfor%}
                           </tr>
                         </thead>
                         <tbody>
-                          {% for line in TCR[table_keys[0]].data %}
+                          {% for line in tables.table1.data %}
                           <tr>
                             {% for info in line %}
                             <td class="u-text-left">{{ info }}</td>
@@ -177,55 +156,17 @@
                       </table>
                     </div>
                   </div>
-                  {% endif %}
-                  {% if summary.BCR.has %}
-                  <br>
-                  BCR
-                  <!-- <p>
-                    分析的BCR样本总数为：{{ summary.BCR.sample_num }}个；<br>
-                    所有样本过滤前总细胞数为：{{ summary.BCR.raw_cell_num }}个，过滤后带有效V(D)J对总细胞数为：{{ summary.BCR.filted_VJ_cell_num }}个；<br>
-                    过滤前平均每个样本的细胞数为：{{ summary.BCR.raw_cell_num_per_sample }}个，过滤后为：{{ summary.BCR.filted_VJ_cell_num_per_sample }}个；<br>
-                    平均每个样本比对到V(D)J片段的比对率为：{{ summary.BCR.map_vdj_rate }}，详细结果见细胞信息统计总表。
-                  </p> -->
-                  <div class="c-article-table-border c-table-scroll-wrapper">
-                    <div
-                      class="
-                        c-table-scroll-wrapper__content
-                        c-table-scroll-wrapper__fade--transparent
-                      "
-                      data-component-scroll-wrapper=""
-                    >
-                      <table class="data last-table">
-                        <thead class="c-article-table-head">
-                          <tr>
-                            {%for col in BCR[table_keys[0]].header %}
-                            <th class="u-text-left">{{ col }}</th>
-                            {%endfor%}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {% for line in BCR[table_keys[0]].data %}
-                          <tr>
-                            {% for info in line %}
-                            <td class="u-text-left">{{ info }}</td>
-                            {% endfor %}
-                          </tr>
-                          {% endfor %}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  {% endif %}
+
                   
                   <div class="c-article-section__figure-description" data-test="bottom-caption" id="table-desc">
                     <p>
-                      表1 注： <br>SampleID：分析时的样本名；<br>
-                      Estimated Number of Cells：检测到的细胞数目，细胞数目取决于文库中T/B细胞比例；<br>
-                      Mean Read Pairs per Cell：平均每个细胞检测到的Reads数目，推荐每个细胞的测序量为5000个reads；<br>
-                      Number of Read Pairs：样本的总reads数目；<br>
-                      Number of Cells With Productive V-J Spanning Pair：带有效V-J对的细胞数目；<br>
-                      Reads Mapped to Any V(D)J Gene：比对到V(D)J片段的Reads比例；<br>
-                      Reads Mapped to TRA/B, IGH/K/L：比对到相应片段的Reads比例。
+                      表1 注： <br>Estimated number of cells：预估的细胞数；<br>
+                      Confidently mapped read pairs：有效比对的Reads数；<br>
+                      Median high-quality fragments per cell：细胞高质量的片段数的中位数；<br>
+                      Fraction of high-quality fragments overlapping TSS：TSS区域高质量片段数比例；<br>
+                      Fragments flanking a single nucleosome：单个核小体长度的片段比例；<br>
+                      TSS enrichment score：TSS富集分数；<br>
+                      TSS： transcription start site。
                     </p>
                   </div>
                 </div>
@@ -290,7 +231,7 @@
       </div>
 
       {% if check_sec.cell_filter == 1 %}
-      <section data-title="克隆型分布">
+      <section data-title="细胞过滤">
         <div class="c-article-section" id="Sec1-section">
           <h2
             class="
@@ -299,17 +240,26 @@
             "
             id="Sec1"
           >
-          克隆型分布
+          细胞过滤
           </h2>
           <div class="c-article-section__content" id="Sec1-content">
             <p>
-              通常情况下，一个淋巴细胞会同时表达一条重链和一条轻链，这两条链共同确定了这个细胞的克隆型(Clonetype)。
-              相比常规免疫组库分析，单细胞免疫组库可以同时获得一个细胞的轻链和重链，因此可以更好地确定细胞的克隆型。
-              但在实际的分析过程中，可能会出现一个克隆型只含有一条链或者多条链的情况，在我们的分析中过滤了含有3条以上链的细胞。
+              原始数据中存在一些低质量的数据信息，会影响生信分析的结果可靠性。因此，在进行下游分析前需要对细胞数据进行过滤，主要指标包括片段数、TSS富集分数和双胞数等。
             </p>
             <p>
-              CDR3区域是T/BCR序列中变化最丰富的部分，两个细胞CDR3序列完全相同被认定为一种克隆型。
-              如果两个细胞的一条链完全相同，其中一个细胞未测到另一条链，也视为两个克隆型。在 表2 中包括所有样本的克隆型统计的基本信息。
+              片段即 fragment ，在ATAC-seq实验中，表示的是介于两个转座酶插入位点之间的的DNA片段，由于在建库过程中会进行片段长度筛选，只会保留较短的DNA片段，一般是1 kb以下。
+              片段数反映了Tn5转座酶在基因组的插入情况，是评价scATAC-seq实验成功与否的重要指标。转录活跃的基因其转录起始位点区域是开放的，有利于Tn5转座酶插入，TSS富集分数，
+              即TSS区域片段数所占的比例，可以用来评估噪声情况，如果TSS富集分数太低，说明Tn5转座的效果不理想，获得的文库中存在较大比例的基因组背景。双胞或者多胞会对下游的数据分析产生影响，
+              ArhcR
+              <sup>
+                <a data-track="click" data-track-action="reference anchor" data-track-label="link" data-test="citation-ref" aria-label="Reference 1" title="Granja J M, Corces M R, Pierce S E, et al. ArchR is a scalable software package for integrative single-cell chromatin accessibility analysis[J]. Nature genetics, 2021, 53(3): 403-411." href="./report.html#ref-CR1" id="ref-link-section-d38771043e817">1</a>
+              </sup>
+              可以通过比较单个barcode与来自两个barcode的模拟混合数据的相似性，来评估该barcode是双胞的可能性,。具体指标如下：
+            </p>
+            <p>
+              (1)  片段数：2000 ~ 100, 000；<br>
+              (2)  TSS富集分数：≥ 6；<br>
+              (3)  双胞分数：默认去除双胞富集分数最高的5%的细胞。
             </p>
 
             <div
@@ -321,13 +271,11 @@
               <figure>
                 <figcaption class="c-article-table__figcaption">
                   <b id="Tab2" data-test="table-caption"
-                    >表2 克隆型统计</b
+                    >表2 过滤后细胞信息统计表</b
                   >
                 </figcaption>
                 <div class="c-article-table-container">
 
-                  {% if summary.TCR.has %}
-                  TCR
                   <div class="c-article-table-border c-table-scroll-wrapper">
                     <div
                       class="
@@ -339,13 +287,13 @@
                       <table class="data last-table">
                         <thead class="c-article-table-head">
                           <tr>
-                            {%for col in TCR[table_keys[1]].header %}
+                            {%for col in tables.table2.header %}
                             <th class="u-text-left">{{ col }}</th>
                             {%endfor%}
                           </tr>
                         </thead>
                         <tbody>
-                          {% for line in TCR[table_keys[1]].data %}
+                          {% for line in tables.table2.data %}
                           <tr>
                             {% for info in line %}
                             <td class="u-text-left">{{ info }}</td>
@@ -356,47 +304,14 @@
                       </table>
                     </div>
                   </div>
-                  {% endif %}
-                  {% if summary.BCR.has %}
-                  <br>
-                  BCR
-                  <div class="c-article-table-border c-table-scroll-wrapper">
-                    <div
-                      class="
-                        c-table-scroll-wrapper__content
-                        c-table-scroll-wrapper__fade--transparent
-                      "
-                      data-component-scroll-wrapper=""
-                    >
-                      <table class="data last-table">
-                        <thead class="c-article-table-head">
-                          <tr>
-                            {%for col in BCR[table_keys[1]].header %}
-                            <th class="u-text-left">{{ col }}</th>
-                            {%endfor%}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {% for line in BCR[table_keys[1]].data %}
-                          <tr>
-                            {% for info in line %}
-                            <td class="u-text-left">{{ info }}</td>
-                            {% endfor %}
-                          </tr>
-                          {% endfor %}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  {% endif %}
                   
                   <div class="c-article-section__figure-description" data-test="bottom-caption" id="table-desc">
                     <p>
-                      表1 注： <br>SampleID：分析时的样本名；<br>
-                      Clonetype_id：克隆型名称；<br>
-                      Frequency：克隆型大小；<br>
-                      Proportion：克隆型占样本的比例；<br>
-                      CDR3.aa：克隆型的CDR3序列，如果克隆型为双链，则用分号隔开，前面为轻链后面为重链。
+                      表1 注： <br>Cells：过滤后的细胞数；<br>
+                      Median Frags：过滤后细胞内片段数的中位数；<br>
+                      median TSSEnrichment：过滤后细胞内TSS富集分数的中位数；<br>
+                      median DoubletEnrichment：过滤后细胞内是双胞富集分数的中位数；<br>
+                      fragments flanking a single nucleosome：过滤后单个核小体长度的片段比例。
                     </p>
                   </div>
                 </div>
@@ -429,44 +344,35 @@
             </div>
 
             <p>
-              克隆型分布分析包括克隆型数目统计、丰度（Abundance）分析、CDR3序列长度分析等，旨在获得样本中不同克隆型的大致分布情况。
-              本分析和下面的大部分分析内容采用immunarch
-              <sup>
-                <a data-track="click" data-track-action="reference anchor" 
-                data-track-label="link" data-test="citation-ref" aria-label="Reference 1" 
-                title="ImmunoMind Team. (2019). immunarch: An R Package for Painless Bioinformatics Analysis of T-Cell and B-Cell Immune Repertoires. Zenodo. http://doi.org/10.5281/zenodo.3367200" 
-                href="./report.html#ref-CR1" id="ref-link-section-d38771043e817">1</a>
-              </sup>
-              进行分析。
+              对数据进行过滤后，可以看到细胞的TSS富集分数和片段数等指标均得到显著提升（Fig. 1a-d, f）。
+              由于Tn5转座子的特性，片段长度的分布会与核小体长度的倍数呈现周期性的变化，这也是评价ATAC数据质量的参考依据，通常在单个核小体和两个核小体长度的片段比例会比较高（Fig. 1e）。            
             </p>
-            <p>
-              克隆型数目统计可以获得样本中总克隆型数目和样本特异性的克隆型数目；丰度分析探索了克隆型的富集情况，比如最富集的10个克隆型占有的比例；
-              CDR3序列长度分析统计了样本中CDR3序列长度的分布，可以辅助判断样本的差异。
-            </p>
+
             <div class="
                 c-article-section__figure
                 js-c-reading-companion-figures-item
               " data-test="figure" data-container-section="figure" id="figure-1" data-title="克隆型分布" data-gtm-vis-first-on-screen-10482319_399="746637" data-gtm-vis-total-visible-time-10482319_399="10000" data-gtm-vis-recent-on-screen-10482319_399="4647217" data-gtm-vis-has-fired-10482319_399="1">
               <figure>
                 <figcaption>
-                  <b id="Fig1" class="c-article-section__figure-caption" data-test="figure-caption-text">Fig. 1: 克隆型分布</b>
+                  <b id="Fig1" class="c-article-section__figure-caption" data-test="figure-caption-text">Fig. 1: 数据质控</b>
                 </figcaption>
                 <div class="c-article-section__figure-content">
-                  {% for immune_type in summary.immune_types %}
-                  <p>{{immune_type}}</p>
+
                   <div class="c-article-section__figure-item">
                     <a class="c-article-section__figure-link" data-test="img-link" data-track="click" data-track-label="image" data-track-action="view figure" href="./full_size_page/Fig1.html" rel="nofollow"><picture><source type="image/webp" srcset="
-                      show_img/{{ immune_type }}_fig1.png 1x
+                      show_img/{{ figs_name.fig1 }} 1x
                           ">
-                        <img aria-describedby="Fig0" src="show_img/{{ immune_type }}_fig1.png" alt="figure0" loading="lazy" width="685" height="519"></picture></a>
+                        <img aria-describedby="Fig0" src="show_img/{{ figs_name.fig1 }}" alt="figure0" loading="lazy" width="685" height="519"></picture></a>
                   </div>
-                  {% endfor %}
+
                   <div class="c-article-section__figure-description" data-test="bottom-caption" id="figure-1-desc">
                     <p>
-                      <b>a</b> 各样本中特有的克隆型总数目，特有克隆数目一般随细胞数目增加而增加。
-                      <b>b</b> 各样本中克隆型丰度变化，横轴表示克隆型具有的细胞数目，即克隆型大小，纵轴表示克隆型的数目，随着克隆型大小的增加，相应地该大小的克隆型数目逐渐减少，曲线呈现下降趋势。
-                      <b>c</b> 克隆型频率在对应分段的克隆型的累计占比，如淡黄色表示频率小于10<sup>-4</sup>的的克隆型的累计百分比，出现Large和Hyperexpand比例较高说明克隆性增殖情况明显。
-                      <b>d</b> 将克隆型按照克隆型大小分为五类，统计对应克隆细胞数目占样本细胞的比例，一般来说，克隆型大小为1的克隆数目占比较高，克隆型大小越大占比越低。如果大克隆型比例较高，则说明存在明显的克隆性增殖。
+                      <b>a</b> 过滤前样本的富集分数的分布。
+                      <b>b</b> 过滤前样本的片段数分布。 
+                      <b>c</b> 过滤后样本的富集分数的分布。
+                      <b>d</b> 过滤后样本的片段数分布。
+                      <b>e</b> 过滤后样本长度的分布。
+                      <b>f</b> 过滤后样本的片段数和TSS富集分数的分布密度图。
                     </p>
                   </div>
                 </div>
@@ -482,7 +388,7 @@
       {% endif %}
 
       {% if check_sec.sample_merge == 1 %}
-      <section data-title="共享克隆型">
+      <section data-title="数据整合">
         <div class="c-article-section" id="Sec11-section">
           <h2
             class="
@@ -491,11 +397,11 @@
             "
             id="Sec11"
           >
-          共享克隆型
+          数据整合
           </h2>
           <div class="c-article-section__content" id="Sec11-content">
             <p>
-              样本中的共享克隆型（Clonetype overlap）揭示了样本的相似性和可能存在的细胞迁移路径，共享克隆型越多，样本相似性越高。
+              对多批次、多样本的数据分析时，scATAC-seq数据一般会显示出较强的批次效应。批次效应会干扰下游的分析，影响挖掘生物学意义的差异，这里我们使用harmony对批次效应进行校正。
             </p>
             <div
               class="
@@ -513,39 +419,28 @@
                     id="Fig2"
                     class="c-article-section__figure-caption"
                     data-test="figure-caption-text"
-                    >Fig. 2: 共享克隆型</b
+                    >Fig. 2: 数据整合</b
                   >
                 </figcaption>
+
                 <div class="c-article-section__figure-content">
-                  {% for immune_type in summary.immune_types %}
-                  <p>{{immune_type}}</p>
                   <div class="c-article-section__figure-item">
                     <a class="c-article-section__figure-link" data-test="img-link" data-track="click" 
                     data-track-label="image" data-track-action="view figure" href="./full_size_page/Fig2.html" rel="nofollow">
                       <picture><source type="image/webp" srcset="
-                      show_img/{{ immune_type }}_fig2.png 1x
+                      show_img/{{ figs_name.fig2 }} 1x
                           ">
-                        <img aria-describedby="Fig2" src="show_img/{{ immune_type }}_fig2.png" alt="figure0" loading="lazy" width="685" height="519"></picture></a>
+                        <img aria-describedby="Fig2" src="show_img/{{ figs_name.fig1 }}" alt="figure0" loading="lazy" width="685" height="519"></picture></a>
                   </div>
-                  {% endfor %}
+
                   <div
                     class="c-article-section__figure-description"
                     data-test="bottom-caption"
                     id="figure-2-desc"
                   >
-                    <!-- <p>
-                      文库的整合优先选用Seurat中的“SCTransform”
-                      <sup>
-                        <a data-track="click" data-track-action="reference anchor" data-track-label="link" data-test="citation-ref" aria-label="Reference 1" title="Hafemeister C, Satija R. Normalization and variance stabilization of single-cell RNA-seq data using regularized negative binomial regression[J]. Genome biology, 2019, 20(1): 1-15." href="./report.html#ref-CR1" id="ref-link-section-d38771043e817">1</a>
-                      </sup>
-                      。“SCTransform”不仅批次效应矫正能力强，而且能够更好保留真实存在的生物学差异。
-                      <b>a</b> 不同批次整合后的细胞在UMAP坐标上的情况，不同颜色表示不同批次，通过这个图我们可以观察不同批次数据的整合后的情况。许多情况下，我们期望不同batch细胞弥散分布，没有明显的聚集。但是，即使某个batch的细胞有聚集，也不一定是整合效果不好。可能不同batch样本的差异巨大，存在生物学上特有的细胞类群。但生物学重复如果出现batch特异，则需要额外注意。  
-                      <b>b</b> 不同样本在UMAP坐标上的展示情况，不同颜色表示不同样本。在聚类之后，我们可以更为定量地展示是否某个cluster在不同batch（<b>c</b>）或者样本间（<b>d</b>）的差异。类似<b>a</b>和<b>b</b>的判断方法，<b>c</b>和<b>d</b>可以辅助质控评判和挑选condition特异的细胞类群。
-
-                    </p> -->
                     <p>
-                      <b>a</b> 不同样本间overlap的克隆型数目，两个不同个体样本的共享克隆型一般比较低，而相同个体的不同组织中会存在一定比例的共享克隆型。 
-                      <b>b</b> Morisita指数，用描述个体在群体中的分散程度来评估样本重叠度，指数越接近1代表两个样本重叠度越高。
+                      <b>a</b> 使用harmony校正批次效应后，按样本显示的UMAP图。 
+                      <b>b</b> 使用harmony校正批次效应后，按批次显示的UMAP图。
                     </p>
                   </div>
                 </div>
@@ -582,7 +477,7 @@
       {% endif %}
 
       {% if check_sec.cell_cluster_marker == 1 %}
-      <section data-title="多样性分析">
+      <section data-title="类特征分析">
         <div class="c-article-section" id="Sec12-section">
           <h2
             class="
@@ -591,15 +486,116 @@
             "
             id="Sec12"
           >
-          多样性分析
+          类特征分析
           </h2>
           <div class="c-article-section__content" id="Sec12-content">
             <!-- <h3 class="c-article__sub-heading" id="Sec13">
               Database construction for ligand-receptor interactions
             </h3> -->
             <p>
-              克隆型多样性（Diversity）是T/BCR分析的常用方法，我们通过多种算法对克隆多样性进行分析。
-              克隆多样性和机体的状态相关，在一些病理状态下，可能会出现T细胞克隆性增殖的现象，使克隆型多样性下降。
+              相似的细胞通常呈现相近的染色质开放状态。通过聚类分析，将相似的细胞归为一群，有助于发现一类细胞间普遍存在的染色质开放状态的规律。
+              ArchR使用源自Seurat
+              <sup>
+                <a data-track="click" data-track-action="reference anchor" 
+                data-track-label="link" data-test="citation-ref" aria-label="Reference 2" 
+                title="Hao Y, Hao S, Andersen-Nissen E, et al. Integrated analysis of multimodal single-cell data[J]. Cell, 2021, 184(13): 3573-3587." 
+                href="./report.html#ref-CR2" id="ref-link-section-d38771043e817">2</a>
+              </sup>
+              的聚类方法，这里我们使用resolution = {{ summary.resolution }} 进行聚类（Fig. 3a）。
+            </p>
+            <p>
+              ArchR通过对基因转录起始位点附近5 kb区域的片段数按离TSS的距离进行加权分析，获得细胞中每一个基因的表达分数（gene score）。
+              通过对类群中基因表达分数的差异分析，可以获得每个类群的特征基因（表3），用于对类群的注释。
+            </p>
+
+            <div
+              class="c-article-table"
+              data-test="inline-table"
+              data-container-section="table"
+              id="table-3"
+            >
+              <figure>
+                <figcaption class="c-article-table__figcaption">
+                  <b id="Tab3" data-test="table-caption"
+                    >表3 特征基因列表</b
+                  >
+                </figcaption>
+                <div class="c-article-table-container">
+
+                  <div class="c-article-table-border c-table-scroll-wrapper">
+                    <div
+                      class="
+                        c-table-scroll-wrapper__content
+                        c-table-scroll-wrapper__fade--transparent
+                      "
+                      data-component-scroll-wrapper=""
+                    >
+                      <table class="data last-table">
+                        <thead class="c-article-table-head">
+                          <tr>
+                            {%for col in tables.table3.header %}
+                            <th class="u-text-left">{{ col }}</th>
+                            {%endfor%}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for line in tables.table3.data %}
+                          <tr>
+                            {% for info in line %}
+                            <td class="u-text-left">{{ info }}</td>
+                            {% endfor %}
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  
+                  <div class="c-article-section__figure-description" data-test="bottom-caption" id="table-desc">
+                    <p>
+                      表3 注： <br>group_name：类群名；<br>
+                      seqnames：特征基因所在染色体；<br>
+                      start：特征基因的转录起始位置；<br>
+                      end：特征基因的转录中止位置；<br>
+                      strand：特征基因转录方向；<br>
+                      name：特征基因的名称；<br>
+                      idx：特征基因在分析时的序列号；<br>
+                      Log2FC：特征基因在该类群中相比其余类群的基因表达分数比值的对数；<br>
+                      FDR：假阳性率；<br>
+                      MeanDiff：特征基因在该类群中相比其余类群的基因表达分数的差值。
+                    </p>
+                  </div>
+                </div>
+                <div class="u-text-right u-hide-print">
+                  <a
+                    class="c-article__pill-button"
+                    data-test="table-link"
+                    data-track="click"
+                    data-track-action="view table"
+                    data-track-label="button"
+                    rel="nofollow"
+                    href="./result_file"
+                    aria-label="Full size table 2"
+                    ><span>Full size table</span
+                    ><svg
+                      width="16"
+                      height="16"
+                      focusable="false"
+                      role="img"
+                      aria-hidden="true"
+                      class="u-icon"
+                    >
+                      <use
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        xlink:href="#global-icon-chevron-right"
+                      ></use>
+                      </svg></a>
+                </div>
+              </figure>
+            </div>
+
+            <p>
+              为了更好地反映每一类群特征基因的分布情况，我们同时绘制了特征基因的小提琴图、在转录起始位置附近的片段分布峰图和UMAP展示图（Fig. 3b-d）。
             </p>
 
             <div
@@ -618,46 +614,31 @@
                     id="Fig3"
                     class="c-article-section__figure-caption"
                     data-test="figure-caption-text"
-                    >Fig. 3: 克隆型多样性</b
+                    >Fig. 3: 聚类分析</b
                   >
                 </figcaption>
                 <div class="c-article-section__figure-content">
-                  {% for immune_type in summary.immune_types %}
-                  <p>{{immune_type}}</p>
+
                   <div class="c-article-section__figure-item">
                     <a class="c-article-section__figure-link" data-test="img-link" data-track="click" 
                     data-track-label="image" data-track-action="view figure" href="./full_size_page/Fig3.html" rel="nofollow">
                       <picture><source type="image/webp" srcset="
-                      show_img/{{ immune_type }}_fig3.png 1x
+                      show_img/{{ figs_name.fig3 }} 1x
                           ">
-                        <img aria-describedby="Fig3" src="show_img/{{ immune_type }}_fig3.png" alt="figure0" loading="lazy" width="685" height="519"></picture></a>
+                        <img aria-describedby="Fig3" src="show_img/{{ figs_name.fig3 }}" alt="figure3" loading="lazy" width="685" height="519"></picture></a>
                   </div>
-                  {% endfor %}
+
                   <div
                     class="c-article-section__figure-description"
                     data-test="bottom-caption"
-                    id="figure-5-desc"
+                    id="figure-3-desc"
                   >
                     <p>
-                      <b>a</b> chao1指数于1984年由Chao提出
-                      <sup>
-                        <a data-track="click" data-track-action="reference anchor" 
-                        data-track-label="link" data-test="citation-ref" aria-label="Reference 2" 
-                        title="Chao A. Nonparametric estimation of the number of classes in a population[J]. Scandinavian Journal of statistics, 1984: 265-270." 
-                        href="./report.html#ref-CR2" id="ref-link-section-d38771043e817">2</a>
-                      </sup>
-                      ，最早用于度量物种丰富度的指标，它和丰度、均匀度无关，但是它对稀有的物种很敏感，chao1指数越大，表示丰富性越好。  
-                      <b>b</b> D50统计样本中累计克隆型频率分布达到50%时的克隆型数目，D50越大，表示克隆型分布越均匀。
-                      <b>c</b> gini指数取值在0~1之间
-                      <sup>
-                        <a data-track="click" data-track-action="reference anchor" 
-                        data-track-label="link" data-test="citation-ref" aria-label="Reference 3" 
-                        title="Gini C. On the measure of concentration with special reference to income and statistics[J]. Colorado College Publication, General Series, 1936, 208(1): 73-79." 
-                        href="./report.html#ref-CR3" id="ref-link-section-d38771043e817">3</a>
-                      </sup>
-                      ，gini指数越低，丰富度越好。
-                      <b>d</b> 稀释性曲线是一种通过抽样评估物种丰富度的方法。对细胞进行多次抽样，利用样本中的克隆型数目构建曲线。
-                      曲线表示特异性克隆数目随抽样数目增加而变化的情况，增加相同的抽样数目，特异性克隆增加越多，表示克隆型多样性越丰富。
+                      <b>a</b> 细胞类群的UMAP分布图。
+                      <b>b</b> 特征基因的小提琴图，默认展示每类的top1的marker。
+                      <b>c</b> 特征基因的片段分布峰图，以选定基因的TSS为中心，展示向左右两侧各5 kb的区域，片段峰图可以清晰地显示该基因TSS附近的染色质开放状态。
+                               仅展示一个基因，其余见<a href="../Result/Step3/Cluster/res{{ summary.resolution }}/Browser">结果文件</a>。
+                      <b>d</b> 特征基因gene score的UMAP展示，仅展示每类的top1基因，如果类群多余10个，仅展示10个。
                     </p>
                   </div>
                 </div>
@@ -688,13 +669,17 @@
                 </div>
               </figure>
             </div>
+            <p>
+              为了对细胞类群进行更好地刻画，我们绘制了制定类群的差异基因火山图（Fig. 4a），
+              可以显示该群与剩余细胞相比，启动子区域显著更开放和不开放的基因。同时，提供了不同类群的gene score值的差异化热图（Fig. 4b）。
+            </p>
           </div>
         </div>
       </section>
       {% endif %}
 
       {% if check_sec.go_kegg == 1 %}
-      <section data-title="V(D)J基因频率">
+      <section data-title="基因富集分析">
         <div class="c-article-section" id="code-availability-section">
           <h2
             class="
@@ -703,25 +688,29 @@
             "
             id="富集分析"
           >
-          V(D)J基因频率
+          基因富集分析
           </h2>
           <div
             class="c-article-section__content"
             id="code-availability-content"
           >
           <p>
-            T/BCR的V、D、J基因是多样性的重要来源，不同样本V(D)J基因的出现频率存在一定的特异性，对样本V(D)J基因频率（Geneusage）分析可以获得出现频率最高的V、D、J基因，以及出现频率最高的V-J基因对，这些结果有助于对克隆型功能的理解。这里仅展示单个样本的结果。
-            更多的结果可见
-            {% if summary.TCR.has %}
-            <a href="../Result_03_sample/TCR/05.Geneusage/">TCR</a>
-            {% endif %}
-            {% if summary.BCR.has %}
-              {% if summary.TCR.has %}
-              和
-              {% endif %}
-            <a href="../Result_03_sample/BCR/05.Geneusage/">BCR</a>
-            {% endif %}
-            。
+            GO数据库是GO组织（Gene Ontology Consortium）于2000年构建的一个结构化的标准生物学注释系统，旨在建立基因及其产物知识的标准词汇体系，适用于各个物种。 
+            GO注释系统是一个有向无环图，包含三个主要分支，即：生物学过程（Biological Process），分子功能（Molecular Function）和细胞组分（Cellular Component）。 
+          </p>
+          <p>
+            对每个cluster的差异基因集，采用ClusterProfiler
+            <sup>
+              <a data-track="click" data-track-action="reference anchor" 
+              data-track-label="link" data-test="citation-ref" aria-label="Reference 5" 
+              title="Yu G, Wang L G, Han Y, et al. clusterProfiler: an R package for comparing biological themes among gene clusters[J]. Omics: a journal of integrative biology, 2012, 16(5): 284-287." 
+              href="./report.html#ref-CR5" id="ref-link-section-d38771043e817">5</a>
+            </sup>
+            对基因分别进行生物学过程，分子功能和细胞组分的富集分析。 
+            富集分析采用超几何检验方法来寻找与整个基因组背景相比显著富集的GO条目。 我们用气泡图展现了所有cluster top的GO term（仅包含BP）（Fig. 4c）。
+          </p>
+          <p>
+            全部的富集结果详见 表4 GO富集分析结果表。
           </p>
           <div
               class="
@@ -739,30 +728,30 @@
                     id="Fig4"
                     class="c-article-section__figure-caption"
                     data-test="figure-caption-text"
-                    >Fig. 4: V(D)J基因频率</b
+                    >Fig. 4: 基因富集分析</b
                   >
                 </figcaption>
                 <div class="c-article-section__figure-content">
-                  {% for immune_type in summary.immune_types %}
-                  <p>{{immune_type}}</p>
+
                   <div class="c-article-section__figure-item">
                     <a class="c-article-section__figure-link" data-test="img-link" data-track="click" 
                     data-track-label="image" data-track-action="view figure" href="./full_size_page/Fig4.html" rel="nofollow">
                       <picture><source type="image/webp" srcset="
-                      show_img/{{ immune_type }}_fig4.png 1x
+                      show_img/{{ figs_name.fig4 }} 1x
                           ">
-                        <img aria-describedby="Fig4" src="show_img/{{ immune_type }}_fig4.png" alt="figure0" loading="lazy" width="685" height="519"></picture></a>
+                        <img aria-describedby="Fig4" src="show_img/{{ figs_name.fig4 }}" alt="figure4" loading="lazy" width="685" height="519"></picture></a>
                   </div>
-                  {% endfor %}
+
                   <div
                     class="c-article-section__figure-description"
                     data-test="bottom-caption"
                     id="figure-4-desc"
                   >
                     <p>
-                      <b>a，b</b> 分别用柱状图和极坐标图展示top20的V基因的出现频率。
-                      <b>c</b> V-J基因对的出现频率。
-                      <b>d</b> 样本V基因频率J-S散度。J-S散度用于评估两样本中基因的重叠度，如果值越大，则重叠度越低。
+                      <b>a</b> 特定类群的特征基因火山图。蓝色为显著下调基因（|Fold Change| ≥ 1.5 & FDR ≤ 0.1），红色为显著上调基因，灰色为没有差异的基因。每个cluster的火山图。
+                      <b>b</b> 差异基因热图，纵坐标为类群名。
+                      <b>c</b> GO富集分析的气泡图，主要侧重Biological Process这个category。气泡图显示不同cluster top富集的GO Term。点越大，富集到term中的基因越多，颜色深浅表示校正后的P-value。
+                      <b>d</b> KEGG富集分析的气泡图，展示了不同cluster top富集的KEGG pathways。
                     </p>
                   </div>
                 </div>
@@ -793,29 +782,216 @@
                 </div>
               </figure>
             </div>
+
+            <div
+              class="c-article-table"
+              data-test="inline-table"
+              data-container-section="table"
+              id="table-4"
+            >
+              <figure>
+                <figcaption class="c-article-table__figcaption">
+                  <b id="Tab4" data-test="table-caption"
+                    >表4 富集分析结果表</b
+                  >
+                </figcaption>
+                <div class="c-article-table-container">
+
+                  <div class="c-article-table-border c-table-scroll-wrapper">
+                    <div
+                      class="
+                        c-table-scroll-wrapper__content
+                        c-table-scroll-wrapper__fade--transparent
+                      "
+                      data-component-scroll-wrapper=""
+                    >
+                      <table class="data last-table">
+                        <thead class="c-article-table-head">
+                          <tr>
+                            {%for col in tables.table4.header %}
+                            <th class="u-text-left">{{ col }}</th>
+                            {%endfor%}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for line in tables.table4.data %}
+                          <tr>
+                            {% for info in line %}
+                            <td class="u-text-left">{{ info }}</td>
+                            {% endfor %}
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  
+                  <div class="c-article-section__figure-description" data-test="bottom-caption" id="table-desc">
+                    <p>
+                      表4 注： <br>ID ：GO term；<br>
+                      Description ：通路（term）的描述信息；<br>
+                      GeneRatio ：富集到该通路（term）的差异基因数/所有的差异基因数目；<br>
+                      BgRatio：所有背景基因中富集到该通路（term）中的基因数/所有背景基因集；<br>
+                      enrich_factor：GeneRation/BgRatio；<br>
+                      pvalue：富集的pvalue；<br>
+                      qvalue：富集的qvalue；<br>
+                      geneID：富集到该通路（term）的差异基因的symbol；<br>
+                      gene_number：富集到该通路（term）的差异基因数。
+                    </p>
+                  </div>
+                </div>
+                <div class="u-text-right u-hide-print">
+                  <a
+                    class="c-article__pill-button"
+                    data-test="table-link"
+                    data-track="click"
+                    data-track-action="view table"
+                    data-track-label="button"
+                    rel="nofollow"
+                    href="./result_file"
+                    aria-label="Full size table 2"
+                    ><span>Full size table</span
+                    ><svg
+                      width="16"
+                      height="16"
+                      focusable="false"
+                      role="img"
+                      aria-hidden="true"
+                      class="u-icon"
+                    >
+                      <use
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        xlink:href="#global-icon-chevron-right"
+                      ></use>
+                      </svg></a>
+                </div>
+              </figure>
+            </div>
+            <p>
+              KEGG(Kyoto Encyclopedia of Genes and Genomes)是一个整合了基因组、化学和系统功能信息的数据库。 基于KEGG数据库，pathway 富集分析用超几何检验找出与整个基因组背景相比，在差异基因中显著富集的 pathway。 
+              气泡图展示了所有cluster top的KEGG pathway，并用颜色表示了pathway的富集程度（Fig. 4d ）。全部结果详见 表5 KEGG富集分析结果表。
+            </p>
+
+            <div
+              class="c-article-table"
+              data-test="inline-table"
+              data-container-section="table"
+              id="table-5"
+            >
+              <figure>
+                <figcaption class="c-article-table__figcaption">
+                  <b id="Tab5 data-test="table-caption"
+                    >表5 KEGG富集分析结果表</b
+                  >
+                </figcaption>
+                <div class="c-article-table-container">
+
+                  <div class="c-article-table-border c-table-scroll-wrapper">
+                    <div
+                      class="
+                        c-table-scroll-wrapper__content
+                        c-table-scroll-wrapper__fade--transparent
+                      "
+                      data-component-scroll-wrapper=""
+                    >
+                      <table class="data last-table">
+                        <thead class="c-article-table-head">
+                          <tr>
+                            {%for col in tables.table5.header %}
+                            <th class="u-text-left">{{ col }}</th>
+                            {%endfor%}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for line in tables.table5.data %}
+                          <tr>
+                            {% for info in line %}
+                            <td class="u-text-left">{{ info }}</td>
+                            {% endfor %}
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  
+                  <div class="c-article-section__figure-description" data-test="bottom-caption" id="table-desc">
+                    <p>
+                      
+                    </p>
+                  </div>
+                </div>
+                <div class="u-text-right u-hide-print">
+                  <a
+                    class="c-article__pill-button"
+                    data-test="table-link"
+                    data-track="click"
+                    data-track-action="view table"
+                    data-track-label="button"
+                    rel="nofollow"
+                    href="./result_file"
+                    aria-label="Full size table 2"
+                    ><span>Full size table</span
+                    ><svg
+                      width="16"
+                      height="16"
+                      focusable="false"
+                      role="img"
+                      aria-hidden="true"
+                      class="u-icon"
+                    >
+                      <use
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        xlink:href="#global-icon-chevron-right"
+                      ></use>
+                      </svg></a>
+                </div>
+              </figure>
+            </div>
+
           </div>
         </div>
       </section>
       {% endif %}
 
       {% if check_sec.pseudotime == 1 %}
-      <section data-title="克隆型追踪">
+      <section data-title="Motif富集分析">
         <div class="c-article-section" id="article-comments-section">
           <h2
             class="
               c-article-section__title
               js-section-title js-c-reading-companion-sections-item
             "
-            id="克隆型追踪"
+            id="Motif富集分析"
           >
-          克隆型追踪
+          Motif富集分析
           </h2>
           <div
             class="c-article-section__content"
             id="article-comments-content"
           >
             <p>
-              克隆型追踪（Clonetype tracking）可以显示感兴趣的克隆型在不同的样本或者类群中的分布情况。这里显示的是前两个样本top10的克隆型在不同样本中的分布。
+              Peak Calling是ATAC-seq常用的分析方法，可以更为准确地获知片段的峰所在位置。为了提高peaks的可靠性，ArchR将同属一个类群的细胞合并为数个伪bulk数据，利用MACS2
+              <sup>
+                <a data-track="click" data-track-action="reference anchor" 
+                data-track-label="link" data-test="citation-ref" aria-label="Reference 3" 
+                title="Zhang Y, Liu T, Meyer C A, et al. Model-based analysis of ChIP-Seq (MACS)[J]. Genome biology, 2008, 9(9): 1-9." 
+                href="./report.html#ref-CR3" id="ref-link-section-d38771043e817">3</a>
+              </sup>
+              对伪bulk数据进行peak calling，并进行假设检验，仅保留类群中保守性较好的峰进行下游分析。
+            </p>
+            <p>
+              利用这些类群保守的峰进行motif富集分析，可以获得类群活跃的转录因子，以便于更为全面地对类群 特征进行刻画。
+            </p>
+            <p>
+              我们用专为单细胞数据开发的chromVAR
+              <sup>
+                <a data-track="click" data-track-action="reference anchor" 
+                data-track-label="link" data-test="citation-ref" aria-label="Reference 4" 
+                title="Schep A N, Wu B, Buenrostro J D, et al. chromVAR: inferring transcription-factor-associated accessibility from single-cell epigenomic data[J]. Nature methods, 2017, 14(10): 975-978." 
+                href="./report.html#ref-CR4" id="ref-link-section-d38771043e817">4</a>
+              </sup>
+              进行motif分析，得到了在所有类群中motif的差异排序（Fig. 5a）。对类群motif富集分数进行z-score标准化，然后按照z-score值排序，可以获得类群特异的motif（Fig. 5b-e）。
             </p>
             <div
               class="
@@ -833,28 +1009,31 @@
                     id="Fig5"
                     class="c-article-section__figure-caption"
                     data-test="figure-caption-text"
-                    >Fig. 5: 克隆型追踪</b
+                    >Fig. 5: Motif富集分析</b
                   >
                 </figcaption>
                 <div class="c-article-section__figure-content">
-                  {% for immune_type in summary.immune_types %}
-                  <p>{{immune_type}}</p>
+
                   <div class="c-article-section__figure-item">
                     <a class="c-article-section__figure-link" data-test="img-link" data-track="click" 
                     data-track-label="image" data-track-action="view figure" href="./full_size_page/Fig5.html" rel="nofollow">
                       <picture><source type="image/webp" srcset="
-                      show_img/{{ immune_type }}_fig5.png 1x
+                      show_img/{{ figs_name.fig5 }} 1x
                           ">
-                        <img aria-describedby="Fig5" src="show_img/{{ immune_type }}_fig5.png" alt="figure0" loading="lazy" width="685" height="519"></picture></a>
+                        <img aria-describedby="Fig5" src="show_img/{{ figs_name.fig5 }}" alt="figure0" loading="lazy" width="685" height="519"></picture></a>
                   </div>
-                  {% endfor %}
+
                   <div
                     class="c-article-section__figure-description"
                     data-test="bottom-caption"
                     id="figure-5-desc"
                   >
                     <p>
-                      <b>a，b</b> 分别展示在第一个和第二个样本中，基于CDR3氨基酸序列丰度前10的克隆型在不同样本间分布情况。
+                      <b>a</b> 所有类群中motif的变异度排序。纵轴为motif的deviation值，deviation值越大表明该motif在类群间的差异越大，横轴为按照deviation值的由大到小的排序结果。
+                      <b>b</b> 类群特异的motif的富集分数热图。蓝色越深，表明motif在该群的特征越明显。
+                      <b>c</b> 类群特异的motif的富集分析的z-score在UMAP上的展示，仅展示每类群的富集分数top1的motif，若类群大于6，则只展示前6群。
+                      <b>d</b> 每类群的motif富集分数排序，仅展示C1群的结果，更多结果见<a href="../Result/Step6/Cluster">富集分数曲线图</a>。
+                      <b>e</b> 类群特异motif的z-score的分布图。横轴为z-score值，曲线图表示该类群中细胞的z-score的分布密度。峰对应的z-score越大，表明motif在该群的特征越显著。
                     </p>
                   </div>
                 </div>
@@ -890,206 +1069,9 @@
       </section>
       {% endif %}
 
-      {% if check_sec.cell_type == 1 %}
-      <section data-title="Motif分析">
-        <div class="c-article-section" id="article-comments-section">
-          <h2
-            class="
-              c-article-section__title
-              js-section-title js-c-reading-companion-sections-item
-            "
-            id="Motif分析"
-          >
-          Motif分析
-          </h2>
-          <div
-            class="c-article-section__content"
-            id="article-comments-content"
-          >
-            <p>
-              通过对CDR3序列的motif分析可以获得样本中最富集的Kmer，用于判断T/BCR对抗原识别的特异性，具有相似Kmer的T/BCR具有相近的结构和亲和性，因而对相似抗原具有识别能力。
-            </p>
-            <div
-              class="
-                c-article-section__figure
-                js-c-reading-companion-figures-item
-              "
-              data-test="figure"
-              data-container-section="figure"
-              id="figure-6"
-              data-title="Overview of CellChat."
-            >
-              <figure>
-                <figcaption>
-                  <b
-                    id="Fig6"
-                    class="c-article-section__figure-caption"
-                    data-test="figure-caption-text"
-                    >Fig. 6: Motif序列分析</b
-                  >
-                </figcaption>
-                <div class="c-article-section__figure-content">
-                  {% for immune_type in summary.immune_types %}
-                  <p>{{immune_type}}</p>
-                  <div class="c-article-section__figure-item">
-                    <a class="c-article-section__figure-link" data-test="img-link" data-track="click" 
-                    data-track-label="image" data-track-action="view figure" href="./full_size_page/Fig6.html" rel="nofollow">
-                      <picture><source type="image/webp" srcset="
-                      show_img/{{ immune_type }}_fig6.png 1x
-                          ">
-                        <img aria-describedby="Fig6" src="show_img/{{ immune_type }}_fig6.png" alt="figure6" loading="lazy" width="685" height="519"></picture></a>
-                  </div>
-                  {% endfor %}
-                  <div
-                    class="c-article-section__figure-description"
-                    data-test="bottom-caption"
-                    id="figure-6-desc"
-                  >
-                    <p>
-                      <b>a</b> 计算样本中长度为5个氨基酸的Kmer分布，展示的是丰度前10的CDR3氨基酸kmer序列在不同样本中的分布情况。
-                      <b>b</b> 长度为5的kmer的motif图。
-                    </p>
-                  </div>
-                </div>
-                <div class="u-text-right u-hide-print">
-                  <a
-                    class="c-article__pill-button"
-                    data-test="article-link"
-                    data-track="click"
-                    data-track-label="button"
-                    data-track-action="view figure"
-                    href="./full_size_page/Fig6.html"
-                    data-track-dest="link:Figure1 Full size image"
-                    aria-label="Full size image figure 1"
-                    rel="nofollow"
-                    ><span>Full size image</span
-                    ><svg
-                      width="16"
-                      height="16"
-                      focusable="false"
-                      role="img"
-                      aria-hidden="true"
-                      class="u-icon"
-                    >
-                      <use
-                        xlink="http://www.w3.org/1999/xlink"
-                        xlink:href="#global-icon-chevron-right"
-                      ></use></svg></a>
-                </div>
-              </figure>
-            </div>
-          </div>
-        </div>
-      </section>
-      {% endif %}
 
 
-      {% if summary.RNA %}
-            <p>
-              单细胞免疫组库数据可以同时分析一个细胞的转录组和T/BCR的数据，有助于理解不同细胞类型在免疫反应中的作用。
-              因此，若同时进行了单细胞转录组测序，我们会把所有文库的contig进行合并，并按照指定的细胞类群进行重新分组，产生基于细胞类群的T/BCR分析结果，
-              包括细胞类群克隆型分布，共享克隆型，多样性分析，V(D)J基因频率，克隆型追踪，Motif分析，详见<a href="../Result_04_cluster">结果目录</a>。
-            </p>
 
-      <section data-title="UMAP">
-        
-        <div class="c-article-section" id="article-comments-section">
-          <h2
-            class="
-              c-article-section__title
-              js-section-title js-c-reading-companion-sections-item
-            "
-            id="UMAP"
-          >
-          UMAP
-          </h2>
-          <div
-            class="c-article-section__content"
-            id="article-comments-content"
-          >
-            <p>
-              在UMAP上展示克隆型丰度有助于理解类群中克隆型的分布，通过将统计得到的克隆型细胞数目与转录组数据整合，利用Seurat
-              <sup>
-                <a data-track="click" data-track-action="reference anchor" 
-                data-track-label="link" data-test="citation-ref" aria-label="Reference 4" 
-                title="Hao Y, Hao S, Andersen-Nissen E, et al. Integrated analysis of multimodal single-cell data[J]. Cell, 2021, 184(13): 3573-3587. e29." 
-                href="./report.html#ref-CR4" id="ref-link-section-d38771043e817">4</a>
-              </sup>
-              软件绘图。
-            </p>
-            <div
-              class="
-                c-article-section__figure
-                js-c-reading-companion-figures-item
-              "
-              data-test="figure"
-              data-container-section="figure"
-              id="figure-7"
-              data-title="Overview of CellChat."
-            >
-              <figure>
-                <figcaption>
-                  <b
-                    id="Fig7"
-                    class="c-article-section__figure-caption"
-                    data-test="figure-caption-text"
-                    >Fig. 7: 克隆型大小在UMAP上的分布</b
-                  >
-                </figcaption>
-                <div class="c-article-section__figure-content">
-                  {% for immune_type in summary.immune_types %}
-                  <p>{{immune_type}}</p>
-                  <div class="c-article-section__figure-item">
-                    <a class="c-article-section__figure-link" data-test="img-link" data-track="click" 
-                    data-track-label="image" data-track-action="view figure" href="./full_size_page/Fig7.html" rel="nofollow">
-                      <picture><source type="image/webp" srcset="
-                      show_img/{{ immune_type }}_fig7.png 1x
-                          ">
-                        <img aria-describedby="Fig7" src="show_img/{{ immune_type }}_fig7.png" alt="figure7" loading="lazy" width="685" height="519"></picture></a>
-                  </div>
-                  {% endfor %}
-                  <div
-                    class="c-article-section__figure-description"
-                    data-test="bottom-caption"
-                    id="figure-7-desc"
-                  >
-                    <p>
-                      <b>a</b> 克隆型大小图。对克隆型大小进行分类，细胞没有检测出克隆型的细胞显示为NA。在结果文件中也显示克隆型大小绝对值在UMAP上的分布。
-                      <b>b</b> 克隆型频率图。对克隆型按照频率进行分类，克隆型占细胞总体的比例对应分别为：Hyperexpanded (0.01~1)、Large（0.001~0.01）、Medium（1e-04~0.001）、small（< 1e-04)。
-                    </p>
-                  </div>
-                </div>
-                <div class="u-text-right u-hide-print">
-                  <a
-                    class="c-article__pill-button"
-                    data-test="article-link"
-                    data-track="click"
-                    data-track-label="button"
-                    data-track-action="view figure"
-                    href="./full_size_page/Fig7.html"
-                    data-track-dest="link:Figure7 Full size image"
-                    aria-label="Full size image figure 7"
-                    rel="nofollow"
-                    ><span>Full size image</span
-                    ><svg
-                      width="16"
-                      height="16"
-                      focusable="false"
-                      role="img"
-                      aria-hidden="true"
-                      class="u-icon"
-                    >
-                      <use
-                        xlink="http://www.w3.org/1999/xlink"
-                        xlink:href="#global-icon-chevron-right"
-                      ></use></svg></a>
-                </div>
-              </figure>
-            </div>
-          </div>
-        </div>
-      </section>
-      {% endif %}
       
 
       <!-- <section data-title="模板">
@@ -1139,7 +1121,7 @@
                   >
                     <span class="c-article-references__counter">1.</span>
                     <p class="c-article-references__text" id="ref-CR1">
-                      ImmunoMind Team. (2019). immunarch: An R Package for Painless Bioinformatics Analysis of T-Cell and B-Cell Immune Repertoires. Zenodo. http://doi.org/10.5281/zenodo.3367200
+                      Granja J M, Corces M R, Pierce S E, et al. ArchR is a scalable software package for integrative single-cell chromatin accessibility analysis[J]. Nature genetics, 2021, 53(3): 403-411.
                     </p>
                   </li>
                   <li
@@ -1150,7 +1132,7 @@
                   >
                     <span class="c-article-references__counter">2.</span>
                     <p class="c-article-references__text" id="ref-CR2">
-                      Chao A. Nonparametric estimation of the number of classes in a population[J]. Scandinavian Journal of statistics, 1984: 265-270.
+                      Hao Y, Hao S, Andersen-Nissen E, et al. Integrated analysis of multimodal single-cell data[J]. Cell, 2021, 184(13): 3573-3587.
                     </p>
                   </li>
                   <li
@@ -1161,7 +1143,7 @@
                   >
                     <span class="c-article-references__counter">3.</span>
                     <p class="c-article-references__text" id="ref-CR3">
-                      Gini C. On the measure of concentration with special reference to income and statistics[J]. Colorado College Publication, General Series, 1936, 208(1): 73-79.
+                      Zhang Y, Liu T, Meyer C A, et al. Model-based analysis of ChIP-Seq (MACS)[J]. Genome biology, 2008, 9(9): 1-9.
                     </p>
                   </li>
                   <li
@@ -1172,7 +1154,18 @@
                   >
                     <span class="c-article-references__counter">4.</span>
                     <p class="c-article-references__text" id="ref-CR4">
-                      Hao Y, Hao S, Andersen-Nissen E, et al. Integrated analysis of multimodal single-cell data[J]. Cell, 2021, 184(13): 3573-3587. e29.
+                      Schep A N, Wu B, Buenrostro J D, et al. chromVAR: inferring transcription-factor-associated accessibility from single-cell epigenomic data[J]. Nature methods, 2017, 14(10): 975-978.
+                    </p>
+                  </li>
+                  <li
+                    class="
+                      c-article-references__item
+                      js-c-reading-companion-references-item
+                    "
+                  >
+                    <span class="c-article-references__counter">5.</span>
+                    <p class="c-article-references__text" id="ref-CR5">
+                      Yu G, Wang L G, Han Y, et al. clusterProfiler: an R package for comparing biological themes among gene clusters[J]. Omics: a journal of integrative biology, 2012, 16(5): 284-287.
                     </p>
                   </li>
                   

@@ -109,9 +109,9 @@
           </h2>
           <div class="c-article-section__content" id="Abs1-content">
             <p>
-              本项目中分析的物种为：{{ summary.Species }}；分析时样本总数为：{{ summary.sample_num }}<br>
-              所有样本过滤前总细胞数为：{{ summary.raw_cell }} cells，过滤后总细胞数为：{{ summary.cell_filter }} cells<br>
-              过滤前平均每个样本的细胞数目为：{{ summary.raw_cell_per_sample }} cells，过滤后为：{{ summary.cell_filter_per_sample }} cells<br>
+              本项目中分析的物种为：{{ summary.Species }}；分析时样本总数为：{{ summary.sample_num }}；<br>
+              所有样本过滤前总细胞数为：{{ summary.raw_cell }} cells，过滤后总细胞数为：{{ summary.cell_filter }} cells；<br>
+              过滤前平均每个样本的细胞数目为：{{ summary.raw_cell_per_sample }} cells，过滤后为：{{ summary.cell_filter_per_sample }} cells；<br>
               详细结果见细胞信息统计总表。<br>
             </p>
             <div
@@ -167,7 +167,7 @@
                       Median high-quality fragments per cell：细胞高质量的片段数的中位数；<br>
                       Fraction of high-quality fragments overlapping TSS：TSS区域高质量片段数比例；<br>
                       Fragments flanking a single nucleosome：单个核小体长度的片段比例；<br>
-                      TSS (transcription start site) enrichment score：，样本一般大于4。
+                      TSS (transcription start site) enrichment score：TSS富集分数，样本一般大于4。
                     </p>
                   </div>
                 </div>
@@ -248,7 +248,7 @@
               原始数据中存在一些低质量的数据信息，会影响生信分析的结果可靠性。因此，在进行下游分析前需要对细胞数据进行过滤，主要指标包括片段数、TSS富集分数和双胞数等。
             </p>
             <p>
-              片段即 fragment ，在ATAC-seq实验中，表示的是介于两个转座酶插入位点之间的的DNA片段，由于在建库过程中会进行片段长度筛选，只会保留较短的DNA片段，一般是1 kb以下。片段数反映了Tn5转座酶在基因组的插入情况，是评价scATAC-seq实验成功与否的重要指标。般来说，片段数在1000一下的细胞其携带的信息过少，不利于进行下游分析，应予以舍弃。 
+              片段即 fragment ，在ATAC-seq实验中，表示的是介于两个转座酶插入位点之间的的DNA片段，由于在建库过程中会进行片段长度筛选，只会保留较短的DNA片段，一般是1 kb以下。片段数反映了Tn5转座酶在基因组的插入情况，是评价scATAC-seq实验成功与否的重要指标。一般来说，片段数在1000以下的细胞其携带的信息过少，不利于进行下游分析，应予以舍弃。 
             </p>
             <p>
               转录活跃的基因其转录起始位点区域是开放的，有利于Tn5转座酶插入。TSS富集分数，反应的就是TSS区域片段数所占的比例，可以用来评估噪声情况，如果TSS富集分数太低，说明Tn5转座的效果不理想，获得的文库中存在较大比例的基因组背景。
@@ -862,7 +862,7 @@
               </figure>
             </div>
             <p>
-              KEGG(Kyoto Encyclopedia of Genes and Genomes)是一个整合了基因组、化学和系统功能信息的数据库。基于KEGG数据库，pathway 富集分析用超几何检验找出与整个基因组背景相比，在差异基因中显著富集的 pathway。气泡图展示了所有cluster top的KEGG pathway，并用颜色表示了pathway的富集程度（Fig. 4d ）。全部结果详见 表5 KEGG富集分析结果表。
+              KEGG(Kyoto Encyclopedia of Genes and Genomes)是一个整合了基因组、化学和系统功能信息的数据库。基于KEGG数据库，pathway 富集分析用超几何检验找出与整个基因组背景相比，在差异基因中显著富集的 pathway。气泡图展示了所有cluster top的KEGG pathway，并用颜色表示了pathway的富集程度（Fig. 4d）。全部结果详见 表5 KEGG富集分析结果表。
             </p>
 
             <div

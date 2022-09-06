@@ -4,7 +4,6 @@ Created by Guang Yang
 You can contact the developer via yangguang2@genomics.cn or access the details via https://github.com/yangguang8112/generate_html.git
 """
 
-from types import resolve_bases
 from jinja2 import Template
 import sys
 import json
@@ -12,7 +11,7 @@ from config import Config
 import os
 import time
 import pandas as pd
-from merge_fig import *
+# from merge_fig import *
 
 # template_file = sys.argv[1]
 # data_json_file = sys.argv[2]
